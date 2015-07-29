@@ -15,7 +15,9 @@ Meteor.startup(function() {
       text: function() {
         return Fake.sentence();
       },
-      user: Meteor.users.findOne()._id,
+      user: Fake.user({
+        fields: ['name', 'username', 'emails.address', 'profile.name'],
+      }),
       timestamp: Date.now(),
       channel: 'general',
       archived: function() { return Fake.fromArray([false, true]); },
@@ -28,6 +30,6 @@ Meteor.startup(function() {
     _(5000).times(function(n) {
       Factory.create('message');
     });
-    
+
   }
 });
