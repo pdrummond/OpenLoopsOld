@@ -1,0 +1,12 @@
+<template name="messages">
+	<div class="message-history">
+	 	<a id="show-earlier-link" href="#" style="display:block;padding-top:50px;padding-bottom:10px">Show earlier messages</a>
+		{{#if Template.subscriptionsReady}}
+			{{#each messages}}
+				{{> message}}
+			{{/each}}
+		{{else}}
+			Loading...
+		{{/if}}
+	</div>
+</template>
