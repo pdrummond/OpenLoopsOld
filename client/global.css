@@ -290,6 +290,10 @@ body {
   min-height: 1rem;
 }
 
+.message_content.archived {
+  text-decoration: line-through;
+}
+
 /* line 4, ../tests/sass/components/_user-menu.scss */
 .user-menu {
   float: left;
@@ -345,7 +349,6 @@ body {
   margin-left: 220px;
 }
 
-/* line 6, ../tests/sass/components/_input-box.scss */
 .input-box_text {
   font-size: .95rem;
   width: 90%;
@@ -368,6 +371,17 @@ body {
   bottom: 0;
   min-height: 41px !important;
   padding: 9px 5px 9px 8px;
+}
+
+.input-box_filter {
+  font-size: .80rem;
+  width:60%;
+  margin-left: 2%;
+  margin-bottom: auto;
+  line-height: 1.2rem;
+  outline: 0;
+  bottom: 0;
+  margin-left:20px;
 }
 
 

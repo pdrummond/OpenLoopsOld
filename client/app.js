@@ -7,7 +7,7 @@ Template.messages.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
 		self.subscribe('messages', {
-			channel: Session.get('channel'),
+			filter: OpenLoops.getFilter(Session.get('filterString')),
 			limit: Session.get('messageLimit'),			
 		}, function() {
 			setTimeout(function() {
@@ -30,7 +30,19 @@ Template.messages.events({
 		var newLimit = Session.get('messageLimit') + OpenLoops.MESSAGE_LIMIT_INC;
 		Session.set('messageLimit', newLimit);
 	}
-})
+});
+
+Template.message.helpers({
+	archivedClass: function() {
+		return this.archived?"archived":"";
+	}
+});
+
+Template.header.events({
+  'keyup .input-box_filter': function(e) {
+    OpenLoops.onFilterInput(e);
+  }
+});
 
 Accounts.ui.config({
 	passwordSignupFields: 'USERNAME_AND_EMAIL'
@@ -82,6 +94,43 @@ Template.channel.helpers({
 });
 
 OpenLoops = {
+
+	onFilterInput: function() {
+		var self = this;
+		if(this.keyTimer) {
+			clearTimeout(this.keyTimer);
+		}
+		this.keyTimer = setTimeout(function() {
+			Session.set("filterString", $(".input-box_filter").val());
+		}, 1000);
+	},
+
+	getFilter: function(filterString) {
+		var filter = {};		
+		var remainingText = filterString;
+		var re = new RegExp("([\\w\\.-]+)\\s*:\\s*([\\w\\.-]+)", "g");
+		var match = re.exec(filterString);
+		while (match != null) {	   
+			var field = match[1].trim();
+			var value = match[2].trim();
+			if(value == "true") {
+				value = true;
+			} else if(value == "false") {
+				value = false;
+			}
+			remainingText = remainingText.replace(field, '');
+			remainingText = remainingText.replace(value, '');
+			remainingText = remainingText.replace(/:/g, '');
+			filter[field] = value; 
+			match = re.exec(filterString);			
+		}
+		if(remainingText && remainingText.length > 0) {
+			filter["$or"] = [{title: {$regex:remainingText}}, {text: {$regex:remainingText}}];
+		}			
+		filter.channel = Session.get('channel');
+		console.log("Current filter is: " + JSON.stringify(filter));
+		return filter;
+	},
 
 	scrollBottom: function() {
 		$('.message-history').scrollTop($('.message-history')[0].scrollHeight);

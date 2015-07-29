@@ -11,22 +11,23 @@ Meteor.startup(function() {
       });
     }
 
-    /*Factory.define('message', Messages, {
+    Factory.define('message', Messages, {
       text: function() {
         return Fake.sentence();
       },
       user: Meteor.users.findOne()._id,
       timestamp: Date.now(),
-      channel: 'general'
+      channel: 'general',
+      archived: function() { return Fake.fromArray([false, true]); },
+      status: function() { return Fake.fromArray(['open', 'in-progress', 'blocked', 'in-test', 'done']); }
+
     });
 
     Messages.remove({});
 
-
-    if (Messages.find({}).count() === 0) {
-      _(10).times(function(n) {
-        Factory.create('message');
-      });
-  }*/
-}
+    _(5000).times(function(n) {
+      Factory.create('message');
+    });
+    
+  }
 });

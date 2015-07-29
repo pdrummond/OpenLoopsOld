@@ -4,13 +4,13 @@ Meteor.publish('channels', function () {
 
 Meteor.publish('messages', function (opts) {
 	console.log("opts: " + JSON.stringify(opts));	
-	check(opts.channel, String);
+	check(opts.filter, Object);
 	check(opts.limit, Number);
 	if(opts.limit > Messages.find().count()) {
 		opts.limit = 0;
 	}
 
-    return Messages.find({channel: opts.channel}, {limit: opts.limit, sort: {timestamp: -1}});
+    return Messages.find(opts.filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
 Meteor.publish("allUsernames", function () {
