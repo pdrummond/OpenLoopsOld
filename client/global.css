@@ -252,8 +252,7 @@ body {
   -webkit-border-radius: 0.2rem;
   border-radius: 0.2rem;
   width: 36px;
-  height: 36px;
-  background-image: url("http://iode.co.uk/images/the_boss.jpeg");
+  height: 36px;  
   background-size: cover;
 }
 
@@ -316,8 +315,7 @@ body {
   -webkit-border-radius: 0.2rem;
   border-radius: 0.2rem;
   width: 48px;
-  height: 48px;
-  background-image: url("http://iode.co.uk/images/the_boss.jpeg");
+  height: 48px;  
   background-size: cover;
   margin-right: 8px;
 }
@@ -395,4 +393,10 @@ body {
 
 .login-link-text {
   color:white;
+}
+
+#login-dropdown-list {
+  top:auto;
+  left:auto;
+  bottom:20px;
 }

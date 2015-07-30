@@ -74,6 +74,13 @@ Template.header.helpers({
 
 });
 
+Template.registerHelper('profileImage', function (context) {
+	if(context) {
+		var userId = _.isObject(context) ? context._id : context;		
+		return Meteor.users.findOne(userId).profileImage;
+	}
+});
+
 Template.registerHelper('currentChannel', function () {
 	return Session.get('channel');
 });
