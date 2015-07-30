@@ -1,11 +1,14 @@
-<template name="header">
+<template name="header">	
 	<div class="header">	
 		<div class="team-menu" style="z-index:10">Iode</div>
 		<div class="channel-menu">
 			<span class="channel-menu_name">				
 				{{channelName}}
 			</span>
-			<input class="input-box_filter" placeholder="Search here..."/>
+			
 		</div>
+		<form class="uk-form filter-form">
+				<input class="input-box_filter" placeholder="Search here..." value="{{filterString}}"/>	
+			</form>
 	</div>
 </template>

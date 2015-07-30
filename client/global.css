@@ -81,7 +81,7 @@ body {
   height: 100%;
   width: 100%;
   margin: 0;
-  padding-top: 53px;
+  padding-top: 100px;
   padding-bottom: 64px;
 }
 
@@ -113,7 +113,7 @@ body {
 .team-menu {
   position: relative;
   width: 220px;
-  height: 53px;
+  height: 100px;
   line-height: 53px;
   font-weight: 900;
   padding: 0 1rem;
@@ -373,10 +373,13 @@ body {
   padding: 9px 5px 9px 8px;
 }
 
+.filter-form {
+  margin-left:240px;
+}
+
 .input-box_filter {
   font-size: .80rem;
-  width:60%;
-  margin-left: 2%;
+  width:95%;
   margin-bottom: auto;
   line-height: 1.2rem;
   outline: 0;

@@ -2,7 +2,6 @@ Meteor.startup(function() {
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
 });
 
-
 Template.messages.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
@@ -22,6 +21,10 @@ Template.messages.onCreated(function() {
 Template.messages.helpers({
 	messages: function() {  	
 		return Messages.find({}, {sort: {timestamp: 1}});
+	},
+
+	noMessages: function() {		
+		return Messages.find({}, {sort: {timestamp: 1}}).count() == 0;
 	}
 });
 
@@ -51,6 +54,10 @@ Accounts.ui.config({
 Template.header.helpers({
 	channelName: function() {
 		return Session.get('channel');
+	},
+
+	filterString: function() {
+		return Session.get('filterString');
 	}
 });
 
@@ -90,6 +97,14 @@ Template.channel.helpers({
 		} else {
 			return "";
 		}
+	}
+});
+
+Template.channel.events({
+	'click': function() {		
+		Session.set('messageLimit', 30);
+		Session.set('filterString', '');
+		Router.go("/" + this.name);		
 	}
 });
 
