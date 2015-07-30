@@ -1,13 +1,15 @@
 <template name="messages">
-	<div class="message-history">
+	<div class="message-history">		
 		{{#if noMessages}}	 		
-			<p>No Messages</p>
+			<p style="padding-top:20px;font-style:italic;position: absolute;bottom: 80px;">Be the first to add a message to this channel</p>
 	 	{{else}}
-	 		<a id="show-earlier-link" href="#" style="display:block;padding-top:10px;padding-bottom:10px">Show earlier messages</a>
+	 		{{#if welcomeMessageNotPresent}}
+	 			<a id="show-earlier-link" href="#" style="display:block;padding-top:10px;padding-bottom:10px">Show earlier messages</a>
+	 		{{/if}}
 	 	{{/if}}
 		{{#if Template.subscriptionsReady}}
 			{{#each messages}}
-				{{> message}}
+				{{> messageHolder}}
 			{{/each}}
 		{{else}}
 			Loading...

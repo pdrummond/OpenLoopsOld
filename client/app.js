@@ -24,7 +24,12 @@ Template.messages.helpers({
 	},
 
 	noMessages: function() {		
-		return Messages.find({}, {sort: {timestamp: 1}}).count() == 0;
+		return Messages.find({template: {$ne: 'welcomeMessage'}}, {sort: {timestamp: 1}}).count() == 0;
+	},
+
+	welcomeMessageNotPresent: function() {
+		var count = Messages.find({template: 'welcomeMessage'}).count();
+		return count == 0;
 	}
 });
 
@@ -35,9 +40,15 @@ Template.messages.events({
 	}
 });
 
-Template.message.helpers({
+Template.messageHolder.helpers({
 	archivedClass: function() {
 		return this.archived?"archived":"";
+	},
+
+	messageTemplate: function() {
+		var template = this.template || "message";
+		console.log('template:', template);
+		return template;		
 	}
 });
 
@@ -59,6 +70,8 @@ Template.header.helpers({
 	filterString: function() {
 		return Session.get('filterString');
 	}
+
+
 });
 
 Template.registerHelper('currentChannel', function () {
@@ -90,6 +103,24 @@ Template.listings.helpers({
 	}
 });
 
+Template.listings.events({
+	'submit .new-channel-form': function(e) {		
+		e.stopPropagation();
+		e.preventDefault();
+		var name = $('.channel-input').val();
+		if(name && name.length > 0) {
+			$('.new-channel-form').hide();
+			$(".channel-input").val('');
+			Meteor.call('createChannel', {name: name});
+			Session.set('channel', name);
+		}
+	},
+	'click .add-channel-button': function() {
+		$('.new-channel-form').show();
+		$('.channel-input').focus();
+	}
+});
+
 Template.channel.helpers({
 	active: function () {
 		if (Session.get('channel') === this.name) {
@@ -107,6 +138,7 @@ Template.channel.events({
 		Router.go("/" + this.name);		
 	}
 });
+
 
 OpenLoops = {
 

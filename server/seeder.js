@@ -3,15 +3,11 @@ Meteor.startup(function() {
   if(debug) {
     if (Channels.find({}).count() === 0) {
       Channels.remove({});
-      Channels.insert({
-        name: "general"
-      });
-      Channels.insert({
-        name: "random"
-      });
+      Meteor.call('createChannel', {name:'general'});
+      Meteor.call('createChannel', {name:'random'});
     }
 
-    Factory.define('message', Messages, {
+    /*Factory.define('message', Messages, {
       text: function() {
         return Fake.sentence();
       },
@@ -29,7 +25,6 @@ Meteor.startup(function() {
 
     _(5000).times(function(n) {
       Factory.create('message');
-    });
-
+    });*/
   }
 });
