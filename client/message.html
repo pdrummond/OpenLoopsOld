@@ -1,9 +1,18 @@
 <template name="message">
 	<div class="message">
-		<img src="{{profileImage userId}}" class="message_profile-pic"/>
+
+		{{#if isTask}}
+			<i class="icon big tasks large message_profile-pic"></i>
+			{{else}}
+			<img src="{{profileImage userId}}" class="message_profile-pic"/>		
+		{{/if}}
 		<a href="" class="message_username">{{usernameFromId userId}}</a>
-		<span class="message_timestamp">{{timestampToTime timestamp}}</span>
+		<span class="message_timestamp">{{timestampToTime timestamp}}</span>		
 		<span class="message_star"></span>
-		<span class="message_content {{archivedClass}}"><strong>{{status}}</strong> - {{text}}</span>
+		{{#if isTask}}
+			<div class="ui mini red horizontal label">{{status}}</div>
+			<div class="ui mini horizontal label"><i class="flag icon"></i> backlog</div>
+		{{/if}}
+		<span class="message_content {{archivedClass}}">{{text}}</span>
 	</div>
 </template>

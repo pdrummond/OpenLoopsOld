@@ -7,7 +7,8 @@ Template.footer.events({
         e.stopPropagation();
         Meteor.call('newMessage', {
           text: $('.input-box_text').val(),
-          channel: Session.get('channel')
+          channel: Session.get('channel'),
+          type: Session.get('messageCreationType')||'message',
         }, function(error, result) {
           if(error) {
             alert("Error: " + error);

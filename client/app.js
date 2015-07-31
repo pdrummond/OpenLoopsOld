@@ -146,6 +146,44 @@ Template.channel.events({
 	}
 });
 
+Template.footer.onRendered(function() {
+	this.$('.ui.dropdown').dropdown();
+});
+
+Template.message.onRendered(function() {
+	this.$('.ui.dropdown').dropdown();
+});
+
+Template.message.helpers({
+	isTask: function() {
+		return this.type == "task";
+	},
+
+	isMessage: function() {
+		return this.type == "message";	
+	},
+
+	status: function() {
+		return this.status || "open";
+	}
+});
+
+Template.footer.helpers({
+	messageCreationType: function() {
+		return Session.get('messageCreationType');
+	}
+});
+
+Template.footer.events({
+	'click #create-box-message-menu-item': function() {
+		Session.set('messageCreationType', 'message');
+	},
+
+	'click #create-box-task-menu-item': function() {
+		Session.set('messageCreationType', 'task');
+	},
+});
+
 
 OpenLoops = {
 
