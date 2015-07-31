@@ -47,7 +47,10 @@ Template.messageHolder.helpers({
 
 	messageTemplate: function() {
 		var template = this.template || "message";
-		console.log('template:', template);
+		switch(this.type) {
+			case 'task': template = 'taskMessage'; break;		
+			case 'milestone': template = 'milestoneMessage'; break;
+		}
 		return template;		
 	}
 });
@@ -146,10 +149,6 @@ Template.channel.events({
 	}
 });
 
-Template.footer.onRendered(function() {
-	this.$('.ui.dropdown').dropdown();
-});
-
 Template.message.onRendered(function() {
 	this.$('.ui.dropdown').dropdown();
 });
@@ -168,9 +167,13 @@ Template.message.helpers({
 	}
 });
 
+Template.footer.onRendered(function() {
+	this.$('.ui.dropdown').dropdown();
+});
+
 Template.footer.helpers({
 	messageCreationType: function() {
-		return Session.get('messageCreationType');
+		return Session.get('messageCreationType') || "message";
 	}
 });
 
@@ -181,6 +184,10 @@ Template.footer.events({
 
 	'click #create-box-task-menu-item': function() {
 		Session.set('messageCreationType', 'task');
+	},
+
+	'click #create-box-milestone-menu-item': function() {
+		Session.set('messageCreationType', 'milestone');
 	},
 });
 
