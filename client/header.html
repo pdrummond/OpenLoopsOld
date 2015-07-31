@@ -1,5 +1,5 @@
 <template name="header">	
-	<div class="header">	
+	<div class="app-header">	
 		<div class="team-menu" style="z-index:10">Iode</div>
 		<div class="channel-menu">			
 			<span class="channel-menu_name">				
@@ -7,8 +7,10 @@
 			</span>
 			
 		</div>
-		<form class="uk-form filter-form">
-				<input class="input-box_filter" placeholder="Search here..." value="{{filterString}}"/>	
-			</form>
+		<div class="ui icon input" style="display:flex;padding-left:15px;margin-right:50px">
+  			<input class="input_box_filter" type="text" placeholder="Search..." value="{{filterString}}" />
+  			<i class="search icon"></i>
+		</div>
+		
 	</div>
 </template>

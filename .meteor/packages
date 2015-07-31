@@ -13,5 +13,6 @@ accounts-ui
 accounts-github
 email
 iron:router
-zcurtis:uikit
 jparker:gravatar
+semantic:ui
+flemay:less-autoprefixer
