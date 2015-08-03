@@ -1,0 +1,22 @@
+<template name="messageDetailTextSection">
+	<div class="message-text-section">
+		<div>
+			<p id="message-text" style="font-size:1.2em;padding:10px">{{text}}</p>	
+			<textarea id="message-text-input" style="display:none;width: 100%;
+			resize: none;
+			border: none;
+			background: none;
+			color: white;  
+			outline: none;
+			padding: 10px;
+			font-size: 1.2em;">{{text}}</textarea>
+		</div>
+		<div class="ui tiny compact primary buttons" style="padding:10px;float:right">
+			<button id="edit-button" class="ui button">Edit</button>
+		</div>
+		<div id="edit-text-buttons" class="ui tiny compact buttons" style="display:none;padding:10px;float:right">
+			<button id="cancel-button" class="ui button">Cancel</button>		
+			<button id="save-button" class="ui teal button">Save</button>
+		</div>
+	</div>
+</template>

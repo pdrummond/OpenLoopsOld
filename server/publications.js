@@ -2,6 +2,10 @@ Meteor.publish('channels', function () {
     return Channels.find();
 });
 
+Meteor.publish('milestones', function () {
+    return Milestones.find();
+});
+
 Meteor.publish('messages', function (opts) {
 	console.log("opts: " + JSON.stringify(opts));	
 	check(opts.filter, Object);

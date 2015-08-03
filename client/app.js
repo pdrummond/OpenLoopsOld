@@ -46,19 +46,20 @@ Template.messageHolder.helpers({
 	},
 
 	messageTemplate: function() {
-		var template = this.template || "message";
+		var template = this.template || "MessageComponent";
 		switch(this.type) {
-			case 'task': template = 'taskMessage'; break;		
-			case 'milestone': template = 'milestoneMessage'; break;
+			case 'task': template = 'TaskMessageComponent'; break;
+			case 'milestone': template = 'MilestoneMessageComponent'; break;
 		}
+		console.log("template:" + template);
 		return template;		
 	}
 });
 
 Template.header.events({
-  'keyup .input-box_filter': function(e) {
-    OpenLoops.onFilterInput(e);
-  }
+	'keyup .input-box_filter': function(e) {
+		OpenLoops.onFilterInput(e);
+	}
 });
 
 Accounts.ui.config({
@@ -73,8 +74,6 @@ Template.header.helpers({
 	filterString: function() {
 		return Session.get('filterString');
 	}
-
-
 });
 
 Template.registerHelper('profileImage', function (context) {
@@ -149,21 +148,149 @@ Template.channel.events({
 	}
 });
 
-Template.message.onRendered(function() {
-	this.$('.ui.dropdown').dropdown();
-});
+MessageDetailComponent = BlazeComponent.extendComponent({
 
-Template.message.helpers({
-	isTask: function() {
-		return this.type == "task";
+	template: function() {
+		return 'messageDetail';
 	},
 
-	isMessage: function() {
-		return this.type == "message";	
+	events: function() {		
+		return [{
+			'click #edit-button': this.onEditButtonClicked,
+			'click #save-button': this.onSaveButtonClicked,
+			'click #cancel-button': this.onCancelButtonClicked,
+		}]
 	},
 
-	status: function() {
-		return this.status || "open";
+	onEditButtonClicked: function() {
+		this.$("#message-text").hide();
+		this.$("#message-text-input").show();
+		this.$("#message-text-input").focus();
+		this.$("#edit-button").hide();
+		this.$("#edit-text-buttons").show();
+	},
+
+	onCancelButtonClicked: function() {
+		this.$("#message-text").show();
+		this.$("#message-text-input").hide();
+		this.$("#edit-button").show();
+		this.$("#edit-text-buttons").hide();
+	},
+
+	onSaveButtonClicked: function() {
+		var newText = this.$("#message-text-input").val();
+
+		this.$("#message-text").show();
+		this.$("#message-text-input").hide();
+		this.$("#edit-button").show();
+		this.$("#edit-text-buttons").hide();
+
+		Meteor.call('updateMessageText', Session.get('selectedMessage')._id, newText);		
+	},
+
+	onRendered: function() {
+		this.$('.ui.dropdown').dropdown();	
+	},
+
+}).register('MessageDetailComponent');
+
+TaskMessageDetailComponent = MessageDetailComponent.extendComponent({
+	
+	template: function() {
+		return 'taskMessageDetail';
+	},
+
+
+	events: function() {
+		return TaskMessageDetailComponent.__super__.events.call(this).concat({
+			'click .status.item': this.onStatusClicked,
+		});    
+	},
+
+	onStatusClicked: function(e) {
+		var newStatus = $(e.target).attr('data-value');
+		if(newStatus && newStatus.length > 0){
+			Meteor.call('updateMessageStatus', Session.get('selectedMessage')._id, newStatus);
+		}
+	},
+
+	milestones: function() {
+		return Milestones.find({channel: Session.get('channel')});
+	},
+
+	milestoneLabel: function() {
+		var milestone =  Milestones.findOne(this.data().milestone);
+		return milestone?milestone.text:'';
+	}
+
+}).register('TaskMessageDetailComponent');
+
+MilestoneMessageDetailComponent = MessageDetailComponent.extendComponent({
+	
+	template: function() {
+		return 'messageDetail';
+	}
+
+}).register('MilestoneMessageDetailComponent');
+
+
+MessageComponent = BlazeComponent.extendComponent({
+
+	template: function() {
+		return 'message';
+	},
+	
+	events: function() {		
+		return [{
+			'click': this.onClick
+		}];
+	},
+	
+	onRendered: function() {
+		this.$('.ui.dropdown').dropdown();
+		$('.ui.sidebar').sidebar({
+			dimPage: false,
+		});
+	},
+
+	milestoneLabel: function() {
+		var milestone =  Milestones.findOne(this.data().milestone);
+		return milestone?milestone.text:'';
+	},
+
+	statusLabel: function() {
+		return OpenLoops.TaskStatus[this.data().status || OpenLoops.DEFAULT_STATUS_VALUE].label;
+	},
+
+	statusColor: function() {
+		return OpenLoops.TaskStatus[this.data().status || OpenLoops.DEFAULT_STATUS_VALUE].color;
+	},
+
+	onClick: function() {				
+		Session.set('selectedMessage', this.data());
+		$('.ui.sidebar').sidebar('toggle');
+	}
+}).register('MessageComponent');
+
+TaskMessageComponent = MessageComponent.extendComponent({
+	
+	template: function() {
+		return 'taskMessage';
+	}
+
+}).register('TaskMessageComponent');
+
+MilestoneMessageComponent = MessageComponent.extendComponent({
+	
+	template: function() {
+		return 'milestoneMessage';
+	}
+
+}).register('MilestoneMessageComponent');
+
+Template.milestoneItem.events({
+	'click': function() {
+		Meteor.call('updateMessageMilestone', Session.get('selectedMessage')._id, this._id);
 	}
 });
 
@@ -191,6 +318,26 @@ Template.footer.events({
 	},
 });
 
+Template.app.events({
+	'click #close-sidebar-button': function() {
+		$('.ui.sidebar').sidebar('toggle');
+	}
+});
+
+Template.app.helpers({
+	messageDetailTemplate: function() {
+		var template = this.template || "MessageDetailComponent";
+		switch(this.type) {
+			case 'task': template = 'TaskMessageDetailComponent'; break;
+			case 'milestone': template = 'MilestoneMessageDetailComponent'; break;
+		}
+		return template;
+	},
+
+	selectedMessage: function() {	
+		return Session.get('selectedMessage');
+	}
+});
 
 OpenLoops = {
 
@@ -235,4 +382,15 @@ OpenLoops = {
 		$('.message-history').scrollTop($('.message-history')[0].scrollHeight);
 	}
 }
+
+OpenLoops.TaskStatus = {
+	'new': {label: 'New', color: 'teal'},
+	'open': {label: 'Open', color: 'green'},
+	'in-progress': {label: 'In Progress', color: 'purple'},
+	'blocker': {label: 'Blocker', color: 'red'},
+	'in-test': {label: 'In-Test', color: 'yellow'},
+	'done': {label: 'Done', color: 'blue'}
+}
+
+OpenLoops.DEFAULT_STATUS_VALUE = "new";
 OpenLoops.MESSAGE_LIMIT_INC = 30;

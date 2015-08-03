@@ -80,9 +80,7 @@ html {
 body {
   height: 100%;
   width: 100%;
-  margin: 0;
-  padding-top: 100px;
-  padding-bottom: 64px;
+  margin: 0;  
 }
 
 /* line 23, ../tests/sass/_layout.scss */
@@ -97,6 +95,8 @@ body {
 /* line 31, ../tests/sass/_layout.scss */
 .main {
   height: 100%;
+  padding-top: 100px;
+  padding-bottom: 64px;
 }
 
 /* line 35, ../tests/sass/_layout.scss */
@@ -107,6 +107,7 @@ body {
   height: 64px;
   width: 100%;
   background-color:white;
+  z-index:999;
 }
 
 /* line 1, ../tests/sass/components/_header.scss */
@@ -395,4 +396,8 @@ body {
   top:auto;
   left:auto;
   bottom:20px;
+}
+
+#message-text {
+  margin-right:50px;
 }
