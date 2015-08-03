@@ -243,13 +243,6 @@ body {
   border-radius:5px;
 }
 
-.milestone.message {  
-  background-color: #DAE7F1;
-  border: 1px solid #659FCB;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
 /* line 11, ../tests/sass/components/_message.scss */
 .message_profile-pic {
   position: absolute;
