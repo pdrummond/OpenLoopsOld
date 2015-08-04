@@ -6,6 +6,11 @@ Meteor.publish('milestones', function () {
     return Milestones.find();
 });
 
+Meteor.publish('filters', function () {
+    return Filters.find();
+});
+
+
 Meteor.publish('messages', function (opts) {
 	console.log("opts: " + JSON.stringify(opts));	
 	check(opts.filter, Object);

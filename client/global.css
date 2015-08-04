@@ -404,19 +404,16 @@ body {
 }
 
 .task.message .message_content {
-  font-size:1.1em;
+  font-size:1.0em;
   font-weight: bold;
-  color: orange;
 }
 
 .milestone.message .message_content {
-  font-size:1.1em;
-  font-weight: bold;
-  color: green;
+  font-size:1.0em;
+  font-weight: bold;  
 }
 
 .milestone.message .message_profile-pic.icon {
-
   color: green;
 }
 

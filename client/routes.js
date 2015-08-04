@@ -4,6 +4,7 @@ Router.configure({
     return [
     Meteor.subscribe('channels'),
     Meteor.subscribe('milestones'),
+    Meteor.subscribe('filters'),
     Meteor.subscribe('allUsernames')
   ]
   }

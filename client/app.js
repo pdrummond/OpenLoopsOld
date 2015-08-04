@@ -1,3 +1,8 @@
+
+Accounts.ui.config({
+	passwordSignupFields: 'USERNAME_AND_EMAIL'
+});
+
 Meteor.startup(function() {
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
 	Session.setDefault('messageCreationType', "message");
@@ -32,8 +37,8 @@ Template.messages.onRendered(function() {
 		}
 		console.log("changing to " + type);
 		Session.set("messageCreationType", type);
-        return false;
-    });
+		return false;
+	});
 });
 
 Template.messages.helpers({
@@ -77,11 +82,32 @@ Template.messageHolder.helpers({
 Template.header.events({
 	'keyup .input-box_filter': function(e) {
 		OpenLoops.onFilterInput(e);
-	}
-});
+	},
 
-Accounts.ui.config({
-	passwordSignupFields: 'USERNAME_AND_EMAIL'
+	'click #create-filter-button': function() {
+		var title = prompt("Tab Name");
+		if(title != null) {
+			var query = $(".input-box_filter").val();
+			if(query != null && query.length > 0) {
+				Meteor.call('createFilter', {
+					title: title, 
+					query: query,
+					channel: Session.get('channel')
+				});
+			}
+		}
+	},
+
+	'click #messages-filter-item': function() {
+		Session.set('filterString', null);
+	},
+
+	'click #delete-filter-button': function() {
+		var filter = Session.get('currentFilter');
+		if(filter != null) {
+			Meteor.call('deleteFilter', filter._id);
+		}
+	}
 });
 
 Template.header.helpers({
@@ -91,6 +117,28 @@ Template.header.helpers({
 
 	filterString: function() {
 		return Session.get('filterString');
+	},
+	
+	filters: function() {
+		return Filters.find({'channel': Session.get('channel')});
+	},
+
+	messagesFilterActive: function() {
+		var filterString = Session.get('filterString');
+		return filterString == null || filterString.length == 0 ? 'active' : '';
+	}
+});
+
+Template.filterItem.helpers({
+	activeClass: function() {
+		return Session.get('filterString') == this.query?'active':'';
+	}
+})
+
+Template.filterItem.events({
+	'click': function() {
+		Session.set('currentFilter', this);
+		Session.set('filterString', this.query);
 	}
 });
 
