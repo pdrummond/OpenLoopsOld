@@ -1,13 +1,13 @@
 <template name="taskMessage">	
 	<div class="task message">
 		<i class="icon big warning circle large message_profile-pic" title="Task"></i>
-		<span style="font-size:1.2em" class="message_content {{archivedClass}}">{{text}}</span>
+		<span class="message_content {{archivedClass}}">{{text}}</span>
 		<span class="ui horizontal labels" style="position:absolute;top:5px;right:5px">			
 				<div class="ui label"><i class="flag icon"></i> {{milestoneLabel}}</div>		
 				<div class="ui label {{statusColor}}" >{{statusLabel}}</div>			
 		</span>
 		<div style="padding-top:5px">
-			<a href="" class="message_username" style="color:#babbbf !important">Created by {{usernameFromId userId}} at </a>
+			<a href="" class="message_username" style="color:#babbbf !important; font-size:12px !important">Created by {{usernameFromId userId}} at </a>
 			<span class="message_timestamp">{{timestampToTime timestamp}}</span>		
 			<span class="message_star"></span>
 		</div>

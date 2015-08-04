@@ -25,6 +25,7 @@ html {
   line-height: 1;
 }
 
+
 /* line 24, ../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
@@ -400,4 +401,25 @@ body {
 
 #message-text {
   margin-right:50px;
+}
+
+.task.message .message_content {
+  font-size:1.1em;
+  font-weight: bold;
+  color: orange;
+}
+
+.milestone.message .message_content {
+  font-size:1.1em;
+  font-weight: bold;
+  color: green;
+}
+
+.milestone.message .message_profile-pic.icon {
+
+  color: green;
+}
+
+.task.message .message_profile-pic.icon {
+  color: orange;
 }

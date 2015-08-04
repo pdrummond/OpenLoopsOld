@@ -377,20 +377,27 @@ OpenLoops = {
 		while (match != null) {	   
 			var field = match[1].trim();
 			var value = match[2].trim();
+			remainingText = remainingText.replace(field, '');
+			remainingText = remainingText.replace(value, '');
+			remainingText = remainingText.replace(/:/g, '');
 			if(value == "true") {
 				value = true;
 			} else if(value == "false") {
 				value = false;
 			}
-			remainingText = remainingText.replace(field, '');
-			remainingText = remainingText.replace(value, '');
-			remainingText = remainingText.replace(/:/g, '');
+			if(field == "milestone") {
+				//if the filter is milestone:sprint1 then we need to convert this to the milestone:<milestoneId>				
+				var milestones = Milestones.find({channel: Session.get("channel"), text:value}).fetch();
+				if(milestones.length > 0) {
+					value = milestones[0]._id;
+				}
+			}			
 			filter[field] = value; 
 			match = re.exec(filterString);			
 		}
 		if(remainingText && remainingText.length > 0) {
 			filter["$or"] = [{title: {$regex:remainingText}}, {text: {$regex:remainingText}}];
-		}			
+		}
 		filter.channel = Session.get('channel');
 		console.log("Current filter is: " + JSON.stringify(filter));
 		return filter;
