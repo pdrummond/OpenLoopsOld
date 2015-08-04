@@ -7,13 +7,11 @@
 meteor-platform
 dburles:factory
 anti:fake
-accounts-base
-accounts-password
-accounts-ui
-email
 iron:router
 jparker:gravatar
 semantic:ui
 flemay:less-autoprefixer
 peerlibrary:blaze-components
 mousetrap:mousetrap
+accounts-ui
+accounts-password
