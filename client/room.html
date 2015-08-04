@@ -1,17 +1,3 @@
 <template name="app">	
-	<div class="ui right overlay inverted sidebar vertical menu" style="z-index:9999;height:100%;width:500px;color:white">
-		<i id="close-sidebar-button" class="remove icon" style="padding:5px;position:absolute;top:5px;right:5px;z-index:999999"></i>
-		{{#with selectedMessage}}
-			{{> Template.dynamic template=messageDetailTemplate}}
-		{{/with}}
-	</div>
-	<div class="pusher" style="height:100%">  
-		{{> header}}
-		<div class="main" style="height:100%">
-
-			{{> listings}}
-			{{> yield}}        
-		</div>
-	</div>
-	{{> footer}}	
+	{{> yield}}	
 </template>

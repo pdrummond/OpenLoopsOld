@@ -1,8 +1,4 @@
 
-Accounts.ui.config({
-	passwordSignupFields: 'USERNAME_AND_EMAIL'
-});
-
 Meteor.startup(function() {
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
 	Session.setDefault('messageCreationType', "message");
@@ -161,6 +157,13 @@ Template.registerHelper("timestampToTime", function (timestamp) {
 	return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2);
 });
 
+Template.registerHelper("currentUserName", function () {
+	var user = Meteor.user();
+	if(user != null) {
+		return user.username;
+	}
+});
+
 Template.registerHelper("usernameFromId", function (userId) {
 	var user = Meteor.users.findOne({_id: userId});
 	if (typeof user === "undefined") {
@@ -210,7 +213,7 @@ Template.channel.events({
 	'click': function() {		
 		Session.set('messageLimit', 30);
 		Session.set('filterString', '');
-		Router.go("/" + this.name);		
+		Router.go("/channel/" + this.name);		
 	}
 });
 
@@ -371,6 +374,10 @@ Template.footer.helpers({
 });
 
 Template.footer.events({
+	'click #logout-menu-item': function() {
+		Meteor.logout();
+	},
+
 	'click #create-box-message-menu-item': function() {
 		Session.set('messageCreationType', 'message');
 	},
@@ -384,13 +391,13 @@ Template.footer.events({
 	},
 });
 
-Template.app.events({
+Template.messageListPage.events({
 	'click #close-sidebar-button': function() {
 		$('.ui.sidebar').sidebar('toggle');
 	}
 });
 
-Template.app.helpers({
+Template.messageListPage.helpers({
 	messageDetailTemplate: function() {
 		var template = this.template || "MessageDetailComponent";
 		switch(this.type) {
@@ -452,7 +459,7 @@ OpenLoops = {
 	},
 
 	scrollBottom: function() {
-		$('.message-history').scrollTop($('.message-history')[0].scrollHeight);
+		//$('.message-history').scrollTop($('.message-history')[0].scrollHeight);
 	}
 }
 

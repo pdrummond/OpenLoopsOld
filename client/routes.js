@@ -1,5 +1,6 @@
 Router.configure({
   layoutTemplate: 'app',
+  notFoundTemplate: 'notFound',
   waitOn: function() { 
     return [
     Meteor.subscribe('channels'),
@@ -23,13 +24,37 @@ var requireLogin = function() {
 }
 
 Router.route('/', function () {
-  this.redirect('/general');
-}, {name: 'channel'});
-
-Router.route('/:channel', function () {
-	Session.set('channel', this.params.channel);
-  this.render('messages');
+  this.redirect('/channel/general');
 });
 
+Router.route('/channel/:channel', function () {
+	Session.set('channel', this.params.channel);
+  this.render('messageListPage');
+}, {name: 'channel'});
 
-Router.onBeforeAction(requireLogin, {exclude: ['accessDenied']});
+AccountsTemplates.configureRoute('signIn', {name: 'signIn', path:'sign-in'});
+AccountsTemplates.configureRoute('signUp', {name: 'signUp', path:'sign-up'});
+
+var pwd = AccountsTemplates.removeField('password');
+AccountsTemplates.removeField('email');
+AccountsTemplates.addFields([
+  {
+      _id: "username",
+      type: "text",
+      displayName: "username",
+      required: true,
+      minLength: 5,
+  },
+  {
+      _id: 'email',
+      type: 'email',
+      required: true,
+      displayName: "email",
+      re: /.+@(.+){2,}\.(.+){2,}/,
+      errStr: 'Invalid email',
+  },
+  pwd
+]);
+
+
+Router.onBeforeAction(requireLogin, {only: ['channel']});

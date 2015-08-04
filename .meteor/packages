@@ -13,5 +13,5 @@ semantic:ui
 flemay:less-autoprefixer
 peerlibrary:blaze-components
 mousetrap:mousetrap
-accounts-ui
 accounts-password
+useraccounts:semantic-ui
