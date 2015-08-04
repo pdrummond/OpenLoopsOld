@@ -1,9 +1,11 @@
 Meteor.startup(function() {
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
+	Session.setDefault('messageCreationType', "message");
 });
 
 Template.messages.onCreated(function() {
 	var self = this;
+	// map multiple combinations to the same callback   
 	self.autorun(function() {
 		self.subscribe('messages', {
 			filter: OpenLoops.getFilter(Session.get('filterString')),
@@ -16,6 +18,22 @@ Template.messages.onCreated(function() {
 			}, 1);
 		});
 	});
+});
+
+Template.messages.onRendered(function() {
+	Mousetrap.bind(['mod+m'], function() {
+		var type = Session.get("messageCreationType");
+		if(type === "message") {
+			type = "task";
+		} else if(type == "task") {
+			type = "milestone";
+		} else if(type == "milestone") {
+			type = "message";
+		}
+		console.log("changing to " + type);
+		Session.set("messageCreationType", type);
+        return false;
+    });
 });
 
 Template.messages.helpers({
