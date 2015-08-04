@@ -1,10 +1,8 @@
 <template name="header">	
 	<div class="app-header">	
-		<div class="team-menu" style="z-index:10">Iode</div>
+		{{> teamMenu}}
 		<div class="channel-menu">			
-			<span class="channel-menu_name">				
-				{{channelName}}
-			</span>
+			{{> channelName}}
 
 			<div class="ui secondary menu" style="position:absolute;top:-10px;left:400px;">
 				<a id="messages-filter-item" class="item {{messagesFilterActive}}">

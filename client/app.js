@@ -106,11 +106,23 @@ Template.header.events({
 	}
 });
 
-Template.header.helpers({
+Template.channelName.helpers({
 	channelName: function() {
 		return Session.get('channel');
 	},
+});
 
+Template.channelName.events({
+	'click #messages-page-button': function() {
+		Router.go("/channel/" + Session.get('channel') + "/messages");
+	},
+
+	'click #kanban-page-button': function() {
+		Router.go("/channel/" + Session.get('channel') + "/kanban");
+	}
+});
+
+Template.header.helpers({	
 	filterString: function() {
 		return Session.get('filterString');
 	},
@@ -143,6 +155,10 @@ Template.registerHelper('profileImage', function (context) {
 		var userId = _.isObject(context) ? context._id : context;		
 		return Meteor.users.findOne(userId).profileImage;
 	}
+});
+
+Template.registerHelper('milestones', function() {
+	return Milestones.find({channel: Session.get('channel')});
 });
 
 Template.registerHelper('currentChannel', function () {
@@ -213,7 +229,7 @@ Template.channel.events({
 	'click': function() {		
 		Session.set('messageLimit', 30);
 		Session.set('filterString', '');
-		Router.go("/channel/" + this.name);		
+		Router.go("/channel/" + this.name + "/messages");
 	}
 });
 
@@ -281,10 +297,6 @@ TaskMessageDetailComponent = MessageDetailComponent.extendComponent({
 		if(newStatus && newStatus.length > 0){
 			Meteor.call('updateMessageStatus', Session.get('selectedMessage')._id, newStatus);
 		}
-	},
-
-	milestones: function() {
-		return Milestones.find({channel: Session.get('channel')});
 	},
 
 	milestoneLabel: function() {
@@ -410,6 +422,10 @@ Template.messageListPage.helpers({
 	selectedMessage: function() {	
 		return Session.get('selectedMessage');
 	}
+});
+
+Template.kanbanHeader.onRendered(function() {
+	this.$('.ui.dropdown').dropdown();	
 });
 
 OpenLoops = {

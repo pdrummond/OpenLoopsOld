@@ -1,0 +1,24 @@
+<template name="kanbanHeader">	
+	<div class="app-header">
+		{{> teamMenu}}			
+		<div class="channel-menu">			
+			{{> channelName}}
+
+			<div class="ui secondary menu" style="position:absolute;top:-10px;left:400px;">
+				<div class="ui dropdown item">
+					Milestone <i class="dropdown icon"></i>
+					<div class="menu">	
+						{{#each milestones}}
+							{{> kanbanMilestoneItem}}
+						{{/each}}					
+												
+					</div>
+				</div>				
+			</div>	
+		</div>
+	</div>
+</template>
+
+<template name="kanbanMilestoneItem">
+	<div class="item">{{text}}</div>
+</template>

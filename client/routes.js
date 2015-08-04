@@ -24,13 +24,19 @@ var requireLogin = function() {
 }
 
 Router.route('/', function () {
-  this.redirect('/channel/general');
+  this.redirect('/channel/general/messages');
 });
 
-Router.route('/channel/:channel', function () {
+Router.route('/channel/:channel/messages', function () {
 	Session.set('channel', this.params.channel);
   this.render('messageListPage');
-}, {name: 'channel'});
+}, {name: 'messageListPage'});
+
+Router.route('/channel/:channel/kanban', function () {
+  Session.set('channel', this.params.channel);
+  this.render('kanbanPage');
+}, {name: 'kanbanPage'});
+
 
 AccountsTemplates.configureRoute('signIn', {name: 'signIn', path:'sign-in'});
 AccountsTemplates.configureRoute('signUp', {name: 'signUp', path:'sign-up'});
@@ -57,4 +63,4 @@ AccountsTemplates.addFields([
 ]);
 
 
-Router.onBeforeAction(requireLogin, {only: ['channel']});
+Router.onBeforeAction(requireLogin, {only: ['messageListPage', 'kanbanPage']});
