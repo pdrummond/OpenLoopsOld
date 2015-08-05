@@ -3,6 +3,10 @@ Meteor.methods({
     message.timestamp = Date.now();
     message.userId = Meteor.userId();
 
+    if(message.type == 'task') {
+      message.status = 'new';
+    }
+
     var messageId = Messages.insert(message);
 
     //If message is a milestone then create a specific milestone
@@ -23,8 +27,8 @@ Meteor.methods({
 
   updateMessageText:function(messageId, newText) {
   	Messages.update(messageId, {$set: {text: newText}});
-  	var message = Message.findOne(messageId);
-  	if(message.type === "milestone") {
+  	var message = Messages.findOne(messageId);
+  	if(message.type == "milestone") {
   		var milestone = Milestones.findOne({messageId: message._id});
   		Milestones.update(milestone._id, {$set: {text: newText}});
   	}

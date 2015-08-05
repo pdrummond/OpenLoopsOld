@@ -419,3 +419,7 @@ body {
 .task.message .message_profile-pic.icon {
   color: orange;
 }
+
+.hide {
+  display:none !important;
+}

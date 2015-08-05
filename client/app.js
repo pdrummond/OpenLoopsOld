@@ -233,7 +233,26 @@ Template.channel.events({
 	}
 });
 
-MessageDetailComponent = BlazeComponent.extendComponent({
+AbstractMessageComponent = BlazeComponent.extendComponent({
+	onRendered: function() {
+		this.$('.ui.dropdown').dropdown();	
+	},
+
+	milestoneLabel: function() {
+		var milestone =  Milestones.findOne(this.data().milestone);
+		return milestone?milestone.text:'No Milestone';
+	},
+
+	statusLabel: function() {
+		return OpenLoops.TaskStatus[this.data().status].label || 'No Status';
+	},
+
+	statusColor: function() {
+		return OpenLoops.TaskStatus[this.data().status].color || '';
+	},
+});
+
+MessageDetailComponent = AbstractMessageComponent.extendComponent({
 
 	template: function() {
 		return 'messageDetail';
@@ -271,11 +290,7 @@ MessageDetailComponent = BlazeComponent.extendComponent({
 		this.$("#edit-text-buttons").hide();
 
 		Meteor.call('updateMessageText', Session.get('selectedMessage')._id, newText);		
-	},
-
-	onRendered: function() {
-		this.$('.ui.dropdown').dropdown();	
-	},
+	}
 
 }).register('MessageDetailComponent');
 
@@ -297,12 +312,7 @@ TaskMessageDetailComponent = MessageDetailComponent.extendComponent({
 		if(newStatus && newStatus.length > 0){
 			Meteor.call('updateMessageStatus', Session.get('selectedMessage')._id, newStatus);
 		}
-	},
-
-	milestoneLabel: function() {
-		var milestone =  Milestones.findOne(this.data().milestone);
-		return milestone?milestone.text:'';
-	}
+	}	
 
 }).register('TaskMessageDetailComponent');
 
@@ -315,7 +325,7 @@ MilestoneMessageDetailComponent = MessageDetailComponent.extendComponent({
 }).register('MilestoneMessageDetailComponent');
 
 
-MessageComponent = BlazeComponent.extendComponent({
+MessageComponent = AbstractMessageComponent.extendComponent({
 
 	template: function() {
 		return 'message';
@@ -334,19 +344,6 @@ MessageComponent = BlazeComponent.extendComponent({
 		});
 	},
 
-	milestoneLabel: function() {
-		var milestone =  Milestones.findOne(this.data().milestone);
-		return milestone?milestone.text:'';
-	},
-
-	statusLabel: function() {
-		return OpenLoops.TaskStatus[this.data().status || OpenLoops.DEFAULT_STATUS_VALUE].label;
-	},
-
-	statusColor: function() {
-		return OpenLoops.TaskStatus[this.data().status || OpenLoops.DEFAULT_STATUS_VALUE].color;
-	},
-
 	onClick: function() {				
 		Session.set('selectedMessage', this.data());
 		$('.ui.sidebar').sidebar('toggle');
@@ -357,6 +354,10 @@ TaskMessageComponent = MessageComponent.extendComponent({
 	
 	template: function() {
 		return 'taskMessage';
+	},
+
+	hideMilestoneClass: function() {
+		return this.milestone == null? 'hide':'';
 	}
 
 }).register('TaskMessageComponent');
