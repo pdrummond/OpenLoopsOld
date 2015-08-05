@@ -244,11 +244,19 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 	},
 
 	statusLabel: function() {
-		return OpenLoops.TaskStatus[this.data().status].label || 'No Status';
+		if(this.data().status != null) {
+			return OpenLoops.TaskStatus[this.data().status].label || 'No Status';
+		} else {
+			return '';
+		}
 	},
 
 	statusColor: function() {
-		return OpenLoops.TaskStatus[this.data().status].color || '';
+		if(this.data().status != null) {
+			return OpenLoops.TaskStatus[this.data().status].color || '';
+		} else {
+			return '';
+		}
 	},
 });
 
@@ -344,9 +352,12 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 		});
 	},
 
-	onClick: function() {				
-		Session.set('selectedMessage', this.data());
-		$('.ui.sidebar').sidebar('toggle');
+	onClick: function() {
+		var selectedMessage = Session.get('selectedMessage');
+		if(selectedMessage && selectedMessage._id == this.data()._id) {
+			$('.ui.sidebar').sidebar('toggle');
+		}
+		Session.set('selectedMessage', this.data());		
 	}
 }).register('MessageComponent');
 
