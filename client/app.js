@@ -353,10 +353,11 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 	},
 
 	onClick: function() {
-		var selectedMessage = Session.get('selectedMessage');
-		if(selectedMessage && selectedMessage._id == this.data()._id) {
-			$('.ui.sidebar').sidebar('toggle');
-		}
+		//var selectedMessage = Session.get('selectedMessage');
+		$('.ui.sidebar').sidebar('toggle');
+		//if(selectedMessage && selectedMessage._id == this.data()._id) {
+		
+		//}
 		Session.set('selectedMessage', this.data());		
 	}
 }).register('MessageComponent');
