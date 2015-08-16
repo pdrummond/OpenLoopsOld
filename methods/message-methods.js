@@ -9,6 +9,11 @@ Meteor.methods({
 
     var messageId = Messages.insert(message);
 
+    if(message.type == 'task') {
+      var activityMessage = 'Created a task <strong>#OLZ-10</strong>';
+      Meteor.call('createActivity', {text: activityMessage});
+    }
+
     return messageId;
   },
 
