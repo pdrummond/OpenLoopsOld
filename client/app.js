@@ -69,6 +69,7 @@ Template.messageHolder.helpers({
 		switch(this.type) {
 			case 'task': template = 'TaskMessageComponent'; break;
 			case 'milestone': template = 'MilestoneMessageComponent'; break;
+			case 'activity': template = 'ActivityComponent'; break;
 		}
 		console.log("template:" + template);
 		return template;		
@@ -112,16 +113,6 @@ Template.channelName.helpers({
 	},
 });
 
-Template.channelName.events({
-	'click #messages-page-button': function() {
-		Router.go("/channel/" + Session.get('channel') + "/messages");
-	},
-
-	'click #kanban-page-button': function() {
-		Router.go("/channel/" + Session.get('channel') + "/kanban");
-	}
-});
-
 Template.header.helpers({	
 	filterString: function() {
 		return Session.get('filterString');
@@ -158,7 +149,7 @@ Template.registerHelper('profileImage', function (context) {
 });
 
 Template.registerHelper('milestones', function() {
-	return Milestones.find({channel: Session.get('channel')});
+	return Milestones.find();
 });
 
 Template.registerHelper('currentChannel', function () {
@@ -240,7 +231,7 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 
 	milestoneLabel: function() {
 		var milestone =  Milestones.findOne(this.data().milestone);
-		return milestone?milestone.text:'No Milestone';
+		return milestone?milestone.title:'No Milestone';
 	},
 
 	statusLabel: function() {
@@ -356,7 +347,7 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 		//var selectedMessage = Session.get('selectedMessage');
 		$('.ui.sidebar').sidebar('toggle');
 		//if(selectedMessage && selectedMessage._id == this.data()._id) {
-		
+
 		//}
 		Session.set('selectedMessage', this.data());		
 	}
@@ -369,7 +360,7 @@ TaskMessageComponent = MessageComponent.extendComponent({
 	},
 
 	hideMilestoneClass: function() {
-		return this.milestone == null? 'hide':'';
+		return this.data().milestone == null? 'hide':'';
 	}
 
 }).register('TaskMessageComponent');
@@ -381,6 +372,14 @@ MilestoneMessageComponent = MessageComponent.extendComponent({
 	}
 
 }).register('MilestoneMessageComponent');
+
+ActivityComponent = MessageComponent.extendComponent({
+	
+	template: function() {
+		return 'activityMessage';
+	}
+
+}).register('ActivityComponent');
 
 Template.milestoneItem.events({
 	'click': function() {
@@ -414,6 +413,52 @@ Template.footer.events({
 	'click #create-box-milestone-menu-item': function() {
 		Session.set('messageCreationType', 'milestone');
 	},
+
+	'keypress input': function(e) {
+		var inputVal = $('.input-box_text').val();
+		if(!!inputVal) {
+			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+			if (charCode == 13) {
+				e.stopPropagation();
+				if(inputVal.startsWith('/')) {
+					var commandData = inputVal.match(/\/(\w+) (\w+) (.*)/);
+					if(commandData && commandData.length == 4) {
+						var command = commandData[1];
+						var itemType = commandData[2];
+						var commandContent = commandData[3];
+
+						switch(command) {
+							case 'create': {
+								if(itemType == "milestone") {
+									OpenLoops.createMilestone(commandContent, function(error, result) {
+										if(error) {
+											alert("Error: " + error);
+										} else {
+										//??
+									}
+								});	
+								} else {
+									OpenLoops.createMessage(itemType, commandContent, function(error, result) {
+										if(error) {
+											alert("Error: " + error);
+										} else {
+										//??
+									}
+								});
+								}
+								break;
+							}
+						}
+						console.log("command:" + JSON.stringify(commandData));
+					}          
+				} else {
+					OpenLoops.createMessage('message', inputVal);
+				}
+				$('.input-box_text').val("");
+				return false;
+			}    
+		}
+	}
 });
 
 Template.messageListPage.events({
@@ -440,6 +485,7 @@ Template.messageListPage.helpers({
 Template.kanbanHeader.onRendered(function() {
 	this.$('.ui.dropdown').dropdown();	
 });
+
 
 OpenLoops = {
 
@@ -471,7 +517,7 @@ OpenLoops = {
 			}
 			if(field == "milestone") {
 				//if the filter is milestone:sprint1 then we need to convert this to the milestone:<milestoneId>				
-				var milestones = Milestones.find({channel: Session.get("channel"), text:value}).fetch();
+				var milestones = Milestones.find({title:value}).fetch();
 				if(milestones.length > 0) {
 					value = milestones[0]._id;
 				}
@@ -482,13 +528,38 @@ OpenLoops = {
 		if(remainingText && remainingText.length > 0) {
 			filter["$or"] = [{title: {$regex:remainingText}}, {text: {$regex:remainingText}}];
 		}
-		filter.channel = Session.get('channel');
+		//filter.channel = Session.get('channel');		
 		console.log("Current filter is: " + JSON.stringify(filter));
 		return filter;
 	},
 
 	scrollBottom: function() {
-		//$('.message-history').scrollTop($('.message-history')[0].scrollHeight);
+		$('.message-history').scrollTop($('.message-history')[0].scrollHeight);				
+	},
+
+	scrollBottomAnimate: function() {
+		$(".message-history").stop().animate({scrollTop:$('.message-history')[0].scrollHeight}, 500, 'swing');
+	},
+
+	createMessage: function(messageType, text) {
+		messageType == messageType || 'message';
+		Meteor.call('createMessage', {
+			channel: Session.get('channel'),
+			type: messageType,
+			text: text,  
+		}, function(error, result) {
+			if(error) {
+				alert("Error: " + error);
+			} else {
+				OpenLoops.scrollBottomAnimate();
+			}
+		});
+	},
+
+	createMilestone: function(title, callback) {
+		Meteor.call('createMilestone', {			
+			title: title, 
+		}, callback);
 	}
 }
 

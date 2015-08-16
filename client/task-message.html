@@ -1,15 +1,23 @@
 <template name="taskMessage">	
-	<div class="task message">
-		<i class="icon big warning circle large message_profile-pic" title="Task"></i>
-		<span class="message_content {{archivedClass}}">{{text}}</span>
-		<span class="ui horizontal labels" style="position:absolute;top:5px;right:5px">			
+	<div class="item task message">
+		<div class="right floated content">
+			<span class="ui horizontal labels" style="padding-right:40px">			
 				<div class="ui label {{hideMilestoneClass}}"><i class="flag icon"></i> {{milestoneLabel}}</div>		
 				<div class="ui label {{statusColor}}" >{{statusLabel}}</div>			
-		</span>
-		<div style="padding-top:5px">
-			<a href="" class="message_username" style="color:#babbbf !important; font-size:12px !important">Created by {{usernameFromId userId}} at </a>
-			<span class="message_timestamp">{{timestampToTime timestamp}}</span>		
-			<span class="message_star"></span>
+			</span>
+		</div>
+		<div class="ui mini image" style="left:-10px">
+			<i class="icon huge warning circle large message_profile-pic" title="Task"></i>
+			</div>
+		<div class="content" style="margin-left:5px">
+			<div class="header {{archivedClass}}">{{text}}</div>
+			<div class="description" style="margin-top:5px">
+				<span class="ui mini labels">				
+					<div class="ui label blue">Next</div>
+					<div class="ui label olive">Feature</div>
+					<div class="ui label red">Rejected</div>
+				</span>
+			</div>				
 		</div>
 	</div>
 </template>
