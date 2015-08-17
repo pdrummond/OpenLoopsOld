@@ -483,6 +483,10 @@ Template.messageListPage.helpers({
 	}
 });
 
+Template.taskDetailPage.onRendered(function() {
+	this.$('.ui.dropdown').dropdown();
+});
+
 Template.taskDetailPage.helpers({
 	isButtonActive: function(data) {
 		return data.hash.buttonName == Session.get('currentSection')?'active':'';
@@ -502,8 +506,51 @@ Template.taskDetailPage.events({
 	},
 	'click #activity-button': function() {
 		Session.set("currentSection", 'activity');
+	},
+
+	'click #edit-description': function() {
+		Session.set("currentSection", 'description');		
+		$(".preview-wrap").toggleClass('full-width');
+	},
+
+	'dblclick .preview-wrap': function() {		
+		$(".preview-wrap").toggleClass('full-width');	
 	}
 });
+
+Template.editor.onRendered( function() {
+	Meteor.promise( "convertMarkdown", this.data.description).then( function( html ) {
+		$( "#preview" ).html( html );
+	});
+	this.editor = CodeMirror.fromTextArea( this.find( "#editor" ), {
+		lineNumbers: false,
+		fixedGutter: false,
+		mode: "markdown",
+		lineWrapping: true,
+		indentWithTabs:false,
+		//cursorHeight: 0.85,
+		placeholder: "Type Description here"
+	});
+});
+
+Template.editor.events({
+	'keyup .CodeMirror': function( event, template ) {
+		var text = template.editor.getValue();
+
+		if ( text !== "" ) {	
+			var self = this;
+			Meteor.promise( "convertMarkdown", text)
+			.then( function( html ) {
+				$( "#preview" ).html( html );
+				return Meteor.promise( "updateTaskDescription", self._id, text);
+			})
+			.catch( function( error ) {
+				Bert.alert( error.reason, "danger" );
+			});
+		}
+	}
+});
+
 
 OpenLoops = {
 

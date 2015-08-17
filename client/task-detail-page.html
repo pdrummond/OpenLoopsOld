@@ -1,9 +1,9 @@
 <template name="taskDetailPage"> 
-  <div style="padding-left:100px;padding-right:100px;padding-bottom:10px;padding-top:30px">
-    <div class='ui list'>
+  <div>
+    <div class='ui list' style="padding-left:10px;padding-right:10px">
       {{> TaskMessageComponent}}
     </div>
-    <div class="ui pointing menu">
+    <div class="ui menu">
       <a id="description-button" class="item {{isButtonActive buttonName='description'}}">
         Description
       </a>
@@ -18,8 +18,9 @@
           Options
           <i class="dropdown icon"></i>
           <div class="menu">
+            <div id="edit-description" class="item">Edit Description</div>
             <div class="item">Add Check List</div>
-            <div class="item">Option 2</div>
+            
             <div class="item">Option 3</div>
           </div>
         </div>
@@ -33,7 +34,8 @@
     </div>
     <div class="ui fluid container" style="font-size: 1.14285714rem;">
       <div id="description-section" style="display:{{isSectionActive section='description'}}">
-        <div class="ui teal message" style="margin:50px;text-align:center">No Description - click here to add one</div>
+        <!--<div class="ui teal message" style="margin:50px;text-align:center">No Description - click here to add one</div>-->
+        {{> editor}}
       </div>
       <div id="comments-section" style="display:{{isSectionActive section='comments'}}">
         <div class="ui message">Comments Coming Soon</div>

@@ -12,12 +12,12 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-  margin: 0;
+  xmargin: 0;
   padding: 0;
-  border: 0;
-  font: inherit;
+  xborder: 0;
+  xfont: inherit;
   font-size: 100%;
-  vertical-align: baseline;
+  xvertical-align: baseline;
 }
 
 /* line 22, ../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
@@ -428,4 +428,146 @@ body {
 .ui.borderless {
     border: none;
     box-shadow: none;
+}
+
+.editor-view {
+  overflow: hidden;
+}
+
+.editor-view .container {
+  width: 100%;
+  padding: 0px;
+}
+
+.editor-view .navbar {
+  margin-bottom: 0px;
+  padding: 0 0 0 15px;
+}
+
+.editor-header {
+  position: relative;
+  border-bottom: 1px solid #eee;
+
+  label {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #888;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    border: none;
+    padding: 40px 15px 15px;
+  }
+
+  input:focus {
+    outline: 0;
+  }
+
+  .save-state {
+    position: absolute;
+    top: 27px;
+    right: 20px;
+    z-index: 2;
+  }
+}
+
+.editor-wrap,
+.preview-wrap {
+  position: absolute;
+  top: 127px;  
+  bottom: 0px;
+  width: 50%;
+  height: calc( 100% - 128px );
+}
+
+.editor-wrap {
+  left: 0px;
+  border-right: 5px solid black;
+
+  .CodeMirror {
+    height: 100%;
+
+    .CodeMirror-gutters {
+      border-right: none;
+    }
+
+    .CodeMirror-sizer {
+      padding: 15px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}
+
+#editor {
+  visibility: hidden;
+}
+
+.preview-wrap {  
+  width:50%;
+  overflow: auto;
+  right: 0px;
+  background: whitesmoke;
+  padding: 20px;
+  z-index:2;
+  transition: all 0.5s ease;
+}
+
+.preview-wrap.full-width {
+  width:100%;
+  background: #fff;
+}
+
+#preview > *:last-child {
+  margin-bottom: 0px;
+}
+
+#preview {
+  > *:first-child {
+    margin-top: 0px;
+  }
+
+  > *:last-child {
+    margin-bottom: 0px;
+  }
+
+  img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+blockquote p {
+  display: inline;
+}
+
+pre {
+  padding-left:50px;
+  padding-top:10px;
+  padding-bottom:10px;
+  margin-bottom:10px;
+  background:white;  
 }
