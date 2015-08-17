@@ -32,11 +32,16 @@ Router.route('/channel/:channel/messages', function () {
   this.render('messageListPage');
 }, {name: 'messageListPage'});
 
-Router.route('/channel/:channel/kanban', function () {
-  Session.set('channel', this.params.channel);
-  this.render('kanbanPage');
-}, {name: 'kanbanPage'});
-
+Router.route('/task/:_id', {
+  name: 'taskDetailPage',
+  waitOn: function() {
+    Meteor.subscribe('singleMessage', this.params._id);
+  },
+  data: function() {  
+    var message = Messages.findOne(this.params._id);    
+    return message;
+  }
+});
 
 AccountsTemplates.configureRoute('signIn', {name: 'signIn', path:'sign-in'});
 AccountsTemplates.configureRoute('signUp', {name: 'signUp', path:'sign-up'});
@@ -63,4 +68,4 @@ AccountsTemplates.addFields([
 ]);
 
 
-Router.onBeforeAction(requireLogin, {only: ['messageListPage', 'kanbanPage']});
+Router.onBeforeAction(requireLogin, {only: ['messageListPage', 'taskDetail']});

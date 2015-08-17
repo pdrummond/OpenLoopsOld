@@ -10,6 +10,10 @@ Meteor.publish('filters', function () {
     return Filters.find();
 });
 
+Meteor.publish('singleMessage', function (id) {
+    return Messages.find(id);
+});
+
 
 Meteor.publish('messages', function (opts) {
 	console.log("opts: " + JSON.stringify(opts));	

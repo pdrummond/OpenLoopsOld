@@ -16,3 +16,4 @@ mousetrap:mousetrap
 accounts-password
 useraccounts:semantic-ui
 yasaricli:slugify
+konecty:mongo-counter

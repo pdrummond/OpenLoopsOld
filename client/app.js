@@ -2,6 +2,7 @@
 Meteor.startup(function() {
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
 	Session.setDefault('messageCreationType', "message");
+	Session.setDefault('currentSection', "description");
 });
 
 Template.messages.onCreated(function() {
@@ -345,11 +346,11 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 
 	onClick: function() {
 		//var selectedMessage = Session.get('selectedMessage');
-		$('.ui.sidebar').sidebar('toggle');
+		//$('.ui.sidebar').sidebar('toggle');
 		//if(selectedMessage && selectedMessage._id == this.data()._id) {
 
 		//}
-		Session.set('selectedMessage', this.data());		
+		Router.go("/task/" + this.data()._id);
 	}
 }).register('MessageComponent');
 
@@ -482,10 +483,27 @@ Template.messageListPage.helpers({
 	}
 });
 
-Template.kanbanHeader.onRendered(function() {
-	this.$('.ui.dropdown').dropdown();	
-});
+Template.taskDetailPage.helpers({
+	isButtonActive: function(data) {
+		return data.hash.buttonName == Session.get('currentSection')?'active':'';
+	},
 
+	isSectionActive: function(data) {
+		return data.hash.section == Session.get('currentSection')?'block':'none';
+	}
+})
+
+Template.taskDetailPage.events({
+	'click #description-button': function() {
+		Session.set("currentSection", 'description');
+	},
+	'click #comments-button': function() {
+		Session.set("currentSection", 'comments');
+	},
+	'click #activity-button': function() {
+		Session.set("currentSection", 'activity');
+	}
+});
 
 OpenLoops = {
 

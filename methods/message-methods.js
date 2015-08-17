@@ -5,6 +5,7 @@ Meteor.methods({
 
     if(message.type == 'task') {
       message.status = 'new';
+      message.uid = Meteor.isServer?incrementCounter(Counters, "message-counters"):0; //TODO: replace message-counters with board id
     }
 
     var messageId = Messages.insert(message);
