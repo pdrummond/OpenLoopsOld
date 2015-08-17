@@ -2,8 +2,36 @@
 	<div class="item task message">
 		<div class="right floated content">
 			<span class="ui horizontal labels" style="padding-right:5px">			
-				<div class="ui label {{hideMilestoneClass}}"><i class="flag icon"></i> {{milestoneLabel}}</div>		
-				<div class="ui label {{statusColor}}" >{{statusLabel}}</div>			
+				<div class="ui label {{hideMilestoneClass}}"><i class="flag icon"></i> {{milestoneLabel}}</div>
+				<div class="ui inline dropdown mini {{statusColor}} button">		
+					<span class="text" style="color:white">{{statusLabel}}</span>					
+					<div class="aligned right menu" style="left:-90px !important">
+						<div class="status item" data-value="new">
+							<div class="ui teal empty circular label"></div>
+							New
+						</div>
+						<div class="status item" data-value="open">
+							<div class="ui green empty circular label"></div>
+							Open
+						</div>
+						<div class="status item" data-value="in-progress">
+							<div class="ui purple empty circular label"></div>
+							In Progress
+						</div>
+						<div class="status item" data-value="blocker">
+							<div class="ui red empty circular label"></div>
+							Blocker
+						</div>
+						<div class="status item" data-value="in-test">
+							<div class="ui yellow empty circular label"></div>
+							In Test
+						</div>				
+						<div class="status item" data-value="done">
+							<div class="ui blue empty circular label"></div>
+							Done
+						</div>			
+					</div>
+				</div>
 			</span>
 		</div>
 		<div class="ui mini image" style="left:-10px">

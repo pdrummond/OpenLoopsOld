@@ -333,7 +333,7 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 	
 	events: function() {		
 		return [{
-			'click': this.onClick
+			'click .header': this.onHeaderClick
 		}];
 	},
 	
@@ -344,7 +344,7 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 		});
 	},
 
-	onClick: function() {
+	onHeaderClick: function() {
 		//var selectedMessage = Session.get('selectedMessage');
 		//$('.ui.sidebar').sidebar('toggle');
 		//if(selectedMessage && selectedMessage._id == this.data()._id) {
@@ -360,8 +360,22 @@ TaskMessageComponent = MessageComponent.extendComponent({
 		return 'taskMessage';
 	},
 
+	events: function() {
+		return TaskMessageComponent.__super__.events.call(this).concat({
+			'click .status.item': this.onStatusClicked,
+		});    
+	},
+
 	hideMilestoneClass: function() {
 		return this.data().milestone == null? 'hide':'';
+	},
+
+	onStatusClicked: function(e) {
+		e.preventDefault();
+		var newStatus = $(e.target).attr('data-value');
+		if(newStatus && newStatus.length > 0){
+			Meteor.call('updateMessageStatus', this.data()._id, newStatus);
+		}
 	}
 
 }).register('TaskMessageComponent');
@@ -484,7 +498,9 @@ Template.messageListPage.helpers({
 });
 
 Template.taskDetailPage.onRendered(function() {
-	this.$('.ui.dropdown').dropdown();
+	this.$('.ui.dropdown').dropdown({
+		action: 'hide'
+	});
 });
 
 Template.taskDetailPage.helpers({
@@ -498,6 +514,10 @@ Template.taskDetailPage.helpers({
 })
 
 Template.taskDetailPage.events({
+	'click .task.message .header': function() {
+		Router.go('/');
+	},
+
 	'click #description-button': function() {
 		Session.set("currentSection", 'description');
 	},
@@ -514,8 +534,8 @@ Template.taskDetailPage.events({
 	},
 
 	'dblclick .preview-wrap': function() {		
-		$(".preview-wrap").toggleClass('full-width');	
-	}
+		$(".preview-wrap").toggleClass('full-width');			
+	},	
 });
 
 Template.editor.onRendered( function() {

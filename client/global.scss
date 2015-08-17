@@ -267,6 +267,7 @@ body {
   margin-left: 0;
   font-style: normal;
   text-decoration: none;
+  cursor:default;
 }
 
 /* line 31, ../tests/sass/components/_message.scss */
@@ -403,9 +404,18 @@ body {
   margin-right:50px;
 }
 
+.task.message .ui.dropdown .menu {
+    left: -90px;
+}
+
 .task.message .message_content {
   font-size:1.0em;
   font-weight: bold;
+}
+
+.task.message .header:hover {
+  cursor:pointer;
+  color:#0098FF !important;  
 }
 
 .milestone.message .message_content {
