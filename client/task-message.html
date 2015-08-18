@@ -1,10 +1,17 @@
 <template name="taskMessage">	
 	<div class="item task message">
 		<div class="right floated content">
-			<span class="ui horizontal labels" style="padding-right:5px">			
-				<div class="ui label {{hideMilestoneClass}}"><i class="flag icon"></i> {{milestoneLabel}}</div>
-				<div class="ui inline dropdown mini {{statusColor}} button">		
-					<span class="text" style="color:white">{{statusLabel}}</span>					
+			<span class="ui horizontal labels" style="padding-right:5px">
+				<div class="ui inline dropdown mini button {{hideMilestoneClass}}">
+					<span class="text"><i class="flag icon"></i> {{milestoneLabel}}</span>
+					<div class="menu">
+						{{#each milestones}}
+						{{> milestoneDropdownItem}}
+						{{/each}}
+					</div>
+				</div>				
+				<div class="ui inline dropdown mini {{statusColor}} button">
+					<span class="text" style="color:white">{{statusLabel}}</span>
 					<div class="aligned right menu" style="left:-90px !important">
 						<div class="status item" data-value="new">
 							<div class="ui teal empty circular label"></div>
@@ -53,5 +60,11 @@
 				</span>-->
 			</div>
 		</div>
+	</div>
+</template>
+
+<template name="milestoneDropdownItem">
+	<div class="milestone item" data-value={{_id}}>		
+		<i class='flag icon' ></i> {{title}}
 	</div>
 </template>

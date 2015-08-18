@@ -28,8 +28,9 @@ Meteor.publish('messages', function (opts) {
 	}
     var filter = {
         $or: [
-            {$and: [{type: 'task'},    {boardId: opts.board._id}]},
-            {$and: [{type: 'message'}, {boardId: opts.board._id}, {channel: opts.channel} ]}
+            {$and: [{type: 'task'},         {boardId: opts.board._id}]},
+            {$and: [{type: 'activity'},     {boardId: opts.board._id}]},
+            {$and: [{type: 'message'},      {boardId: opts.board._id}, {channel: opts.channel} ]}
         ]
     };
     //console.log("FILTER: " + JSON.stringify(filter, null, 4));

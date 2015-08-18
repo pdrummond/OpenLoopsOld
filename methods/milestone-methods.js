@@ -6,7 +6,9 @@ Meteor.methods({
     var milestoneId = Milestones.insert(milestone);
 
     var activityMessage = 'Created a new milestone called <strong>' + milestone.title + '</strong>';
-    Meteor.call('createActivity', {text: activityMessage});
-
+    Meteor.call('createActivity', {
+    	boardId: milestone.boardId, 
+    	text: activityMessage
+   	});
   },
 });

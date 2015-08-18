@@ -42,6 +42,7 @@ Router.route('/task/:_id', {
   },
   data: function() {  
     var message = Messages.findOne(this.params._id);    
+    Session.set('selectedMessage', message);
     return message;
   }
 });

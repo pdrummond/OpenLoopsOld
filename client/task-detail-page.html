@@ -18,10 +18,16 @@
           Options
           <i class="dropdown icon"></i>
           <div class="menu">
-            <div id="edit-description" class="item">Edit Description</div>
-            <div class="item">Add Check List</div>
-            
-            <div class="item">Option 3</div>
+            <div id="edit-description" class="item">Edit Description</div>                    
+            <div class="ui dropdown item">
+              Set Milestone
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                {{#each milestones}}
+                  {{> taskDetailMilestoneItem}}
+                {{/each}}                
+              </div>
+            </div>
           </div>
         </div>
         <div class="item">
@@ -45,4 +51,8 @@
       </div>
     </div>
   </div>
+</template>
+
+<template name="taskDetailMilestoneItem">
+  <a class="item"><i class="flag icon"></i>{{title}}</a>
 </template>

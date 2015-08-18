@@ -12,7 +12,10 @@ Meteor.methods({
 
     if(message.type == 'task') {
       var activityMessage = 'Created a task <strong>#OLZ-10</strong>';
-      Meteor.call('createActivity', {text: activityMessage});
+      Meteor.call('createActivity', {
+        boardId: message.boardId, 
+        text: activityMessage
+      });
     }
 
     return messageId;
@@ -31,7 +34,7 @@ Meteor.methods({
   	Messages.update(messageId, {$set: {status: newStatus}});
   },
 
-  updateMessageMilestone:function(messageId, milestoneId) {
+  updateMessageMilestoneId:function(messageId, milestoneId) {
   	Messages.update(messageId, {$set: {milestone: milestoneId}});
   }
 })

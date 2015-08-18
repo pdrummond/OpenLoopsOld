@@ -379,6 +379,7 @@ TaskMessageComponent = MessageComponent.extendComponent({
 	events: function() {
 		return TaskMessageComponent.__super__.events.call(this).concat({
 			'click .status.item': this.onStatusClicked,
+			'click .milestone.item': this.onMilestoneClicked,
 		});    
 	},
 
@@ -392,7 +393,13 @@ TaskMessageComponent = MessageComponent.extendComponent({
 		if(newStatus && newStatus.length > 0){
 			Meteor.call('updateMessageStatus', this.data()._id, newStatus);
 		}
-	}
+	},
+
+	onMilestoneClicked: function(e) {
+		e.preventDefault();
+		var newMilestoneId = $(e.target).attr('data-value');		
+		Meteor.call('updateMessageMilestoneId', this.data()._id, newMilestoneId);
+	},
 
 }).register('TaskMessageComponent');
 
@@ -414,7 +421,7 @@ ActivityComponent = MessageComponent.extendComponent({
 
 Template.milestoneItem.events({
 	'click': function() {
-		Meteor.call('updateMessageMilestone', Session.get('selectedMessage')._id, this._id);
+		Meteor.call('updateMessageMilestoneId', Session.get('selectedMessage')._id, this._id);
 	}
 });
 
@@ -574,6 +581,12 @@ Template.taskDetailPage.events({
 		$(".preview-wrap").toggleClass('full-width');			
 	},	
 });
+
+Template.taskDetailMilestoneItem.events({
+	'click': function() {		
+		Meteor.call('updateMessageMilestoneId', Session.get('selectedMessage')._id, this._id);
+	}
+})
 
 Template.editor.onRendered( function() {
 	Meteor.promise( "convertMarkdown", this.data.description).then( function( html ) {
