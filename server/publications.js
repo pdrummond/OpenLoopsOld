@@ -22,8 +22,11 @@ Meteor.publish('messages', function (opts) {
 	if(opts.limit > Messages.find().count()) {
 		opts.limit = 0;
 	}
-
-    return Messages.find(opts.filter, {limit: opts.limit, sort: {timestamp: -1}});
+    var filter = {
+        $or: [{type: 'task'}, {$and: [{type: 'message'}, {channel: opts.channel} ]}]
+    };
+    console.log("FILTER: " + JSON.stringify(filter, null, 4));
+    return Messages.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
 Meteor.publish("allUsernames", function () {

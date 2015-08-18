@@ -11,6 +11,7 @@ Template.messages.onCreated(function() {
 	self.autorun(function() {
 		self.subscribe('messages', {
 			filter: OpenLoops.getFilter(Session.get('filterString')),
+			channel: Session.get('channel'),
 			limit: Session.get('messageLimit'),			
 		}, function() {
 			setTimeout(function() {
