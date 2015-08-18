@@ -20,7 +20,7 @@
           <div class="menu">
             <div id="edit-description" class="item">Edit Description</div>                    
             <div class="ui dropdown item">
-              Set Milestone
+              Milestone
               <i class="dropdown icon"></i>
               <div class="menu">
                 {{#each milestones}}
@@ -44,7 +44,7 @@
         {{> editor}}
       </div>
       <div id="comments-section" style="display:{{isSectionActive section='comments'}}">
-        <div class="ui message">Comments Coming Soon</div>
+        {{> comments}}
       </div>
       <div id="activity-section" style="display:{{isSectionActive section='activity'}}">
         <div class="ui message">Task Activity Coming Soon</div>

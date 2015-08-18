@@ -1,0 +1,34 @@
+<template name="comments">	
+	<div class="ui comments" style="padding:20px">
+
+		{{#each comments}}
+		{{> comment}}
+		{{/each}}
+
+		<form id="comment-reply-form" class="ui reply form">
+			<div class="field">
+				<textarea id="comment-reply-textarea"></textarea>
+			</div>
+			<div id="comment-reply-form-submit" class="ui blue labeled submit icon button">
+				<i class="icon edit"></i> Add Reply
+			</div>
+		</form>
+	</div>
+</template>
+
+<template name="comment">
+	<div class="comment">
+		<a class="avatar">
+			<img src="{{profileImage userId}}" class="message_profile-pic" style="width:45px;height:45px"/>
+		</a>
+		<div class="content">
+			<a class="aithor message_username">{{usernameFromId userId}}</a>			
+			<div class="metadata">
+				<span class="date">{{timestampToTime timestamp}}</span>
+			</div>
+			<div class="text">
+				{{text}}
+			</div>			
+		</div>
+	</div>
+</template>

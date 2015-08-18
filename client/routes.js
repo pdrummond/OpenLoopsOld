@@ -8,7 +8,7 @@ Router.configure({
     Meteor.subscribe('milestones'),
     Meteor.subscribe('filters'),
     Meteor.subscribe('allUsernames')
-  ]
+  ];
   }
 });
 
@@ -38,7 +38,10 @@ Router.route('/board/:boardId/channel/:channel/messages', function () {
 Router.route('/task/:_id', {
   name: 'taskDetailPage',
   waitOn: function() {
-    Meteor.subscribe('singleMessage', this.params._id);
+    return [
+      Meteor.subscribe('singleMessage', this.params._id),
+      Meteor.subscribe('comments', this.params._id)
+      ];
   },
   data: function() {  
     var message = Messages.findOne(this.params._id);    
@@ -72,4 +75,4 @@ AccountsTemplates.addFields([
 ]);
 
 
-Router.onBeforeAction(requireLogin, {only: ['boardList', 'messageListPage', 'taskDetail']});
+Router.onBeforeAction(requireLogin, {only: ['boardList', 'messageListPage', 'taskDetailPage']});

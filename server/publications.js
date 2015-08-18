@@ -18,6 +18,9 @@ Meteor.publish('singleMessage', function (id) {
     return Messages.find(id);
 });
 
+Meteor.publish('comments', function(messageId) {
+    return Comments.find({messageId: messageId});
+});
 
 Meteor.publish('messages', function (opts) {
 	//console.log("opts: " + JSON.stringify(opts));	

@@ -1,8 +1,33 @@
 
 Meteor.startup(function() {
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
+	Session.setDefault('commentLimit', OpenLoops.COMMENT_LIMIT_INC);
 	Session.setDefault('messageCreationType', "message");
 	Session.setDefault('currentSection', "description");
+});
+
+Template.comments.events({
+	'click #comment-reply-form-submit': function() {
+		var text = $("#comment-reply-textarea").val();
+		if(text && text.length > 0) {
+			Meteor.call('createComment', {
+				//boardId: Session.get('currentBoard')._id,
+				messageId: Session.get('selectedMessage')._id, 
+				text: text
+			});
+		}
+	}
+});
+
+Template.comments.onCreated(function() {
+	var self = this;
+	self.autorun(function() {
+		self.subscribe('comments', {			
+			messageId: Session.get('selectedMessage')._id,
+			limit: Session.get('commentLimit'),			
+		}, function() {			
+		});
+	});
 });
 
 Template.messages.onCreated(function() {
@@ -154,6 +179,10 @@ Template.registerHelper('filters', function (context) {
 		boardId: Session.get('currentBoard')._id, 
 		channel: Session.get('channel')
 	});
+});
+
+Template.registerHelper('comments', function (context) {
+	return Comments.find({messageId: Session.get('selectedMessage')._id});
 });
 
 Template.registerHelper('currentBoardTitle', function (context) {
@@ -711,3 +740,4 @@ OpenLoops.TaskStatus = {
 
 OpenLoops.DEFAULT_STATUS_VALUE = "new";
 OpenLoops.MESSAGE_LIMIT_INC = 30;
+OpenLoops.COMMENT_LIMIT_INC = 50;
