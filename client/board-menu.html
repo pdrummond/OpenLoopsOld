@@ -1,0 +1,25 @@
+<template name="boardMenu">
+	<div class="board-menu" style="z-index:10">
+		<div class="ui floating labeled icon inline dropdown">			
+			<i class="square icon"></i> {{currentBoardTitle}}
+			<div class="menu">
+				<!--<div class="header">
+					Search Boards
+				</div>
+				<div class="ui left icon input">
+					<i class="search icon"></i>
+					<input type="text" name="search" placeholder="Search...">
+				</div>-->
+				{{#each boards}}
+				{{> board}}
+				{{/each}}			
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="board">
+	<div class="item">
+		<i class="square icon"></i> {{title}}
+	</div>
+</template>

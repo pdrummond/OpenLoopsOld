@@ -11,6 +11,7 @@ Template.messages.onCreated(function() {
 	self.autorun(function() {
 		self.subscribe('messages', {
 			filter: OpenLoops.getFilter(Session.get('filterString')),
+			board: Session.get('currentBoard'),
 			channel: Session.get('channel'),
 			limit: Session.get('messageLimit'),			
 		}, function() {
@@ -89,9 +90,10 @@ Template.header.events({
 			var query = $(".input-box_filter").val();
 			if(query != null && query.length > 0) {
 				Meteor.call('createFilter', {
+					boardId: Session.get('currentBoard')._id,
+					channel: Session.get('channel'),
 					title: title, 
-					query: query,
-					channel: Session.get('channel')
+					query: query					
 				});
 			}
 		}
@@ -120,10 +122,6 @@ Template.header.helpers({
 		return Session.get('filterString');
 	},
 	
-	filters: function() {
-		return Filters.find({'channel': Session.get('channel')});
-	},
-
 	messagesFilterActive: function() {
 		var filterString = Session.get('filterString');
 		return filterString == null || filterString.length == 0 ? 'active' : '';
@@ -141,6 +139,25 @@ Template.filterItem.events({
 		Session.set('currentFilter', this);
 		Session.set('filterString', this.query);
 	}
+});
+
+Template.registerHelper('boards', function (context) {
+	return Boards.find();
+});
+
+Template.registerHelper('channels', function (context) {
+	return Channels.find({boardId: Session.get('currentBoard')._id});
+});
+
+Template.registerHelper('filters', function (context) {
+	return Filters.find({
+		boardId: Session.get('currentBoard')._id, 
+		channel: Session.get('channel')
+	});
+});
+
+Template.registerHelper('currentBoardTitle', function (context) {
+	return Session.get('currentBoard').title;
 });
 
 Template.registerHelper('profileImage', function (context) {
@@ -184,11 +201,6 @@ Template.registerHelper("usernameFromId", function (userId) {
 	return user.username;
 });
 
-Template.listings.helpers({
-	channels: function () {
-		return Channels.find();
-	}
-});
 
 Template.listings.events({
 	'submit .new-channel-form': function(e) {		
@@ -198,7 +210,10 @@ Template.listings.events({
 		if(name && name.length > 0) {
 			$('.new-channel-form').hide();
 			$(".channel-input").val('');
-			Meteor.call('createChannel', {name: name});
+			Meteor.call('createChannel', {
+				boardId: Session.get('currentBoard')._id,
+				name: name
+			});
 			Session.set('channel', name);
 		}
 	},
@@ -222,7 +237,7 @@ Template.channel.events({
 	'click': function() {		
 		Session.set('messageLimit', 30);
 		Session.set('filterString', '');
-		Router.go("/channel/" + this.name + "/messages");
+		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/" + this.name + "/messages");
 	}
 });
 
@@ -400,6 +415,27 @@ ActivityComponent = MessageComponent.extendComponent({
 Template.milestoneItem.events({
 	'click': function() {
 		Meteor.call('updateMessageMilestone', Session.get('selectedMessage')._id, this._id);
+	}
+});
+
+Template.boardList.events({	
+	"click #create-board-button": function() {
+		var title = prompt("Board title:");
+		Meteor.call("createBoard", {title: title}, function(error, result) {
+			if (error) {
+				return alert(error.reason);
+			}
+		});
+	}
+});
+
+Template.boardMenu.onRendered(function() {
+	this.$('.ui.dropdown').dropdown();
+});
+
+Template.board.events({
+	'click': function() {		
+		Session.set('currentBoard', this);
 	}
 });
 
@@ -630,6 +666,7 @@ OpenLoops = {
 	createMessage: function(messageType, text) {
 		messageType == messageType || 'message';
 		Meteor.call('createMessage', {
+			boardId: Session.get('currentBoard')._id,
 			channel: Session.get('channel'),
 			type: messageType,
 			text: text,  
@@ -643,7 +680,8 @@ OpenLoops = {
 	},
 
 	createMilestone: function(title, callback) {
-		Meteor.call('createMilestone', {			
+		Meteor.call('createMilestone', {
+			boardId: Session.get('currentBoard')._id,			
 			title: title, 
 		}, callback);
 	}

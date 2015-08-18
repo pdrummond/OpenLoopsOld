@@ -1,0 +1,19 @@
+<template name="boardList">
+	<h1> Boards </h1>
+	<div class="ui text container">
+		<div class="ui raised segment">
+			<button id="create-board-button" class="ui primary button">
+				Create Board
+			</button>
+			<ul>
+				{{#each boards}}
+				{{> boardListItem}}
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+</template>
+
+<template name="boardListItem">
+	<li><a href="/board/{{_id}}/channel/general/messages">{{title}}</a></li>
+</template>

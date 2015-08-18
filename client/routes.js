@@ -3,6 +3,7 @@ Router.configure({
   notFoundTemplate: 'notFound',
   waitOn: function() { 
     return [
+    Meteor.subscribe('boards'),
     Meteor.subscribe('channels'),
     Meteor.subscribe('milestones'),
     Meteor.subscribe('filters'),
@@ -24,10 +25,12 @@ var requireLogin = function() {
 }
 
 Router.route('/', function () {
-  this.redirect('/channel/general/messages');
-});
+  this.render('boardList');
+}, {name: 'boardList'});
 
-Router.route('/channel/:channel/messages', function () {
+Router.route('/board/:boardId/channel/:channel/messages', function () {
+  var board = Boards.findOne(this.params.boardId);
+  Session.set('currentBoard', board);
 	Session.set('channel', this.params.channel);
   this.render('messageListPage');
 }, {name: 'messageListPage'});
@@ -68,4 +71,4 @@ AccountsTemplates.addFields([
 ]);
 
 
-Router.onBeforeAction(requireLogin, {only: ['messageListPage', 'taskDetail']});
+Router.onBeforeAction(requireLogin, {only: ['boardList', 'messageListPage', 'taskDetail']});
