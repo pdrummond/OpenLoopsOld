@@ -6,6 +6,7 @@ Meteor.startup(function() {
 	Session.setDefault('currentSection', "description");
 });
 
+
 Template.comments.onRendered(function() {
 	/*this.editor = CodeMirror.fromTextArea( this.find( "#comment-reply-textarea" ), {
 		lineNumbers: false,
@@ -44,7 +45,6 @@ Template.comments.onCreated(function() {
 
 Template.messages.onCreated(function() {
 	var self = this;
-	// map multiple combinations to the same callback   
 	self.autorun(function() {
 		self.subscribe('messages', {
 			filter: OpenLoops.getFilter(Session.get('filterString')),
@@ -235,9 +235,9 @@ Template.registerHelper("truncateCommentText", function (obj, text, maxSize) {
 		"... (<a href='/board/" + 
 			Session.get('currentBoard')._id + "/task/" + obj.task._id + 
 			"/comments/" + obj.comment._id + "'> Read More </a>)";	
-	} else {
-		return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
-	}
+} else {
+	return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
+}
 });
 
 Template.registerHelper("currentUserName", function () {
@@ -330,6 +330,10 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 			return '';
 		}
 	},	
+
+	onDestroyed: function() {
+		$('html, body').scrollBy(-1); //trick to stop the 'scroll jump' when new messages are added either locally or via subscription.
+	}
 });
 
 MessageDetailComponent = AbstractMessageComponent.extendComponent({
@@ -812,7 +816,7 @@ OpenLoops = {
 	},
 
 	scrollBottom: function() {
-		$('.message-history').scrollTop($('.message-history')[0].scrollHeight);				
+		$('.message-history').scrollTop($('.message-history')[0].scrollHeight);
 	},
 
 	scrollToElement: function(wrapperEl, el) {
