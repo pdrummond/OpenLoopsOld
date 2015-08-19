@@ -12,8 +12,39 @@
 			</ul>
 		</div>
 	</div>
+
+	{{> createBoardDialog}}
 </template>
 
 <template name="boardListItem">
 	<li><a href="/board/{{_id}}/channel/general/messages">{{title}}</a></li>
+</template>
+
+<template name="createBoardDialog">
+	<div id="createBoardDialog" class="ui modal">		
+		<div class="header">
+			Create Board
+		</div>
+		<div class=" content">
+			<form class="ui form">
+				<div class="field">
+					<label>Board Title</label>
+					<input type="text" name="title" placeholder="Pick a descrpitive title for your new board">
+				</div>
+				<div class="field">
+					<label>Board Prefix</label>
+					<input type="text" name="prefix" placeholder="Choose a unique identifier for this board, such as 'PRJ' for example">
+				</div>			
+			</form>
+		</div>
+		<div class="actions">
+			<div class="ui black deny button">
+				Cancel
+			</div>
+			<div id="create-board-submit-button" class="ui positive right labeled icon button">
+				Create Board
+				<i class="checkmark icon"></i>
+			</div>
+		</div>
+	</div>
 </template>

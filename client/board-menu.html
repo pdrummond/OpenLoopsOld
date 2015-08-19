@@ -2,7 +2,10 @@
 	<div class="board-menu" style="z-index:10">
 		<div class="ui floating labeled icon inline dropdown">			
 			<i class="square icon"></i> {{currentBoardTitle}}
-			<div class="menu">
+			<div class="menu">	
+				<div id="show-all-boards" class="item">
+					<i class="left arrow icon"></i> Show All Boards
+				</div>
 				<!--<div class="header">
 					Search Boards
 				</div>
@@ -12,7 +15,8 @@
 				</div>-->
 				{{#each boards}}
 				{{> board}}
-				{{/each}}			
+				{{/each}}
+
 			</div>
 		</div>
 	</div>

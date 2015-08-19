@@ -1,0 +1,14 @@
+<template name="taskMilestoneChangeActivity">
+	<div class="activity message">		
+		<span class="message_content" style="color:gray;font-style:italic">
+			<img class="profile-image" src="{{profileImage userId}}"/>
+			{{#if taskOldMilestoneTitle}}
+				<strong>{{usernameFromId userId}}</strong> changed milestone of <a href="/board/{{currentBoardId}}/task/{{taskId}}/description">#{{taskUid}}</a> from <strong>{{taskOldMilestoneTitle}}</strong> to <strong>{{taskNewMilestoneTitle}}</strong>
+				in {{activityChannel}} channel at {{timestampToTime timestamp}}
+			{{else}}
+			<strong>{{usernameFromId userId}}</strong> set milestone of <a href="/board/{{currentBoardId}}/task/{{taskId}}/description">#{{taskUid}}</a> to <strong>{{taskNewMilestoneTitle}}</strong>
+				in {{activityChannel}} channel at {{timestampToTime timestamp}}
+			{{/if}}
+		</span>
+	</div>
+</template>

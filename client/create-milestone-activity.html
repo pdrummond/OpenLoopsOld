@@ -1,7 +1,9 @@
 <template name="createMilestoneActivity">
 	<div class="activity message">		
 		<span class="message_content" style="color:gray;font-style:italic">
-		<img src="{{profileImage userId}}" style="width:20px;height:20px"/>
-		{{timestampToTime timestamp}}: {{usernameFromId userId}} created milestone <strong>{{milestone.title}}</strong></span>
+		<img class="profile-image" src="{{profileImage userId}}" style="width:20px;height:20px"/>
+		<strong>{{usernameFromId userId}}</strong> created milestone <strong>{{milestoneTitle}}</strong>
+		at {{timestampToTime timestamp}} 
+		</span>
 	</div>
 </template>

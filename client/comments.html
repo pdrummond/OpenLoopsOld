@@ -17,7 +17,7 @@
 </template>
 
 <template name="comment">
-	<div class="comment">
+	<div id={{_id}} class="comment">
 		<a class="avatar">
 			<img src="{{profileImage userId}}" class="message_profile-pic" style="width:45px;height:45px"/>
 		</a>
@@ -27,7 +27,7 @@
 				<span class="date">{{timestampToTime timestamp}}</span>
 			</div>
 			<div class="text">
-				{{text}}
+				{{#markdown}}{{text}}{{/markdown}}
 			</div>			
 		</div>
 	</div>

@@ -1,0 +1,13 @@
+<template name="createCommentActivity">
+	<div class="activity message">		
+		<span class="message_content" style="color:gray;font-style:italic">
+			<img class="profile-image" src="{{profileImage userId}}"/>
+			<strong>{{usernameFromId userId}}</strong> commented on task <a href="/board/{{currentBoardId}}/task/{{taskId}}/description">#{{taskUid}}: {{taskTitle}}</a>
+			at {{timestampToTime timestamp}}
+			<div class="activity-comment">
+				<i class="quote left icon large" style="color:lightgray"></i>
+				{{{truncateCommentText this commentText 500}}}
+			</div>
+		</span>
+	</div>
+</template>

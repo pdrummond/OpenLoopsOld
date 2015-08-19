@@ -1,13 +1,17 @@
 Meteor.methods({
   createComment: function (comment) {
     comment.timestamp = Date.now();
-    comment.userId = Meteor.userId();    
-    Comments.insert(comment);
+    comment.userId = Meteor.userId();
 
-    /*var activityMessage = 'Commented on task <strong>#OLZ-10</strong>';
-      Meteor.call('createActivity', {
-        boardId: comment.boardId, 
-        text: activityMessage
-      });*/ 
+    var commentId = Comments.insert(comment);
+
+    Meteor.call('createActivity', {
+      action: 'create-comment',
+      comment: Comments.findOne(commentId),
+      task: Messages.findOne(comment.messageId),
+      boardId: comment.boardId,
+      description: " ",
+      timestamp: comment.timestamp -1 //To ensure activity appears in message history before comment
+    });
   }
 })

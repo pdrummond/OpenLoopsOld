@@ -7,9 +7,9 @@ Meteor.methods({
 
     Meteor.call('createActivity', {
         action: 'create-milestone',
-        milestone: Milesones.findOne('milestoneId'),
-        boardId: message.boardId,        
-        timestamp: message.timestamp
+        milestone: Milestones.findOne(milestoneId),
+        boardId: milestone.boardId,        
+        timestamp: milestone.timestamp-1, //To ensure activity appears in message history before milestone
       });    
   },
 });

@@ -6,12 +6,24 @@ Meteor.startup(function() {
 	Session.setDefault('currentSection', "description");
 });
 
+Template.comments.onRendered(function() {
+	/*this.editor = CodeMirror.fromTextArea( this.find( "#comment-reply-textarea" ), {
+		lineNumbers: false,
+		fixedGutter: false,
+		mode: "markdown",
+		lineWrapping: true,
+		indentWithTabs:false,
+		//cursorHeight: 0.85,
+		placeholder: "Type Comment here"
+	});*/
+});
+
 Template.comments.events({
 	'click #comment-reply-form-submit': function() {
 		var text = $("#comment-reply-textarea").val();
 		if(text && text.length > 0) {
 			Meteor.call('createComment', {
-				//boardId: Session.get('currentBoard')._id,
+				boardId: Session.get('currentBoard')._id,
 				messageId: Session.get('selectedMessage')._id, 
 				text: text
 			});
@@ -24,7 +36,7 @@ Template.comments.onCreated(function() {
 	self.autorun(function() {
 		self.subscribe('comments', {			
 			messageId: Session.get('selectedMessage')._id,
-			limit: Session.get('commentLimit'),			
+			//limit: Session.get('commentLimit'), 
 		}, function() {			
 		});
 	});
@@ -170,6 +182,11 @@ Template.registerHelper('boards', function (context) {
 	return Boards.find();
 });
 
+Template.registerHelper('currentBoardId', function (context) {
+	return Session.get('currentBoard')._id;
+});
+
+
 Template.registerHelper('channels', function (context) {
 	return Channels.find({boardId: Session.get('currentBoard')._id});
 });
@@ -210,6 +227,17 @@ Template.registerHelper("timestampToTime", function (timestamp) {
 	var minutes = "0" + date.getMinutes();
 	var seconds = "0" + date.getSeconds();
 	return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2);
+});
+
+Template.registerHelper("truncateCommentText", function (obj, text, maxSize) {	
+	if(text.length > maxSize) {
+		return parseMarkdown(text.substring(0, maxSize)).replace(/^<p>/, '').replace(/<\/p>$/,'') + 
+		"... (<a href='/board/" + 
+			Session.get('currentBoard')._id + "/task/" + obj.task._id + 
+			"/comments/" + obj.comment._id + "'> Read More </a>)";	
+	} else {
+		return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
+	}
 });
 
 Template.registerHelper("currentUserName", function () {
@@ -301,11 +329,7 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 		} else {
 			return '';
 		}
-	},
-
-	onTaskLinkClicked: function() {
-		alert("BOOM");
-	}
+	},	
 });
 
 MessageDetailComponent = AbstractMessageComponent.extendComponent({
@@ -366,7 +390,7 @@ TaskMessageDetailComponent = MessageDetailComponent.extendComponent({
 	onStatusClicked: function(e) {
 		var newStatus = $(e.target).attr('data-value');
 		if(newStatus && newStatus.length > 0){
-			Meteor.call('updateMessageStatus', Session.get('selectedMessage')._id, newStatus);
+			Meteor.call('updateMessageStatus', Session.get('selectedMessage')._id, newStatus, Session.get('channel'));
 		}
 	}	
 
@@ -406,7 +430,7 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 		//if(selectedMessage && selectedMessage._id == this.data()._id) {
 
 		//}
-		Router.go("/task/" + this.data()._id);
+		Router.go('/board/' + Session.get('currentBoard')._id + '/task/' + this.data()._id + "/description");
 	}
 }).register('MessageComponent');
 
@@ -431,14 +455,14 @@ TaskMessageComponent = MessageComponent.extendComponent({
 		e.preventDefault();
 		var newStatus = $(e.target).attr('data-value');
 		if(newStatus && newStatus.length > 0){
-			Meteor.call('updateMessageStatus', this.data()._id, newStatus);
+			Meteor.call('updateMessageStatus', this.data()._id, newStatus, Session.get('channel'));
 		}
 	},
 
 	onMilestoneClicked: function(e) {
 		e.preventDefault();
 		var newMilestoneId = $(e.target).attr('data-value');		
-		Meteor.call('updateMessageMilestoneId', this.data()._id, newMilestoneId);
+		Meteor.call('updateMessageMilestoneId', this.data()._id, newMilestoneId, Session.get('channel'));
 	},
 
 }).register('TaskMessageComponent');
@@ -462,31 +486,91 @@ ActivityComponent = MessageComponent.extendComponent({
 		return this.data().activityTemplate;
 	},
 
+	activityChannel: function() {
+		return this.data().activityChannel;
+	},
+
+	taskChannel: function() {
+		return this.data().task.channel;
+	},
+
+	taskId: function() {
+		return this.data().task._id;
+	},
+
+	taskTitle: function() {
+		return this.data().task.text;
+	},
+
+	taskOldMilestoneTitle: function() {
+		return this.data().taskOldMilestoneTitle;
+	},
+
+	taskNewMilestoneTitle: function() {
+		return this.data().taskNewMilestoneTitle;
+	},
+
+	taskOldStatus: function() {
+		return this.data().taskOldStatus;
+	},
+
+	taskNewStatus: function() {
+		return this.data().taskNewStatus;
+	},
+
 	taskUid: function() {
-		return Boards.findOne(this.data().task.boardId).title.substring(0,3).toUpperCase() + "-" + this.data().task.uid;
+		return Boards.findOne(this.data().task.boardId).prefix + "-" + this.data().task.uid;
+	},
+
+	milestoneTitle: function() {
+		return this.data().milestone.title;
+	},
+
+	milestoneId: function() {
+		return this.data().milestone._id;
+	},
+
+	commentText: function() {		
+		return this.data().comment.text;
 	}
 
 }).register('ActivityComponent');
 
 Template.milestoneItem.events({
 	'click': function() {
-		Meteor.call('updateMessageMilestoneId', Session.get('selectedMessage')._id, this._id);
+		Meteor.call('updateMessageMilestoneId', Session.get('selectedMessage')._id, this._id, Session.get('channel'));
 	}
 });
 
 Template.boardList.events({	
 	"click #create-board-button": function() {
-		var title = prompt("Board title:");
-		Meteor.call("createBoard", {title: title}, function(error, result) {
-			if (error) {
-				return alert(error.reason);
+		$('#createBoardDialog').modal({
+			closable: false,
+			blurring: true,
+			onApprove : function() {
+				var board = {
+					title: $("#createBoardDialog input[name='title']").val(),
+					prefix: $("#createBoardDialog input[name='prefix']").val(),
+				};
+				Meteor.call("createBoard", board, function(error, result) {
+					if (error) {
+						return alert(error.reason);
+					}
+				});
 			}
 		});
-	}
+		$('#createBoardDialog').modal('show');
+	},
 });
 
 Template.boardMenu.onRendered(function() {
 	this.$('.ui.dropdown').dropdown();
+});
+
+Template.boardMenu.events({
+	'click #show-all-boards': function() {
+		Router.go("/");
+	}
 });
 
 Template.board.events({
@@ -590,10 +674,19 @@ Template.messageListPage.helpers({
 	}
 });
 
+Template.taskDetailPage.onCreated(function() {
+	setTimeout(function() {
+		var selectedCommentId = Session.get('selectedCommentId');
+		if(selectedCommentId != null) {
+			OpenLoops.scrollToElement('#comments-section', '#' + selectedCommentId);
+		}
+	}, 50);
+});
+
 Template.taskDetailPage.onRendered(function() {
 	this.$('.ui.dropdown').dropdown({
 		action: 'hide'
-	});
+	});	
 });
 
 Template.taskDetailPage.helpers({
@@ -608,17 +701,18 @@ Template.taskDetailPage.helpers({
 
 Template.taskDetailPage.events({
 	'click .task.message .header': function() {
-		Router.go('/');
+		var channel = Session.get('channel') || "general";
+		Router.go('/board/' + Session.get('currentBoard')._id + "/channel/" + channel + "/messages");
 	},
 
 	'click #description-button': function() {
-		Session.set("currentSection", 'description');
+		Router.go("/board/" + Session.get('currentBoard')._id + "/task/" + Session.get('selectedMessage')._id + "/description");
 	},
 	'click #comments-button': function() {
-		Session.set("currentSection", 'comments');
+		Router.go("/board/" + Session.get('currentBoard')._id + "/task/" + Session.get('selectedMessage')._id + "/comments");
 	},
 	'click #activity-button': function() {
-		Session.set("currentSection", 'activity');
+		Router.go("/board/" + Session.get('currentBoard')._id + "/task/" + Session.get('selectedMessage')._id + "/activity");
 	},
 
 	'click #edit-description': function() {
@@ -633,7 +727,7 @@ Template.taskDetailPage.events({
 
 Template.taskDetailMilestoneItem.events({
 	'click': function() {		
-		Meteor.call('updateMessageMilestoneId', Session.get('selectedMessage')._id, this._id);
+		Meteor.call('updateMessageMilestoneId', Session.get('selectedMessage')._id, this._id, Session.get('channel'));
 	}
 })
 
@@ -719,6 +813,12 @@ OpenLoops = {
 
 	scrollBottom: function() {
 		$('.message-history').scrollTop($('.message-history')[0].scrollHeight);				
+	},
+
+	scrollToElement: function(wrapperEl, el) {
+		$('html, body').animate({
+			scrollTop: $(el).offset().top
+		}, 200);
 	},
 
 	scrollBottomAnimate: function() {
