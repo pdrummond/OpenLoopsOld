@@ -5,10 +5,11 @@ Meteor.methods({
     milestone.title = slugify(milestone.title);
     var milestoneId = Milestones.insert(milestone);
 
-    var activityMessage = 'Created a new milestone called <strong>' + milestone.title + '</strong>';
     Meteor.call('createActivity', {
-    	boardId: milestone.boardId, 
-    	text: activityMessage
-   	});
+        action: 'create-milestone',
+        milestone: Milesones.findOne('milestoneId'),
+        boardId: message.boardId,        
+        timestamp: message.timestamp
+      });    
   },
 });

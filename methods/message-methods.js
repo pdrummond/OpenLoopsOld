@@ -5,16 +5,17 @@ Meteor.methods({
 
     if(message.type == 'task') {
       message.status = 'new';
-      message.uid = Meteor.isServer?incrementCounter(Counters, "message-counters"):0; //TODO: replace message-counters with board id
+      message.uid = Meteor.isServer?incrementCounter(Counters, message.boardId):0;
     }
 
     var messageId = Messages.insert(message);
 
-    if(message.type == 'task') {
-      var activityMessage = 'Created a task <strong>#OLZ-10</strong>';
+    if(message.type == 'task') {      
       Meteor.call('createActivity', {
-        boardId: message.boardId, 
-        text: activityMessage
+        action: 'create-task',        
+        task: Messages.findOne(messageId),
+        boardId: message.boardId,        
+        timestamp: message.timestamp -1 //To ensure activity appears in message history before task
       });
     }
 

@@ -271,6 +271,13 @@ Template.channel.events({
 });
 
 AbstractMessageComponent = BlazeComponent.extendComponent({
+	
+	events: function() {
+		return [{	
+			'click .task-link': this.onTaskLinkClicked
+		}]
+	},
+
 	onRendered: function() {
 		this.$('.ui.dropdown').dropdown();	
 	},
@@ -295,6 +302,10 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 			return '';
 		}
 	},
+
+	onTaskLinkClicked: function() {
+		alert("BOOM");
+	}
 });
 
 MessageDetailComponent = AbstractMessageComponent.extendComponent({
@@ -377,9 +388,9 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 	},
 	
 	events: function() {		
-		return [{
+		return MessageComponent.__super__.events.call(this).concat({
 			'click .header': this.onHeaderClick
-		}];
+		});
 	},
 	
 	onRendered: function() {
@@ -444,6 +455,15 @@ ActivityComponent = MessageComponent.extendComponent({
 	
 	template: function() {
 		return 'activityMessage';
+	},
+
+	activityTemplate: function() {		
+		console.log("activityTemplate = " + this.data().activityTemplate);
+		return this.data().activityTemplate;
+	},
+
+	taskUid: function() {
+		return Boards.findOne(this.data().task.boardId).title.substring(0,3).toUpperCase() + "-" + this.data().task.uid;
 	}
 
 }).register('ActivityComponent');

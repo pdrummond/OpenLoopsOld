@@ -1,0 +1,7 @@
+<template name="createTaskActivity">
+	<div class="activity message">		
+		<span class="message_content" style="color:gray;font-style:italic">
+		<img src="{{profileImage userId}}" style="width:20px;height:20px"/>
+		{{timestampToTime timestamp}}: {{usernameFromId userId}} created task <span class="task-link">#{{taskUid}}</span></span>
+	</div>
+</template>
