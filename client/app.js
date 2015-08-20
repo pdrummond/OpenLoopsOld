@@ -54,14 +54,15 @@ Template.messages.onCreated(function() {
 		}, function() {
 			setTimeout(function() {
 				if(Session.get('messageLimit') == OpenLoops.MESSAGE_LIMIT_INC) {
-					OpenLoops.scrollBottom();
-				}
+					OpenLoops.scrollBottom();					
+				}				
 			}, 1);
 		});
-	});
+	});	
 });
 
 Template.messages.onRendered(function() {
+	console.log("messages.onRendered()");
 	Mousetrap.bind(['mod+m'], function() {
 		var type = Session.get("messageCreationType");
 		if(type === "message") {
@@ -74,6 +75,16 @@ Template.messages.onRendered(function() {
 		console.log("changing to " + type);
 		Session.set("messageCreationType", type);
 		return false;
+	});
+	$(".message-history").scroll(function() {
+		if($(".message-history").scrollTop() < 500) {
+			var newLimit = Session.get('messageLimit') + OpenLoops.MESSAGE_LIMIT_INC;
+			Session.set('messageLimit', newLimit);
+		}
+
+		/*if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+			alert(bottom);
+		}*/
 	});
 });
 
@@ -158,7 +169,7 @@ Template.header.helpers({
 	filterString: function() {
 		return Session.get('filterString');
 	},
-	
+
 	messagesFilterActive: function() {
 		var filterString = Session.get('filterString');
 		return filterString == null || filterString.length == 0 ? 'active' : '';
@@ -299,7 +310,7 @@ Template.channel.events({
 });
 
 AbstractMessageComponent = BlazeComponent.extendComponent({
-	
+
 	events: function() {
 		return [{	
 			'click .task-link': this.onTaskLinkClicked
@@ -331,8 +342,8 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 		}
 	},	
 
-	onDestroyed: function() {
-		$('html, body').scrollBy(-1); //trick to stop the 'scroll jump' when new messages are added either locally or via subscription.
+	onDestroyed: function() {		
+		//window.scrollBy(-1, 0); //trick to stop the 'scroll jump' when new messages are added either locally or via subscription.
 	}
 });
 
