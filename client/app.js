@@ -77,9 +77,11 @@ Template.messages.onRendered(function() {
 		return false;
 	});
 	$(".message-history").scroll(function() {
+		console.log("checkScroll: " + $(".message-history").scrollTop());
 		if($(".message-history").scrollTop() < 500) {
 			var newLimit = Session.get('messageLimit') + OpenLoops.MESSAGE_LIMIT_INC;
 			Session.set('messageLimit', newLimit);
+			window.scrollBy(-1, 0);
 		}
 
 		/*if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {

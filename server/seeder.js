@@ -1,13 +1,19 @@
 Meteor.startup(function() {
-  var debug = true;
-  if(debug) {
-    if (Channels.find({}).count() === 0) {
-      Channels.remove({});
-      Meteor.call('createChannel', {name:'general'});
-      Meteor.call('createChannel', {name:'random'});
+  var debug = false;
+  if(debug == true) {
+    if(!Boards.findOne("loadtest")) {
+      Boards.insert({
+        '_id': 'loadtest',
+        'title': 'Load Test Board',
+        'prefix': 'LOD'
+      });
+      Meteor.call('createChannel', {boardId: 'loadtest', name:'general'});
+      Meteor.call('createChannel', {boardId: 'loadtest', name:'random'});      
     }
 
-    /*Factory.define('message', Messages, {
+
+    Factory.define('message', Messages, {
+      boardId: 'loadtest', 
       text: function() {
         return Fake.sentence();
       },
@@ -16,15 +22,14 @@ Meteor.startup(function() {
       }),
       timestamp: Date.now(),
       channel: 'general',
+      type: function() { return Fake.fromArray(['message', 'task', 'milestone'])},
       archived: function() { return Fake.fromArray([false, true]); },
       status: function() { return Fake.fromArray(['open', 'in-progress', 'blocked', 'in-test', 'done']); }
 
     });
 
-    Messages.remove({});
-
-    _(5000).times(function(n) {
+    _(2000).times(function(n) {
       Factory.create('message');
-    });*/
+    });
   }
 });

@@ -404,6 +404,13 @@ body {
   margin-right:50px;
 }
 
+.message-history .task.message {
+    width: 50%;
+    border: 1px solid lightgray;
+    padding: 10px !important;
+    border-radius: 3px;
+}
+
 .task.message .ui.dropdown .menu {
     left: -90px;
 }
@@ -440,7 +447,7 @@ body {
 }
 
 .task.message .message_profile-pic.icon {
-  color: orange;
+  color: #E2E2E2;
 }
 
 .hide {

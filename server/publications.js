@@ -31,12 +31,12 @@ Meteor.publish('messages', function (opts) {
 	}
     var filter = {
         $or: [
-            {$and: [{type: 'task'},         {boardId: opts.board._id}]},
-            {$and: [{type: 'activity'},     {boardId: opts.board._id}]},
-            {$and: [{type: 'message'},      {boardId: opts.board._id}, {channel: opts.channel} ]}
+            {$and: [{type: 'task'},         _.extend({boardId: opts.board._id}, opts.filter)]},
+            {$and: [{type: 'activity'},     _.extend({boardId: opts.board._id}, opts.filter)]},
+            {$and: [{type: 'message'},      _.extend({boardId: opts.board._id, channel: opts.channel}, opts.filter)]}
         ]
     };
-    //console.log("FILTER: " + JSON.stringify(filter, null, 4));
+    console.log("FILTER: " + JSON.stringify(filter, null, 4));
     return Messages.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
