@@ -346,7 +346,11 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 
 	onDestroyed: function() {		
 		//window.scrollBy(-1, 0); //trick to stop the 'scroll jump' when new messages are added either locally or via subscription.
-	}
+	},
+
+	taskUid: function() {
+		return Boards.findOne(this.data().boardId).prefix + "-" + this.data().uid;
+	},
 });
 
 MessageDetailComponent = AbstractMessageComponent.extendComponent({
