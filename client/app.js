@@ -345,7 +345,7 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 	},	
 
 	onDestroyed: function() {		
-		//window.scrollBy(-1, 0); //trick to stop the 'scroll jump' when new messages are added either locally or via subscription.
+		window.scrollBy(100, 0); //trick to stop the 'scroll jump' when new messages are added either locally or via subscription.
 	},
 
 	taskUid: function() {
@@ -619,6 +619,7 @@ Template.boardMenu.events({
 Template.board.events({
 	'click': function() {		
 		Session.set('currentBoard', this);
+		Session.set('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
 		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/general/messages");
 	}
 });
