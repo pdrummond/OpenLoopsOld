@@ -17,7 +17,7 @@
 </template>
 
 <template name="boardListItem">
-	<li><a href="/board/{{_id}}/channel/general/messages">{{title}}</a></li>
+	<li><a href="/board/{{_id}}/channel/general/messages">{{title}} <span style="color:lightgray">{{prefix}}</span></a></li>
 </template>
 
 <template name="createBoardDialog">
@@ -29,7 +29,7 @@
 			<form class="ui form">
 				<div class="field">
 					<label>Board Title</label>
-					<input type="text" name="title" placeholder="Pick a descrpitive title for your new board">
+					<input autofocus type="text" name="title" placeholder="Pick a descrpitive title for your new board">
 				</div>
 				<div class="field">
 					<label>Board Prefix</label>

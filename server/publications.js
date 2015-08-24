@@ -14,6 +14,10 @@ Meteor.publish('boards', function () {
     return Boards.find();
 });
 
+Meteor.publish('boardMembers', function() {
+    return BoardMembers.find();
+});
+
 Meteor.publish('singleMessage', function (id) {
     return Messages.find(id);
 });

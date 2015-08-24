@@ -591,6 +591,28 @@ Template.boardMenu.onRendered(function() {
 Template.boardMenu.events({
 	'click #show-all-boards': function() {
 		Router.go("/");
+	},
+
+	'click #board-settings': function() {		
+		var board = Session.get('currentBoard');
+		$('#boardSettingsDialog').modal({
+			closable: true,
+			blurring: true,
+			onApprove : function() {
+				board = _.extend(board, {					
+					title: $("#boardSettingsDialog input[name='title']").val(),
+					prefix: $("#boardSettingsDialog input[name='prefix']").val(),
+				});
+				Meteor.call("updateBoard", board, function(error, result) {
+					if (error) {
+						return alert(error.reason);
+					}
+				});
+			}
+		});		
+		$("#boardSettingsDialog input[name='title']").val(board.title);
+		$("#boardSettingsDialog input[name='prefix']").val(board.prefix);
+		$('#boardSettingsDialog').modal('show');
 	}
 });
 
@@ -786,6 +808,80 @@ Template.editor.events({
 	}
 });
 
+Template.boardSettingsDialog.onRendered(function() {
+	this.$('.menu .item').tab();
+	this.$('.ui.dropdown').dropdown({
+		action: 'hide'
+	});	
+});
+
+Template.boardSettingsDialog.helpers({
+	boardMembers: function() {
+		return BoardMembers.find({boardId: Session.get('currentBoard')._id});
+	}
+});
+
+Template.boardMember.onRendered(function() {
+	this.$('.ui.dropdown').dropdown({
+		action: 'hide'
+	});	
+});
+
+Template.boardMember.events({
+	'click #new-member-button': function() {
+		var memberName = prompt("Board Member Name:");		
+		if(memberName != null && memberName.length > 0) {
+			var user = Meteor.users.findOne({username: memberName});
+			if(user == null) {
+				alert("No user found with that name.  Please try again"); 
+			} else {
+				Meteor.call('createBoardMember', {
+					boardId: Session.get('currentBoard')._id,
+					userId: user._id,
+					role: 'USER'
+				}, function(error, result) {
+					if(error) {
+						alert("Error: " + error);
+					}
+				});
+			}
+		}
+	},
+
+	'click #set-admin-user': function() {
+		Meteor.call('updateBoardMemberRole', this._id, "ADMIN", function(error, result) {
+			if(error) {
+				alert("Error: " + error);
+			}
+		});
+	},
+
+	'click #set-normal-user': function() {
+		Meteor.call('updateBoardMemberRole', this._id, "USER", function(error, result) {
+			if(error) {
+				alert("Error: " + error);
+			}
+		});
+	},
+
+	'click #remove-member-button': function() {		
+		Meteor.call('deleteBoardMember', this._id, function(error, result) {
+			if(error) {
+				alert("Error: " + error);
+			}
+		});
+	}
+});
+
+Template.boardMember.helpers({
+	roleName: function() {
+		return this.role === 'ADMIN'?'Admin':'User';
+	},
+
+	roleIcon: function() {
+		return this.role === 'ADMIN'?'spy':'user';
+	}	
+});
 
 OpenLoops = {
 

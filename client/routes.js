@@ -4,6 +4,7 @@ Router.configure({
   waitOn: function() { 
     return [
     Meteor.subscribe('boards'),
+    Meteor.subscribe('boardMembers'),
     Meteor.subscribe('channels'),
     Meteor.subscribe('milestones'),
     Meteor.subscribe('filters'),
