@@ -597,6 +597,7 @@ Template.boardMenu.events({
 Template.board.events({
 	'click': function() {		
 		Session.set('currentBoard', this);
+		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/general/messages");
 	}
 });
 
