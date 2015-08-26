@@ -1,6 +1,6 @@
-<template name="issues">
+<template name="actions">
 
-	<div id="issues-wrapper">
+	<div id="actions-wrapper">
 
 		<div id="filter-box" style="padding-top:10px">
 			<div class="ui left action input" style="padding-left:15px;margin-right:10px">
@@ -22,15 +22,19 @@
 				<input class="input-box_filter" type="text" placeholder="Type filter here..." value="{{filterString}}" style="width:245px" />
 			</div>
 		</div>
+		<div style="padding-left:15px;margin-top:10px;font-size:90%;color:gray;font-style:italic">Showing {{actionCount}} actions:</div>
 
-		<div id="issue-list">
-
+		<div id="action-list" style="height:100%">
+			<div class="ui divided list" style="padding:10px;padding-left:15px;height:100%;overflow-y:scroll">
+			{{#each actions}}
+				{{> actionItem}}
+			{{/each}}
+			</div>
 		</div>
 
 	</div>
 
 </template>
-
 
 <template name="filterItem">
 	<div class="filter item {{activeClass}}">

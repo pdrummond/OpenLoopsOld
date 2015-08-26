@@ -422,7 +422,7 @@ body {
   font-weight: bold;
 }
 
-.task.message .header:hover {
+.action .header:hover {
   cursor:pointer;
   color:#0098FF !important;  
 }
@@ -621,16 +621,17 @@ pre {
   max-width:none;
 }
 
-.task-uid {
-  color: #C1C1C1;
+.action-uid {  
+  xcolor: #C1C1C1;
   font-weight: 100;
 }
 
-#issues-wrapper {
+#actions-wrapper {
     width: 400px;
     height: 100%;
     background: whitesmoke;
     position: absolute;
     top: 0px;
     right: 0px;
+    overflow-y:hidden;
 }

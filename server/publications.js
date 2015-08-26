@@ -18,8 +18,8 @@ Meteor.publish('boardMembers', function() {
     return BoardMembers.find();
 });
 
-Meteor.publish('singleMessage', function (id) {
-    return Messages.find(id);
+Meteor.publish('singleAction', function (id) {
+    return Actions.find(id);
 });
 
 Meteor.publish('comments', function(messageId) {
@@ -27,21 +27,26 @@ Meteor.publish('comments', function(messageId) {
 });
 
 Meteor.publish('messages', function (opts) {
+    return Messages.find({}, {limit: opts.limit, sort: {timestamp: -1}});
+});
+
+Meteor.publish('actions', function (opts) {
 	//console.log("opts: " + JSON.stringify(opts));	
 	check(opts.filter, Object);
 	check(opts.limit, Number);
-	if(opts.limit > Messages.find().count()) {
+	if(opts.limit > Actions.find().count()) {
 		opts.limit = 0;
 	}
-    var filter = {
+    /*var filter = {
         $or: [
+            {$and: [{type: 'task'},         _.extend({boardId: opts.board._id}, opts.filter)]},
             {$and: [{type: 'task'},         _.extend({boardId: opts.board._id}, opts.filter)]},
             {$and: [{type: 'activity'},     _.extend({boardId: opts.board._id}, opts.filter)]},
             {$and: [{type: 'message'},      _.extend({boardId: opts.board._id, channel: opts.channel}, opts.filter)]}
         ]
-    };
-    console.log("FILTER: " + JSON.stringify(filter, null, 4));
-    return Messages.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
+    };*/
+    console.log("FILTER: " + JSON.stringify(opts.filter, null, 4));
+    return Actions.find(opts.filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
 Meteor.publish("allUsernames", function () {

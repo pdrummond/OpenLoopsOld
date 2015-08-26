@@ -1,5 +1,6 @@
 
 Meteor.startup(function() {
+	Session.setDefault('actionLimit', 30);
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
 	Session.setDefault('commentLimit', OpenLoops.COMMENT_LIMIT_INC);
 	Session.setDefault('messageCreationType', "message");
@@ -46,8 +47,7 @@ Template.comments.onCreated(function() {
 Template.messages.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
-		self.subscribe('messages', {
-			filter: OpenLoops.getFilter(Session.get('filterString')),
+		self.subscribe('messages', {			
 			board: Session.get('currentBoard'),
 			channel: Session.get('channel'),
 			limit: Session.get('messageLimit'),			
@@ -57,6 +57,18 @@ Template.messages.onCreated(function() {
 					OpenLoops.scrollBottom();					
 				}				
 			}, 1);
+		});
+	});	
+});
+
+Template.actions.onCreated(function() {
+	var self = this;
+	self.autorun(function() {
+		self.subscribe('actions', {
+			filter: OpenLoops.getFilter(Session.get('filterString')),
+			board: Session.get('currentBoard'),
+			channel: Session.get('channel'),
+			limit: Session.get('actionLimit'),
 		});
 	});	
 });
@@ -129,37 +141,6 @@ Template.messageHolder.helpers({
 	}
 });
 
-Template.header.events({
-	'keyup .input-box_filter': function(e) {
-		OpenLoops.onFilterInput(e);
-	},
-
-	'click #create-filter-button': function() {
-		var title = prompt("Tab Name");
-		if(title != null) {
-			var query = $(".input-box_filter").val();
-			if(query != null && query.length > 0) {
-				Meteor.call('createFilter', {
-					boardId: Session.get('currentBoard')._id,
-					channel: Session.get('channel'),
-					title: title, 
-					query: query					
-				});
-			}
-		}
-	},
-
-	'click #messages-filter-item': function() {
-		Session.set('filterString', null);
-	},
-
-	'click #delete-filter-button': function() {
-		var filter = Session.get('currentFilter');
-		if(filter != null) {
-			Meteor.call('deleteFilter', filter._id);
-		}
-	}
-});
 
 Template.channelName.helpers({
 	channelName: function() {
@@ -311,9 +292,9 @@ Template.channel.events({
 	}
 });
 
-Template.issues.onRendered(function() {
+Template.actions.onRendered(function() {
 	this.$('.ui.dropdown').dropdown({
-			action:'hide'
+		action:'hide'
 	});
 });
 
@@ -354,9 +335,7 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 		window.scrollBy(100, 0); //trick to stop the 'scroll jump' when new messages are added either locally or via subscription.
 	},
 
-	taskUid: function() {
-		return Boards.findOne(this.data().boardId).prefix + "-" + this.data().uid;
-	},	
+
 });
 
 MessageDetailComponent = AbstractMessageComponent.extendComponent({
@@ -546,8 +525,8 @@ ActivityComponent = MessageComponent.extendComponent({
 		return this.data().taskNewStatus;
 	},
 
-	taskUid: function() {
-		return Boards.findOne(this.data().task.boardId).prefix + "-" + this.data().task.uid;
+	actionUid: function() {
+		return Boards.findOne(this.data().action.boardId).prefix + "-" + this.action.uid;
 	},
 
 	milestoneTitle: function() {
@@ -677,12 +656,10 @@ Template.footer.events({
 									OpenLoops.createMilestone(commandContent, function(error, result) {
 										if(error) {
 											alert("Error: " + error);
-										} else {
-										//??
-									}
-								});	
+										}
+									});	
 								} else {
-									OpenLoops.createMessage(itemType, commandContent, function(error, result) {
+									OpenLoops.createAction(itemType, commandContent, function(error, result) {
 										if(error) {
 											alert("Error: " + error);
 										} else {
@@ -963,6 +940,20 @@ OpenLoops = {
 				alert("Error: " + error);
 			} else {
 				OpenLoops.scrollBottomAnimate();
+			}
+		});
+	},
+
+	createAction: function(actionType, text) {
+		actionType == actionType || 'task';
+		Meteor.call('createAction', {
+			boardId: Session.get('currentBoard')._id,
+			channel: Session.get('channel'),
+			type: actionType,
+			title: text 
+		}, function(error, result) {
+			if(error) {
+				alert("Error: " + error);
 			}
 		});
 	},

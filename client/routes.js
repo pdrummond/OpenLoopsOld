@@ -40,11 +40,11 @@ Router.route('/board/:boardId/channel/:channel/messages', function () {
   }
 }, {name: 'messageListPage'});
 
-Router.route('/board/:boardId/task/:_id/:section', {
+Router.route('/board/:boardId/action/:_id/:section', {
   name: 'taskDetailPage',
   waitOn: function() {
     return [
-    Meteor.subscribe('singleMessage', this.params._id),
+    Meteor.subscribe('singleAction', this.params._id),
     Meteor.subscribe('comments', this.params._id)
     ];
   },
@@ -67,7 +67,7 @@ Router.route('/board/:boardId/task/:_id/:section', {
 });
 
 //TODO: Figure out way to merge this with above
-Router.route('/board/:boardId/task/:_id/comments/:commentId', {
+Router.route('/board/:boardId/action/:_id/comments/:commentId', {
   name: 'taskDetailCommentPage',
   template: 'taskDetailPage',
   waitOn: function() {

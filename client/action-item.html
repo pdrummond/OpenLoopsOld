@@ -1,0 +1,55 @@
+<template name="actionItem">
+
+	<div class="action item" style="padding-top:10px;padding-bottom:10px">
+		<div class="right floated content">
+			<div class="ui mini {{statusColor}} label">{{statusLabel}}</div>
+		</div>
+		<i class="{{actionIcon}} icon"></i>
+		<div class="content">
+			<div class="header">{{title}}</div>
+
+			<div class="description" style="font-size:80%;color:lightgray">
+				<i class="flag icon"></i>backlog | <span class="action-uid">{{actionUid}}</span>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="milestoneDropdownItem">
+	<div class="milestone item" data-value={{_id}}>		
+		<i class='flag icon' ></i> {{title}}
+	</div>
+</template>
+
+<template name="actionItemStatus">
+	<div class="ui inline dropdown mini {{statusColor}} button">
+		<span class="text" style="color:white">{{statusLabel}}</span>
+		<div class="aligned right menu" style="left:-90px !important">
+			<div class="status item" data-value="new">
+				<div class="ui teal empty circular label"></div>
+				New
+			</div>
+			<div class="status item" data-value="open">
+				<div class="ui green empty circular label"></div>
+				Open
+			</div>
+			<div class="status item" data-value="in-progress">
+				<div class="ui purple empty circular label"></div>
+				In Progress
+			</div>
+			<div class="status item" data-value="blocker">
+				<div class="ui red empty circular label"></div>
+				Blocker
+			</div>
+			<div class="status item" data-value="in-test">
+				<div class="ui yellow empty circular label"></div>
+				In Test
+			</div>				
+			<div class="status item" data-value="done">
+				<div class="ui blue empty circular label"></div>
+				Done
+			</div>			
+		</div>
+	</div>
+
+</template>
