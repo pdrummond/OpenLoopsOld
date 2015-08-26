@@ -1,5 +1,5 @@
 <template name="message">
-	<div class="message">
+	<div class="message" data-userid={{userId}}>
 		<img src="{{profileImage userId}}" class="message_profile-pic"/>
 		<a href="" class="message_username">{{usernameFromId userId}}</a>
 		<span class="message_timestamp">{{timestampToTime timestamp}}</span>

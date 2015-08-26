@@ -1,0 +1,39 @@
+<template name="issues">
+
+	<div id="issues-wrapper">
+
+		<div id="filter-box" style="padding-top:10px">
+			<div class="ui left action input" style="padding-left:15px;margin-right:10px">
+				<div class="ui dropdown button" style="padding:10px">
+					<div class="text"><i class="filter icon"></i> Filters </div>
+					<i class="dropdown icon"></i>
+					<div class="menu">
+						<div id="clear-all-filters" class="item">Clear All Filters</div>
+						<div class="divider"></div>
+						<div class="header">Saved Filters</div>
+						{{#each filters}}
+						{{> filterItem}}
+						{{/each}}
+						<div class="header">Common Filters</div>
+						<div class="item">status:in-progress</div>
+						<div class="item">status:done</div>
+					</div>
+				</div>
+				<input class="input-box_filter" type="text" placeholder="Type filter here..." value="{{filterString}}" style="width:245px" />
+			</div>
+		</div>
+
+		<div id="issue-list">
+
+		</div>
+
+	</div>
+
+</template>
+
+
+<template name="filterItem">
+	<div class="filter item {{activeClass}}">
+		{{title}}
+	</div>
+</template>

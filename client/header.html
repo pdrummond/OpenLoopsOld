@@ -3,32 +3,6 @@
 		{{> boardMenu}}
 		<div class="channel-menu">			
 			{{> channelName}}
-
-			<div class="ui secondary menu" style="position:absolute;top:-10px;left:400px;">
-				<a id="messages-filter-item" class="item {{messagesFilterActive}}">
-					Messages
-				</a>
-				{{#each filters}}
-				{{> filterItem}}
-				{{/each}}
-				<a class="item">
-					<i id="create-filter-button" class="grey plus icon"></i>					
-				</a>
-				<a class="item">
-					<i id="delete-filter-button" class="grey remove icon"></i>
-				</a>
-			</div>	
 		</div>	
-		<div class="ui icon input" style="display:flex;padding-left:15px;margin-right:10px">
-			<input class="input-box_filter" type="text" placeholder="Search..." value="{{filterString}}" />
-			<i class="search icon"></i>
-		</div>
-		
 	</div>
-</template>
-
-<template name="filterItem">
-	<a class="filter item {{activeClass}}">
-		{{title}}
-	</a>
 </template>

@@ -311,6 +311,12 @@ Template.channel.events({
 	}
 });
 
+Template.issues.onRendered(function() {
+	this.$('.ui.dropdown').dropdown({
+			action:'hide'
+	});
+});
+
 AbstractMessageComponent = BlazeComponent.extendComponent({
 
 	events: function() {
@@ -350,7 +356,7 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 
 	taskUid: function() {
 		return Boards.findOne(this.data().boardId).prefix + "-" + this.data().uid;
-	},
+	},	
 });
 
 MessageDetailComponent = AbstractMessageComponent.extendComponent({
@@ -452,7 +458,8 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 
 		//}
 		Router.go('/board/' + Session.get('currentBoard')._id + '/task/' + this.data()._id + "/description");
-	}
+	},
+
 }).register('MessageComponent');
 
 TaskMessageComponent = MessageComponent.extendComponent({
