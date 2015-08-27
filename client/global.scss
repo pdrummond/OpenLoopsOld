@@ -1,11 +1,11 @@
 /* line 5, ../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, h6, p, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
-dl, dt, dd, ol, ul, li,
+dl, dt, dd,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
@@ -29,12 +29,6 @@ html {
   line-height: 1;
 }
 
-
-/* line 24, ../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
-  list-style: none;
-}
-
 /* line 26, ../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
@@ -50,12 +44,12 @@ caption, th, td {
 
 /* line 30, ../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
-  quotes: none;
+  xquotes: none;
 }
 /* line 103, ../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
-  content: "";
-  content: none;
+  xcontent: "";
+  xcontent: none;
 }
 
 /* line 32, ../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
@@ -78,8 +72,7 @@ html {
   position: relative;
   height: 100%;
   font-size: 16px;
-
-  xfont-family: 'Lato', sans-serif; 
+  font-family: 'Open Sans', sans-serif;
 }
 
 /* line 16, ../tests/sass/_layout.scss */
@@ -88,6 +81,8 @@ body {
   width: 100%;
   margin: 0;    
   xfont-family: 'Open Sans Condensed', sans-serif !important;
+  font-family: 'Open Sans', sans-serif;
+  font-weight:300;
 }
 
 /* line 23, ../tests/sass/_layout.scss */
@@ -514,10 +509,10 @@ body {
 .editor-wrap,
 .preview-wrap {
   position: absolute;
-  top: 200px;  
+  top: 182px;  
   bottom: 0px;
   width: 50%;
-  height: calc( 100% - 201px );
+  height: calc( 100% - 182px );
 }
 
 .editor-wrap {
@@ -535,6 +530,10 @@ body {
       padding: 15px;
       font-size: 14px;
       line-height: 20px;
+    }
+
+    span {
+      font-size: 110%;
     }
   }
 }
@@ -556,6 +555,8 @@ body {
 .preview-wrap.full-width {
   width:100%;
   background: #fff;
+  padding-left:20%;
+  padding-right:20%;
 }
 
 #preview > *:last-child {

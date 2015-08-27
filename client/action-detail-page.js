@@ -40,13 +40,12 @@ Template.actionDetailPage.events({
 		Router.go("/board/" + Session.get('currentBoard')._id + "/action/" + Session.get('selectedAction')._id + "/activity");
 	},
 
-	'click #edit-description': function() {
-		Session.set("currentSection", 'description');		
-		$(".preview-wrap").toggleClass('full-width');
+	'click #edit-description': function(e) {
+		doEditMode(e);
 	},
 
-	'dblclick .preview-wrap': function() {		
-		$(".preview-wrap").toggleClass('full-width');			
+	'dblclick .preview-wrap': function(e) {		
+		doEditMode(e);		
 	},	
 
 	'click .status.item': function(e) {
@@ -65,9 +64,15 @@ Template.taskDetailMilestoneItem.events({
 })
 
 Template.editor.onRendered( function() {
-	Meteor.promise( "convertMarkdown", this.description).then( function( html ) {
-		$( "#preview" ).html( html );
+	var self = this;
+	Meteor.promise( "convertMarkdown", this.data.description).then( function( html ) {
+		if(self.data.description == null || self.data.description.trim().length == 0) {
+			$("#preview").html("<strong>Double click here to add a description</strong>");
+		} else {
+			$("#preview").html( html );
+		}
 	});
+
 	this.editor = CodeMirror.fromTextArea( this.find( "#editor" ), {
 		lineNumbers: false,
 		fixedGutter: false,
@@ -121,3 +126,18 @@ Template.comments.onCreated(function() {
 		});
 	});
 });
+
+
+doEditMode = function(e) {
+	e.preventDefault();
+	$(".preview-wrap").toggleClass('full-width');
+	if (window.getSelection) {
+		if (window.getSelection().empty) {  // Chrome
+			window.getSelection().empty();
+		} else if (window.getSelection().removeAllRanges) {  // Firefox
+			window.getSelection().removeAllRanges();
+		}
+	} else if (document.selection) {  // IE?
+		document.selection.empty();
+	}
+}
