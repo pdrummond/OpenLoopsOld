@@ -73,7 +73,7 @@ Template.registerHelper("truncateCommentText", function (obj, text, maxSize) {
 	if(text.length > maxSize) {
 		return parseMarkdown(text.substring(0, maxSize)).replace(/^<p>/, '').replace(/<\/p>$/,'') + 
 		"... (<a href='/board/" + 
-			Session.get('currentBoard')._id + "/task/" + obj.task._id + 
+			Session.get('currentBoard')._id + "/action/" + obj.action._id + 
 			"/comments/" + obj.comment._id + "'> Read More </a>)";	
 } else {
 	return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');

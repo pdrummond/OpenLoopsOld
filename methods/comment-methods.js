@@ -6,12 +6,11 @@ Meteor.methods({
     var commentId = Comments.insert(comment);
 
     Meteor.call('createActivity', {
-      action: 'create-comment',
+      activityType: 'create-comment',
       comment: Comments.findOne(commentId),
-      task: Messages.findOne(comment.messageId),
+      action: Actions.findOne(comment.actionId),
       boardId: comment.boardId,
-      description: " ",
-      timestamp: comment.timestamp -1 //To ensure activity appears in message history before comment
+      description: " ",      
     });
   }
 })

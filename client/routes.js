@@ -72,7 +72,7 @@ Router.route('/board/:boardId/action/:_id/comments/:commentId', {
   template: 'actionDetailPage',
   waitOn: function() {
     return [
-    Meteor.subscribe('singleMessage', this.params._id),
+    Meteor.subscribe('singleAction', this.params._id),
     Meteor.subscribe('comments', this.params._id)
     ];
   },
@@ -80,12 +80,12 @@ Router.route('/board/:boardId/action/:_id/comments/:commentId', {
     var board = Boards.findOne(this.params.boardId);
     if(board) {
       Session.set('currentBoard', board);
-      var message = Messages.findOne(this.params._id);    
-      if(message != null) {
-        Session.set('selectedMessage', message);
+      var action = Actions.findOne(this.params._id);    
+      if(action != null) {
+        Session.set('selectedAction', action);
         Session.set('currentSection', "comments");
         Session.set('selectedCommentId', this.params.commentId);
-        return message;
+        return action;
       } else {
         return null;
       }

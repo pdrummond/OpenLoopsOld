@@ -2,11 +2,12 @@
 	<div class="activity message">		
 		<span class="message_content" style="color:gray;font-style:italic">
 			<img class="profile-image" src="{{profileImage userId}}"/>
-			<strong>{{usernameFromId userId}}</strong> commented on task <a href="/board/{{currentBoardId}}/task/{{taskId}}/description">#{{taskUid}}: {{taskTitle}}</a>
+			<strong>{{usernameFromId userId}}</strong> commented on {{action.type}}
+			 <a href="/board/{{currentBoardId}}/action/{{action._id}}/description">{{actionUid action}}: {{action.title}}</a>
 			at {{timestampToTime timestamp}}
 			<div class="activity-comment">
 				<i class="quote left icon large" style="color:lightgray"></i>
-				{{{truncateCommentText this commentText 500}}}
+				{{{truncateCommentText this comment.text 500}}}
 			</div>
 		</span>
 	</div>

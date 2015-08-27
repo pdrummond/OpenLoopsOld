@@ -57,7 +57,7 @@ Template.taskDetailMilestoneItem.events({
 })
 
 Template.editor.onRendered( function() {
-	Meteor.promise( "convertMarkdown", this.data.description).then( function( html ) {
+	Meteor.promise( "convertMarkdown", this.description).then( function( html ) {
 		$( "#preview" ).html( html );
 	});
 	this.editor = CodeMirror.fromTextArea( this.find( "#editor" ), {

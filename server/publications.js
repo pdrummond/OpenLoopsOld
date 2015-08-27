@@ -22,8 +22,8 @@ Meteor.publish('singleAction', function (id) {
     return Actions.find(id);
 });
 
-Meteor.publish('comments', function(messageId) {
-    return Comments.find({messageId: messageId});
+Meteor.publish('comments', function(actionId) {
+    return Comments.find({actionId: actionId});
 });
 
 Meteor.publish('messages', function (opts) {
