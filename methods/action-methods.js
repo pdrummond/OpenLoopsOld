@@ -30,8 +30,8 @@ Meteor.methods({
 		Meteor.call('createActivity', {
 			activityType: 'action-status-change',        
 			action: action,
-			taskOldStatus: oldStatus,
-			taskNewStatus: newStatus,
+			actionOldStatus: oldStatus,
+			actionNewStatus: newStatus,
 			boardId: action.boardId,
 			activityChannel: channel,
 		});

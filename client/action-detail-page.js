@@ -48,6 +48,14 @@ Template.actionDetailPage.events({
 	'dblclick .preview-wrap': function() {		
 		$(".preview-wrap").toggleClass('full-width');			
 	},	
+
+	'click .status.item': function(e) {
+		e.preventDefault();
+		var newStatus = $(e.target).attr('data-value');
+		if(newStatus && newStatus.length > 0){
+			Meteor.call('updateActionStatus', this._id, newStatus, Session.get('channel'));
+		}
+	}
 });
 
 Template.taskDetailMilestoneItem.events({

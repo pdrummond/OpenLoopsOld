@@ -1,8 +1,10 @@
-<template name="taskStatusChangeActivity">
+<template name="actionStatusChangeActivity">
 	<div class="activity message">		
 		<span class="message_content" style="color:gray;font-style:italic">
 			<img class="profile-image" src="{{profileImage userId}}"/>
-			<strong>{{usernameFromId userId}}</strong> changed status of <a href="/board/{{currentBoardId}}/action/{{taskId}}/description">#{{taskUid}}</a> from <strong>{{actionOldStatus}}</strong> to <strong>{{actionNewStatus}}</strong>
+			<strong>{{usernameFromId userId}}</strong> changed status of 
+			<a href="/board/{{currentBoardId}}/action/{{action._id}}/description">{{actionUid action}}:{{action.title}}</a> 
+			from <strong>{{actionOldStatus}}</strong> to <strong>{{actionNewStatus}}</strong>
 			in {{activityChannel}} channel at {{timestampToTime timestamp}}
 		</span>
 	</div>
