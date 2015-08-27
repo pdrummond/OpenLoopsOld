@@ -41,7 +41,7 @@ Router.route('/board/:boardId/channel/:channel/messages', function () {
 }, {name: 'messageListPage'});
 
 Router.route('/board/:boardId/action/:_id/:section', {
-  name: 'taskDetailPage',
+  name: 'actionDetailPage',
   waitOn: function() {
     return [
     Meteor.subscribe('singleAction', this.params._id),
@@ -52,11 +52,11 @@ Router.route('/board/:boardId/action/:_id/:section', {
     var board = Boards.findOne(this.params.boardId);
     if(board) {
       Session.set('currentBoard', board);
-      var message = Messages.findOne(this.params._id);    
-      if(message != null) {
-        Session.set('selectedMessage', message);
+      var action = Actions.findOne(this.params._id);    
+      if(action != null) {
+        Session.set('selectedAction', action);
         Session.set('currentSection', this.params.section);
-        return message;
+        return action;
       } else {
         return null;
       }
@@ -68,8 +68,8 @@ Router.route('/board/:boardId/action/:_id/:section', {
 
 //TODO: Figure out way to merge this with above
 Router.route('/board/:boardId/action/:_id/comments/:commentId', {
-  name: 'taskDetailCommentPage',
-  template: 'taskDetailPage',
+  name: 'actionDetailCommentPage',
+  template: 'actionDetailPage',
   waitOn: function() {
     return [
     Meteor.subscribe('singleMessage', this.params._id),
@@ -120,5 +120,5 @@ pwd
 ]);
 
 
-Router.onBeforeAction(requireLogin, {only: ['boardList', 'messageListPage', 'taskDetailPage', 'taskDetailCommentPage']});
-Router.onBeforeAction('dataNotFound', {only: ['messageListPage', 'taskDetailPage', 'taskDetailCommentPage']});
+Router.onBeforeAction(requireLogin, {only: ['boardList', 'messageListPage', 'actionDetailPage', 'actionDetailCommentPage']});
+//Router.onBeforeAction('dataNotFound', {only: ['messageListPage', 'actionDetailPage', 'actionDetailCommentPage']});

@@ -20,6 +20,10 @@ time, mark, audio, video {
   xvertical-align: baseline;
 }
 
+h1 {
+  font-size: 1.5rem;
+}
+
 /* line 22, ../../../../../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
@@ -510,10 +514,10 @@ body {
 .editor-wrap,
 .preview-wrap {
   position: absolute;
-  top: 127px;  
+  top: 200px;  
   bottom: 0px;
   width: 50%;
-  height: calc( 100% - 128px );
+  height: calc( 100% - 201px );
 }
 
 .editor-wrap {

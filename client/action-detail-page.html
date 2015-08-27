@@ -1,9 +1,12 @@
-<template name="taskDetailPage"> 
-  <div>
-    <div class='ui list' style="padding-left:10px;padding-right:10px">
-      {{> TaskMessageComponent}}
+<template name="actionDetailPage"> 
+  <div class="actionDetailPage">
+    <div class="header" style="background:black;color:white;padding:30px">
+      <h1>{{title}} <span class="action-uid">{{actionUid this}}</span></h1>
+      <span>        
+        {{> actionStatusDropdown}}
+      </span>
     </div>
-    <div class="ui menu">
+    <div class="ui menu" style="margin:0">
       <a id="description-button" class="item {{isButtonActive buttonName='description'}}">
         Description
       </a>
@@ -24,7 +27,7 @@
               <i class="dropdown icon"></i>
               <div class="menu">
                 {{#each milestones}}
-                  {{> taskDetailMilestoneItem}}
+                {{> taskDetailMilestoneItem}}
                 {{/each}}                
               </div>
             </div>
@@ -51,6 +54,40 @@
       </div>
     </div>
   </div>
+</template>
+
+
+<template name="actionStatusDropdown">  
+  <div class="ui mini dropdown {{actionStatusColor this}} button">
+    <span class="text" style="color:white">Status: {{actionStatusLabel this}}</span>
+    <div class="aligned right menu" style="left:-90px !important">
+      <div class="status item" data-value="new">
+        <div class="ui teal empty circular label"></div>
+        New
+      </div>
+      <div class="status item" data-value="open">
+        <div class="ui green empty circular label"></div>
+        Open
+      </div>
+      <div class="status item" data-value="in-progress">
+        <div class="ui purple empty circular label"></div>
+        In Progress
+      </div>
+      <div class="status item" data-value="blocker">
+        <div class="ui red empty circular label"></div>
+        Blocker
+      </div>
+      <div class="status item" data-value="in-test">
+        <div class="ui yellow empty circular label"></div>
+        In Test
+      </div>        
+      <div class="status item" data-value="done">
+        <div class="ui blue empty circular label"></div>
+        Done
+      </div>      
+    </div>
+  </div>
+
 </template>
 
 <template name="taskDetailMilestoneItem">

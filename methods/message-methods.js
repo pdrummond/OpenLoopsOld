@@ -32,22 +32,6 @@ Meteor.methods({
   	}
   },
 
-  updateMessageStatus:function(messageId, newStatus, channel) {    
-    var message = Messages.findOne(messageId);
-    var oldStatus = message.status;
-    Messages.update(messageId, {$set: {status: newStatus}});
-    var message = Messages.findOne(messageId);
-    
-    Meteor.call('createActivity', {
-      action: 'task-status-change',        
-      task: message,
-      taskOldStatus: oldStatus,
-      taskNewStatus: newStatus,
-      boardId: message.boardId,
-      activityChannel: channel,
-    });
-  },
-
   updateMessageMilestoneId:function(messageId, milestoneId, channel) {
     var task = Messages.findOne(messageId);
     var oldMilestone;

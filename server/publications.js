@@ -45,8 +45,9 @@ Meteor.publish('actions', function (opts) {
             {$and: [{type: 'message'},      _.extend({boardId: opts.board._id, channel: opts.channel}, opts.filter)]}
         ]
     };*/
-    console.log("FILTER: " + JSON.stringify(opts.filter, null, 4));
-    return Actions.find(opts.filter, {limit: opts.limit, sort: {timestamp: -1}});
+    var filter = _.extend({boardId: opts.board._id}, opts.filter);
+    console.log("FILTER: " + JSON.stringify(filter, null, 4));
+    return Actions.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
 Meteor.publish("allUsernames", function () {

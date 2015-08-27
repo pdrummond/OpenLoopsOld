@@ -20,29 +20,6 @@ Template.comments.onRendered(function() {
 	});*/
 });
 
-Template.comments.events({
-	'click #comment-reply-form-submit': function() {
-		var text = $("#comment-reply-textarea").val();
-		if(text && text.length > 0) {
-			Meteor.call('createComment', {
-				boardId: Session.get('currentBoard')._id,
-				messageId: Session.get('selectedMessage')._id, 
-				text: text
-			});
-		}
-	}
-});
-
-Template.comments.onCreated(function() {
-	var self = this;
-	self.autorun(function() {
-		self.subscribe('comments', {			
-			messageId: Session.get('selectedMessage')._id,
-			//limit: Session.get('commentLimit'), 
-		}, function() {			
-		});
-	});
-});
 
 Template.messages.onCreated(function() {
 	var self = this;
@@ -57,18 +34,6 @@ Template.messages.onCreated(function() {
 					OpenLoops.scrollBottom();					
 				}				
 			}, 1);
-		});
-	});	
-});
-
-Template.actions.onCreated(function() {
-	var self = this;
-	self.autorun(function() {
-		self.subscribe('actions', {
-			filter: OpenLoops.getFilter(Session.get('filterString')),
-			board: Session.get('currentBoard'),
-			channel: Session.get('channel'),
-			limit: Session.get('actionLimit'),
 		});
 	});	
 });
@@ -172,87 +137,6 @@ Template.filterItem.events({
 	}
 });
 
-Template.registerHelper('boards', function (context) {
-	return Boards.find();
-});
-
-Template.registerHelper('currentBoardId', function (context) {
-	return Session.get('currentBoard')._id;
-});
-
-
-Template.registerHelper('channels', function (context) {
-	return Channels.find({boardId: Session.get('currentBoard')._id});
-});
-
-Template.registerHelper('filters', function (context) {
-	return Filters.find({
-		boardId: Session.get('currentBoard')._id, 
-		channel: Session.get('channel')
-	});
-});
-
-Template.registerHelper('comments', function (context) {
-	return Comments.find({messageId: Session.get('selectedMessage')._id});
-});
-
-Template.registerHelper('currentBoardTitle', function (context) {
-	return Session.get('currentBoard').title;
-});
-
-Template.registerHelper('profileImage', function (context) {
-	if(context) {
-		var userId = _.isObject(context) ? context._id : context;		
-		return Meteor.users.findOne(userId).profileImage;
-	}
-});
-
-Template.registerHelper('milestones', function() {
-	return Milestones.find();
-});
-
-Template.registerHelper('currentChannel', function () {
-	return Session.get('channel');
-});
-
-Template.registerHelper("timestampToTime", function (timestamp) {
-	var date = new Date(timestamp);
-	var hours = date.getHours();
-	var minutes = "0" + date.getMinutes();
-	var seconds = "0" + date.getSeconds();
-	return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2);
-});
-
-Template.registerHelper("truncateCommentText", function (obj, text, maxSize) {	
-	if(text.length > maxSize) {
-		return parseMarkdown(text.substring(0, maxSize)).replace(/^<p>/, '').replace(/<\/p>$/,'') + 
-		"... (<a href='/board/" + 
-			Session.get('currentBoard')._id + "/task/" + obj.task._id + 
-			"/comments/" + obj.comment._id + "'> Read More </a>)";	
-} else {
-	return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
-}
-});
-
-Template.registerHelper("currentUserName", function () {
-	var user = Meteor.user();
-	if(user != null) {
-		return user.username;
-	}
-});
-
-Template.registerHelper("usernameFromId", function (userId) {
-	var user = Meteor.users.findOne({_id: userId});
-	if (typeof user === "undefined") {
-		return "Anonymous";
-	}
-	if (typeof user.services.github !== "undefined") {
-		return user.services.github.username;
-	}
-	return user.username;
-});
-
-
 Template.listings.events({
 	'submit .new-channel-form': function(e) {		
 		e.stopPropagation();
@@ -315,101 +199,12 @@ AbstractMessageComponent = BlazeComponent.extendComponent({
 		return milestone?milestone.title:'No Milestone';
 	},
 
-	statusLabel: function() {
-		if(this.data().status != null) {
-			return OpenLoops.TaskStatus[this.data().status].label || 'No Status';
-		} else {
-			return '';
-		}
-	},
-
-	statusColor: function() {
-		if(this.data().status != null) {
-			return OpenLoops.TaskStatus[this.data().status].color || '';
-		} else {
-			return '';
-		}
-	},	
-
 	onDestroyed: function() {		
 		window.scrollBy(100, 0); //trick to stop the 'scroll jump' when new messages are added either locally or via subscription.
 	},
 
 
 });
-
-MessageDetailComponent = AbstractMessageComponent.extendComponent({
-
-	template: function() {
-		return 'messageDetail';
-	},
-
-	events: function() {		
-		return [{
-			'click #edit-button': this.onEditButtonClicked,
-			'click #save-button': this.onSaveButtonClicked,
-			'click #cancel-button': this.onCancelButtonClicked,
-		}]
-	},
-
-	onEditButtonClicked: function() {
-		this.$("#message-text").hide();
-		this.$("#message-text-input").show();
-		this.$("#message-text-input").focus();
-		this.$("#edit-button").hide();
-		this.$("#edit-text-buttons").show();
-	},
-
-	onCancelButtonClicked: function() {
-		this.$("#message-text").show();
-		this.$("#message-text-input").hide();
-		this.$("#edit-button").show();
-		this.$("#edit-text-buttons").hide();
-	},
-
-	onSaveButtonClicked: function() {
-		var newText = this.$("#message-text-input").val();
-
-		this.$("#message-text").show();
-		this.$("#message-text-input").hide();
-		this.$("#edit-button").show();
-		this.$("#edit-text-buttons").hide();
-
-		Meteor.call('updateMessageText', Session.get('selectedMessage')._id, newText);		
-	}
-
-}).register('MessageDetailComponent');
-
-TaskMessageDetailComponent = MessageDetailComponent.extendComponent({
-	
-	template: function() {
-		return 'taskMessageDetail';
-	},
-
-
-	events: function() {
-		return TaskMessageDetailComponent.__super__.events.call(this).concat({
-			'click .status.item': this.onStatusClicked,
-		});    
-	},
-
-	onStatusClicked: function(e) {
-		var newStatus = $(e.target).attr('data-value');
-		if(newStatus && newStatus.length > 0){
-			Meteor.call('updateMessageStatus', Session.get('selectedMessage')._id, newStatus, Session.get('channel'));
-		}
-	}	
-
-}).register('TaskMessageDetailComponent');
-
-MilestoneMessageDetailComponent = MessageDetailComponent.extendComponent({
-	
-	template: function() {
-		return 'messageDetail';
-	}
-
-}).register('MilestoneMessageDetailComponent');
-
 
 MessageComponent = AbstractMessageComponent.extendComponent({
 
@@ -431,11 +226,6 @@ MessageComponent = AbstractMessageComponent.extendComponent({
 	},
 
 	onHeaderClick: function() {
-		//var selectedMessage = Session.get('selectedMessage');
-		//$('.ui.sidebar').sidebar('toggle');
-		//if(selectedMessage && selectedMessage._id == this.data()._id) {
-
-		//}
 		Router.go('/board/' + Session.get('currentBoard')._id + '/task/' + this.data()._id + "/description");
 	},
 
@@ -703,95 +493,7 @@ Template.messageListPage.helpers({
 	}
 });
 
-Template.taskDetailPage.onCreated(function() {
-	setTimeout(function() {
-		var selectedCommentId = Session.get('selectedCommentId');
-		if(selectedCommentId != null) {
-			OpenLoops.scrollToElement('#comments-section', '#' + selectedCommentId);
-		}
-	}, 50);
-});
 
-Template.taskDetailPage.onRendered(function() {
-	this.$('.ui.dropdown').dropdown({
-		action: 'hide'
-	});	
-});
-
-Template.taskDetailPage.helpers({
-	isButtonActive: function(data) {
-		return data.hash.buttonName == Session.get('currentSection')?'active':'';
-	},
-
-	isSectionActive: function(data) {
-		return data.hash.section == Session.get('currentSection')?'block':'none';
-	}
-})
-
-Template.taskDetailPage.events({
-	'click .task.message .header': function() {
-		var channel = Session.get('channel') || "general";
-		Router.go('/board/' + Session.get('currentBoard')._id + "/channel/" + channel + "/messages");
-	},
-
-	'click #description-button': function() {
-		Router.go("/board/" + Session.get('currentBoard')._id + "/task/" + Session.get('selectedMessage')._id + "/description");
-	},
-	'click #comments-button': function() {
-		Router.go("/board/" + Session.get('currentBoard')._id + "/task/" + Session.get('selectedMessage')._id + "/comments");
-	},
-	'click #activity-button': function() {
-		Router.go("/board/" + Session.get('currentBoard')._id + "/task/" + Session.get('selectedMessage')._id + "/activity");
-	},
-
-	'click #edit-description': function() {
-		Session.set("currentSection", 'description');		
-		$(".preview-wrap").toggleClass('full-width');
-	},
-
-	'dblclick .preview-wrap': function() {		
-		$(".preview-wrap").toggleClass('full-width');			
-	},	
-});
-
-Template.taskDetailMilestoneItem.events({
-	'click': function() {		
-		Meteor.call('updateMessageMilestoneId', Session.get('selectedMessage')._id, this._id, Session.get('channel'));
-	}
-})
-
-Template.editor.onRendered( function() {
-	Meteor.promise( "convertMarkdown", this.data.description).then( function( html ) {
-		$( "#preview" ).html( html );
-	});
-	this.editor = CodeMirror.fromTextArea( this.find( "#editor" ), {
-		lineNumbers: false,
-		fixedGutter: false,
-		mode: "markdown",
-		lineWrapping: true,
-		indentWithTabs:false,
-		//cursorHeight: 0.85,
-		placeholder: "Type Description here"
-	});
-});
-
-Template.editor.events({
-	'keyup .CodeMirror': function( event, template ) {
-		var text = template.editor.getValue();
-
-		if ( text !== "" ) {	
-			var self = this;
-			Meteor.promise( "convertMarkdown", text)
-			.then( function( html ) {
-				$( "#preview" ).html( html );
-				return Meteor.promise( "updateTaskDescription", self._id, text);
-			})
-			.catch( function( error ) {
-				Bert.alert( error.reason, "danger" );
-			});
-		}
-	}
-});
 
 Template.boardSettingsDialog.onRendered(function() {
 	this.$('.menu .item').tab();
