@@ -7,6 +7,10 @@ Template.registerHelper('actionIcon', function (action) {
 	}
 });
 
+Template.registerHelper('actionTitle', function (action) {
+	return action.title;
+});
+
 Template.registerHelper('actionUid', function (action) {
 	return "#" + Boards.findOne(action.boardId).prefix + "-" + action.uid;
 });

@@ -95,13 +95,12 @@ Template.messageHolder.helpers({
 	},
 
 	messageTemplate: function() {
-		var template = this.template || "MessageComponent";
+		var template;		
 		switch(this.type) {
-			case 'task': template = 'TaskMessageComponent'; break;
-			case 'milestone': template = 'MilestoneMessageComponent'; break;
-			case 'activity': template = 'ActivityComponent'; break;
-		}
-		console.log("template:" + template);
+			case 'message': template = 'message'; break;
+			case 'activity': template = 'activityMessage'; break;			
+			default: template = 'message'; break;
+		}		
 		return template;		
 	}
 });
@@ -181,157 +180,6 @@ Template.actions.onRendered(function() {
 		action:'hide'
 	});
 });
-
-AbstractMessageComponent = BlazeComponent.extendComponent({
-
-	events: function() {
-		return [{	
-			'click .task-link': this.onTaskLinkClicked
-		}]
-	},
-
-	onRendered: function() {
-		this.$('.ui.dropdown').dropdown();	
-	},
-
-	milestoneLabel: function() {
-		var milestone =  Milestones.findOne(this.data().milestone);
-		return milestone?milestone.title:'No Milestone';
-	},
-
-	onDestroyed: function() {		
-		window.scrollBy(100, 0); //trick to stop the 'scroll jump' when new messages are added either locally or via subscription.
-	},
-
-
-});
-
-MessageComponent = AbstractMessageComponent.extendComponent({
-
-	template: function() {
-		return 'message';
-	},
-	
-	events: function() {		
-		return MessageComponent.__super__.events.call(this).concat({
-			'click .header': this.onHeaderClick
-		});
-	},
-	
-	onRendered: function() {
-		this.$('.ui.dropdown').dropdown();
-		$('.ui.sidebar').sidebar({
-			dimPage: false,
-		});
-	},
-
-	onHeaderClick: function() {
-		Router.go('/board/' + Session.get('currentBoard')._id + '/task/' + this.data()._id + "/description");
-	},
-
-}).register('MessageComponent');
-
-TaskMessageComponent = MessageComponent.extendComponent({
-	
-	template: function() {
-		return 'taskMessage';
-	},
-
-	events: function() {
-		return TaskMessageComponent.__super__.events.call(this).concat({
-			'click .status.item': this.onStatusClicked,
-			'click .milestone.item': this.onMilestoneClicked,
-		});    
-	},
-
-	hideMilestoneClass: function() {
-		return this.data().milestone == null? 'hide':'';
-	},
-
-	onStatusClicked: function(e) {
-		e.preventDefault();
-		var newStatus = $(e.target).attr('data-value');
-		if(newStatus && newStatus.length > 0){
-			Meteor.call('updateMessageStatus', this.data()._id, newStatus, Session.get('channel'));
-		}
-	},
-
-	onMilestoneClicked: function(e) {
-		e.preventDefault();
-		var newMilestoneId = $(e.target).attr('data-value');		
-		Meteor.call('updateMessageMilestoneId', this.data()._id, newMilestoneId, Session.get('channel'));
-	},
-
-}).register('TaskMessageComponent');
-
-MilestoneMessageComponent = MessageComponent.extendComponent({
-	
-	template: function() {
-		return 'milestoneMessage';
-	}
-
-}).register('MilestoneMessageComponent');
-
-ActivityComponent = MessageComponent.extendComponent({
-	
-	template: function() {
-		return 'activityMessage';
-	},
-
-	activityTemplate: function() {		
-		console.log("activityTemplate = " + this.data().activityTemplate);
-		return this.data().activityTemplate;
-	},
-
-	activityChannel: function() {
-		return this.data().activityChannel;
-	},
-
-	taskChannel: function() {
-		return this.data().task.channel;
-	},
-
-	taskId: function() {
-		return this.data().task._id;
-	},
-
-	taskTitle: function() {
-		return this.data().task.text;
-	},
-
-	taskOldMilestoneTitle: function() {
-		return this.data().taskOldMilestoneTitle;
-	},
-
-	taskNewMilestoneTitle: function() {
-		return this.data().taskNewMilestoneTitle;
-	},
-
-	taskOldStatus: function() {
-		return this.data().taskOldStatus;
-	},
-
-	taskNewStatus: function() {
-		return this.data().taskNewStatus;
-	},
-
-	actionUid: function() {
-		return Boards.findOne(this.data().action.boardId).prefix + "-" + this.action.uid;
-	},
-
-	milestoneTitle: function() {
-		return this.data().milestone.title;
-	},
-
-	milestoneId: function() {
-		return this.data().milestone._id;
-	},
-
-	commentText: function() {		
-		return this.data().comment.text;
-	}
-
-}).register('ActivityComponent');
 
 Template.milestoneItem.events({
 	'click': function() {

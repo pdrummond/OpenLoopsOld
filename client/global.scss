@@ -633,9 +633,11 @@ pre {
 #actions-wrapper {
     width: 400px;
     height: 100%;
-    background: whitesmoke;
+    background: white;
+    box-shadow: -5px 0px 30px white;
     position: absolute;
     top: 0px;
     right: 0px;
-    overflow-y:hidden;
+    overflow-y: hidden;
+    border-left: 1px solid lightgray;
 }

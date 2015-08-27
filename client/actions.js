@@ -11,6 +11,11 @@ Template.actions.onCreated(function() {
 	});	
 });
 
+Template.actions.onRendered(function() {
+	this.$('.menu .item').tab();	
+});
+
+
 Template.actions.helpers({
 	actions: function() {  	
 		return Actions.find({}, {sort: {timestamp: 1}});
@@ -59,9 +64,10 @@ Template.actions.events({
 });
 
 Template.actionItem.onRendered(function() {
+
 	this.$('.ui.dropdown').dropdown({
 		action: 'hide'
-	});
+	});	
 });
 
 Template.actionItem.helpers({

@@ -1,9 +1,0 @@
-<template name="createActionActivity">
-	<div class="activity message">		
-		<span class="message_content" style="color:gray;font-style:italic">
-			<img class="profile-image" src="{{profileImage userId}}"/>
-			<strong>{{usernameFromId userId}}</strong> created action <a href="/board/{{currentBoardId}}/action/{{actionId}}/description">#{{actionUid}}: {{actionTitle}}</a>
-			in {{actionChannel}} channel at {{timestampToTime timestamp}}
-		</span>
-	</div>
-</template>
