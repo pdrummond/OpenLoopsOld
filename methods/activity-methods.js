@@ -7,7 +7,7 @@ Meteor.methods({
     	case 'create-action': activity.activityTemplate = 'createActionActivity'; break;
     	case 'create-milestone': activity.activityTemplate = 'createMilestoneActivity'; break;
       case 'create-comment': activity.activityTemplate = 'createCommentActivity'; break;
-      case 'action-status-change': activity.activityTemplate = 'actionStatusChangeActivity'; break;
+      case 'action-attr-change': activity.activityTemplate = 'actionAttrChangeActivity'; break;
       case 'action-milestone-change': activity.activityTemplate = 'actionMilestoneChangeActivity'; break;
     }
     var activityId = Messages.insert(activity);

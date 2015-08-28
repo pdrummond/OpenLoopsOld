@@ -1,10 +1,10 @@
-<template name="actionStatusChangeActivity">
+<template name="actionAttrChangeActivity">
 	<div class="activity message">		
 		<span class="message_content" style="color:gray;font-style:italic">
 			<img class="profile-image" src="{{profileImage userId}}"/>
-			<strong>{{usernameFromId userId}}</strong> changed status of 
+			<strong>{{usernameFromId userId}}</strong> changed {{attr}} of 
 			<a href="/board/{{currentBoardId}}/action/{{action._id}}/description">{{actionUid action}}:{{action.title}}</a> 
-			from <strong>{{actionOldStatus}}</strong> to <strong>{{actionNewStatus}}</strong>
+			from <strong>{{actionOldAttr}}</strong> to <strong>{{actionNewAttr}}</strong>
 			in {{activityChannel}} channel at {{timestampToTime timestamp}}
 		</span>
 	</div>

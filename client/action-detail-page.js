@@ -25,10 +25,28 @@ Template.actionDetailPage.helpers({
 });
 
 Template.actionDetailPage.events({
-	'click .task.message .header': function() {
+	'click #back-icon': function() {
 		var channel = Session.get('channel') || "general";
 		Router.go('/board/' + Session.get('currentBoard')._id + "/channel/" + channel + "/messages");
 	},
+
+	'dblclick #action-title': function() {
+		$("#action-title").hide();
+		$("#action-title-input").show();		
+	},
+
+	'keyup #action-title-input': function(e) {
+		var inputVal = $('#action-title-input').val();
+		if(!!inputVal) {
+			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+			if (charCode == 13) {
+				e.stopPropagation();
+				Meteor.call('updateActionTitle', this._id, inputVal, Session.get('channel'));
+				$("#action-title").show();
+				$("#action-title-input").hide();
+			}
+		}
+	},	
 
 	'click #description-button': function() {
 		Router.go("/board/" + Session.get('currentBoard')._id + "/action/" + Session.get('selectedAction')._id + "/description");
