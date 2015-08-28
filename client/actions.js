@@ -22,7 +22,11 @@ Template.actions.helpers({
 	},
 
 	actionCount: function() {
-		return Actions.find().count();	
+		return Actions.find({archived:false}).count();	
+	},
+
+	archivedCount: function() {
+		return Actions.find({archived:true}).count();	
 	},
 	
 	filterString: function() {

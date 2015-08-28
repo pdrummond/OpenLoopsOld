@@ -21,11 +21,7 @@ Template.actionDetailPage.helpers({
 
 	isSectionActive: function(data) {
 		return data.hash.section == Session.get('currentSection')?'block':'none';
-	},
-
-	archivedLabel: function() {
-		return this.archived ? "Archived" : "Not Archived";
-	}
+	},	
 });
 
 Template.actionDetailPage.events({
