@@ -1,24 +1,34 @@
 Meteor.methods({
+
+  createHabotMessage: function(message) {
+    message.type = 'message';
+    message.timestamp = Date.now();
+    message.userId = 'habot';
+    var messageId = Messages.insert(message);
+    return messageId;
+
+  },
+
   createMessage: function (message) {
+    check(message, {
+      type: String,
+      text: String,
+      boardId: String,
+      channel: String,
+    });
     message.timestamp = Date.now();
     message.userId = Meteor.userId();
 
-    if(message.type == 'task') {
-      message.status = 'new';
-      message.description = " "; //needed for markdown processing.
-      message.uid = Meteor.isServer?incrementCounter(Counters, message.boardId):0;
-    }
-
     var messageId = Messages.insert(message);
 
-    if(message.type == 'task') {      
-      Meteor.call('createActivity', {
-        action: 'create-task',        
-        task: Messages.findOne(messageId),
-        boardId: message.boardId,        
-        timestamp: message.timestamp -1 //To ensure activity appears in message history before task
-      });
+    console.log("message.text: " + JSON.stringify(message.text, null, 4));
+    if(message.text.indexOf('@habot') == 0) {
+      var m = message.text.split(' ');
+      if(m.length > 1 && m[1] == "hi") {
+        Meteor.call('createHabotMessage', {text:"Hi there " + Meteor.user().username + ", how's it going?"});
+      }
     }
+
 
     return messageId;
   },

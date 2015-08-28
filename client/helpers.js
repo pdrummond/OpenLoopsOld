@@ -48,8 +48,12 @@ Template.registerHelper('currentBoardTitle', function (context) {
 
 Template.registerHelper('profileImage', function (context) {
 	if(context) {
-		var userId = _.isObject(context) ? context._id : context;		
-		return Meteor.users.findOne(userId).profileImage;
+		var userId = _.isObject(context) ? context._id : context;
+		if(userId == 'habot') {
+			return '/images/loopy.png';
+		} else {
+			return Meteor.users.findOne(userId).profileImage;
+		}
 	}
 });
 
@@ -75,9 +79,9 @@ Template.registerHelper("truncateCommentText", function (obj, text, maxSize) {
 		"... (<a href='/board/" + 
 			Session.get('currentBoard')._id + "/action/" + obj.action._id + 
 			"/comments/" + obj.comment._id + "'> Read More </a>)";	
-} else {
-	return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
-}
+	} else {
+		return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
+	}
 });
 
 Template.registerHelper("currentUserName", function () {
@@ -88,14 +92,18 @@ Template.registerHelper("currentUserName", function () {
 });
 
 Template.registerHelper("usernameFromId", function (userId) {
-	var user = Meteor.users.findOne({_id: userId});
-	if (typeof user === "undefined") {
-		return "Anonymous";
+	if(userId === 'habot') {
+		return 'Habot';
+	} else {
+		var user = Meteor.users.findOne({_id: userId});
+		if (typeof user === "undefined") {
+			return "Anonymous";
+		}
+		if (typeof user.services.github !== "undefined") {
+			return user.services.github.username;
+		}
+		return user.username;
 	}
-	if (typeof user.services.github !== "undefined") {
-		return user.services.github.username;
-	}
-	return user.username;
 });
 
 Template.registerHelper('comments', function (context) {

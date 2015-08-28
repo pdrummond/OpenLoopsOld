@@ -33,7 +33,7 @@ Template.messages.onCreated(function() {
 				if(Session.get('messageLimit') == OpenLoops.MESSAGE_LIMIT_INC) {
 					OpenLoops.scrollBottom();					
 				}				
-			}, 1);
+			}, 50);
 		});
 	});	
 });
@@ -281,7 +281,7 @@ Template.footer.events({
 			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
 			if (charCode == 13) {
 				e.stopPropagation();
-				if(inputVal.startsWith('/')) {
+				if(inputVal.indexOf('/') == 0) {
 					var commandData = inputVal.match(/\/(\w+) (\w+) (.*)/);
 					if(commandData && commandData.length == 4) {
 						var command = commandData[1];
@@ -309,7 +309,7 @@ Template.footer.events({
 							}
 						}
 						console.log("command:" + JSON.stringify(commandData));
-					}          
+					}   
 				} else {
 					OpenLoops.createMessage('message', inputVal);
 				}
@@ -476,6 +476,20 @@ OpenLoops = {
 
 	scrollBottomAnimate: function() {
 		$(".message-history").stop().animate({scrollTop:$('.message-history')[0].scrollHeight}, 500, 'swing');
+	},
+
+	createHabotMessage: function(text) {
+		Meteor.call('createHabotMessage', {
+			boardId: Session.get('currentBoard')._id,
+			channel: Session.get('channel'),			
+			text: text,  
+		}, function(error, result) {
+			if(error) {
+				alert("Error: " + error);
+			} else {
+				OpenLoops.scrollBottomAnimate();
+			}
+		});
 	},
 
 	createMessage: function(messageType, text) {
