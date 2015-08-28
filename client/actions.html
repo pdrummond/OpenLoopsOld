@@ -13,7 +13,7 @@
 			<div id="filter-box" style="padding-top:10px">
 				<div class="ui left action input" style="padding-left:15px;margin-right:10px">
 					<div class="ui dropdown button" style="padding:10px">
-						<div class="text"><i class="filter icon"></i> Filters </div>
+						<div class="text">Filters</div>
 						<i class="dropdown icon"></i>
 						<div class="menu">
 							<div id="clear-all-filters" class="item">Clear All Filters</div>
@@ -27,7 +27,7 @@
 							<div class="item">status:done</div>
 						</div>
 					</div>
-					<input class="input-box_filter" type="text" placeholder="Type filter here..." value="{{filterString}}" style="width:245px" />
+					<input class="input-box_filter" type="text" placeholder="Type filter here..." value="{{filterString}}" style="width:390px" />
 				</div>
 			</div>
 			<div class="ui small text menu" style="margin: 0;margin-left: 10px;">		
@@ -39,7 +39,7 @@
 				</a>			
 			</div>		
 			<div id="action-list" style="height:100%">
-				<div class="ui divided list" style="padding:10px;padding-left:15px;height:100%;overflow-y:scroll">
+				<div class="ui cards" style="padding:10px;padding-left:15px;height:100%;overflow-y:scroll">
 					{{#each actions}}
 					{{> actionItem}}
 					{{/each}}

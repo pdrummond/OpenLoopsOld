@@ -1,108 +1,113 @@
 <template name="actionDetailPage"> 
   <div class="actionDetailPage">
     <div class="header" style="background:black;color:white;padding:30px">
+      <i id="back-icon" class="left arrow icon" style="position: absolute;top: 5px;left: 5px;"></i> 
       <h1>        
-        <span id="action-title"><i id="back-icon" class="left arrow icon"></i> {{title}} <span class="action-uid" style="color:gray">{{actionUid this}}</span></span>
-        <input style="display:none;outline:none;width:100%;background: black;border:none;" id="action-title-input" value="{{title}}">
-      </h1>
-      
-      <span>        
-        {{> actionStatusDropdown}}
-      </span>
+        <span id="action-title">
 
-      <span style="float:right;">
-        <div class="ui checkbox">
-          <input id="archived-check" type="checkbox" name="archived" checked="{{archived}}">
-          <label style='color:white'>Archived</label>
-        </div>        
-      </span>
-    </div>
-    <div class="ui menu" style="margin:0">
-      <a id="description-button" class="item {{isButtonActive buttonName='description'}}">
-        Description
-      </a>
-      <a id="comments-button" class="item {{isButtonActive buttonName='comments'}}">
-        Comments
-      </a>
-      <a id="activity-button" class="item {{isButtonActive buttonName='activity'}}">
-        Activity
-      </a>
-      <div class="right menu">
-        <div class="ui dropdown item">
-          Options
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            <div id="edit-description" class="item">Edit Description</div>                    
-            <div class="ui dropdown item">
-              Milestone
-              <i class="dropdown icon"></i>
-              <div class="menu">
-                {{#each milestones}}
-                {{> taskDetailMilestoneItem}}
-                {{/each}}                
+          <i class="big {{actionIcon this}} {{actionIconColor this}} icon"></i>
+          {{title}} 
+          <span class="action-uid" style="color:gray">{{actionUid this}}</span></span>
+          <input style="display:none;outline:none;width:100%;background: black;border:none;" id="action-title-input" value="{{title}}">
+        </h1>
+
+        <span>        
+          {{> actionStatusDropdown}}
+        </span>
+
+        <span style="float:right;">
+          <div class="ui checkbox">
+            <input id="archived-check" type="checkbox" name="archived" checked="{{archived}}">
+            <label style='color:white'>Archived</label>
+          </div>        
+        </span>
+      </div>
+      <div class="ui menu" style="margin:0">
+        <a id="description-button" class="item {{isButtonActive buttonName='description'}}">
+          Description
+        </a>
+        <a id="comments-button" class="item {{isButtonActive buttonName='comments'}}">
+          Comments
+        </a>
+        <a id="activity-button" class="item {{isButtonActive buttonName='activity'}}">
+          Activity
+        </a>
+        <div class="right menu">
+          <div class="ui dropdown item">
+            Options
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div id="edit-description" class="item">Edit Description</div>                    
+              <div class="ui dropdown item">
+                Milestone
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                  {{#each milestones}}
+                  {{> taskDetailMilestoneItem}}
+                  {{/each}}                
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="item">
-          <div class="ui transparent icon input">
-            <input type="text" placeholder="Search...">
-            <i class="search link icon"></i>
+          <div class="item">
+            <div class="ui transparent icon input">
+              <input type="text" placeholder="Search...">
+              <i class="search link icon"></i>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="ui fluid container" style="font-size: 1.14285714rem;">
-      <div id="description-section" style="display:{{isSectionActive section='description'}}">
-        <!--<div class="ui teal message" style="margin:50px;text-align:center">No Description - click here to add one</div>-->
-        {{> editor}}
-      </div>
-      <div id="comments-section" style="display:{{isSectionActive section='comments'}}">
-        <div class = "ui container" style="width:1024px">
-          {{> comments}}
+      <div class="ui fluid container" style="font-size: 1.14285714rem;">
+        <div id="description-section" style="display:{{isSectionActive section='description'}}">
+          <!--<div class="ui teal message" style="margin:50px;text-align:center">No Description - click here to add one</div>-->
+          {{> editor}}
+        </div>
+        <div id="comments-section" style="display:{{isSectionActive section='comments'}}">
+          <div class = "ui container" style="width:1024px">
+            {{> comments}}
+          </div>
+        </div>
+        <div id="activity-section" style="display:{{isSectionActive section='activity'}}">
+          <div class="ui message">Task Activity Coming Soon</div>
         </div>
       </div>
-      <div id="activity-section" style="display:{{isSectionActive section='activity'}}">
-        <div class="ui message">Task Activity Coming Soon</div>
+    </div>
+  </template>
+
+
+  <template name="actionStatusDropdown">  
+    <div class="ui mini dropdown {{actionStatusColor this}} button">
+      <span class="text" style="color:white">Status: {{actionStatusLabel this}}</span>
+      <div class="aligned right menu" style="left:-90px !important">
+        <div class="status item" data-value="new">
+          <div class="ui teal empty circular label"></div>
+          New
+        </div>
+        <div class="status item" data-value="open">
+          <div class="ui green empty circular label"></div>
+          Open
+        </div>
+        <div class="status item" data-value="in-progress">
+          <div class="ui purple empty circular label"></div>
+          In Progress
+        </div>
+        <div class="status item" data-value="blocker">
+          <div class="ui red empty circular label"></div>
+          Blocker
+        </div>
+        <div class="status item" data-value="in-test">
+          <div class="ui yellow empty circular label"></div>
+          In Test
+        </div>        
+        <div class="status item" data-value="done">
+          <div class="ui blue empty circular label"></div>
+          Done
+        </div>      
       </div>
     </div>
-  </div>
-</template>
 
+  </template>
 
-<template name="actionStatusDropdown">  
-  <div class="ui mini dropdown {{actionStatusColor this}} button">
-    <span class="text" style="color:white">Status: {{actionStatusLabel this}}</span>
-    <div class="aligned right menu" style="left:-90px !important">
-      <div class="status item" data-value="new">
-        <div class="ui teal empty circular label"></div>
-        New
-      </div>
-      <div class="status item" data-value="open">
-        <div class="ui green empty circular label"></div>
-        Open
-      </div>
-      <div class="status item" data-value="in-progress">
-        <div class="ui purple empty circular label"></div>
-        In Progress
-      </div>
-      <div class="status item" data-value="blocker">
-        <div class="ui red empty circular label"></div>
-        Blocker
-      </div>
-      <div class="status item" data-value="in-test">
-        <div class="ui yellow empty circular label"></div>
-        In Test
-      </div>        
-      <div class="status item" data-value="done">
-        <div class="ui blue empty circular label"></div>
-        Done
-      </div>      
-    </div>
-  </div>
-
-</template>
-
-<template name="taskDetailMilestoneItem">
-  <a class="item"><i class="flag icon"></i>{{title}}</a>
-</template>
+  <template name="taskDetailMilestoneItem">
+    <a class="item"><i class="flag icon"></i>{{title}}</a>
+  </template>

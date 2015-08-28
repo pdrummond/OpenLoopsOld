@@ -16,7 +16,7 @@ time, mark, audio, video {
   padding: 0;
   xborder: 0;
   xfont: inherit;
-  font-size: 100%;
+  xfont-size: 100%;
   xvertical-align: baseline;
 }
 
@@ -70,19 +70,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 10, ../tests/sass/_layout.scss */
 html {
   position: relative;
-  height: 100%;
-  font-size: 16px;
-  font-family: 'Open Sans', sans-serif;
+  height: 100%;  
 }
 
 /* line 16, ../tests/sass/_layout.scss */
 body {
   height: 100%;
   width: 100%;
-  margin: 0;    
-  xfont-family: 'Open Sans Condensed', sans-serif !important;
-  xfont-family: 'Open Sans', sans-serif;
-  font-weight:400;
+  margin: 0;      
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  xfont-weight:400;
 }
 
 /* line 23, ../tests/sass/_layout.scss */
@@ -91,7 +88,7 @@ body {
   top: 0;
   left: 0;
   height: 53px;
-  right: 400px;
+  right: 500px;
 }
 
 /* line 31, ../tests/sass/_layout.scss */
@@ -107,7 +104,7 @@ body {
   left: 0;
   bottom: 0;
   height: 64px;
-  right:400px;
+  right:500px;
   background-color:white;
   z-index:999;
 }
@@ -188,6 +185,7 @@ body {
   list-style-type: none;
   text-align: left;
   color: #ab9ba9;
+  padding:0;
 }
 
 /* line 26, ../tests/sass/components/_listings.scss */
@@ -306,7 +304,7 @@ body {
   cursor: pointer;
   background: black;  
   padding: 7px 0 9px 8px;
-  height: 4rem;
+  height: 4.5rem;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -632,7 +630,7 @@ pre {
 }
 
 #actions-wrapper {
-    width: 400px;
+    width: 500px;
     height: 100%;
     background: white;
     box-shadow: -5px 0px 30px white;

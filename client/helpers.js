@@ -1,9 +1,18 @@
 
 Template.registerHelper('actionIcon', function (action) {	
 	switch(action.type) {
-		case 'task': return 'check circle outline'; 
+		case 'task': return 'warning circle'; 
 		case 'bug': return 'bug';
 		default: return 'circle';
+	}
+});
+
+
+Template.registerHelper('actionIconColor', function (action) {	
+	switch(action.type) {
+		case 'task': return 'green'; 
+		case 'bug': return 'red';
+		default: return 'green';
 	}
 });
 
@@ -109,3 +118,15 @@ Template.registerHelper("usernameFromId", function (userId) {
 Template.registerHelper('comments', function (context) {
 	return Comments.find({actionId: Session.get('selectedAction')._id});
 });
+
+
+Template.registerHelper('timeAgo', function (context, options) {
+    Session.get("time");
+    if (context) {
+        return moment(context).fromNow();
+    }
+});
+
+Meteor.setInterval(function() {
+    Session.set("time", new Date().getTime());
+}, 60000);
