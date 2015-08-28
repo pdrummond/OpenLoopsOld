@@ -3,7 +3,7 @@
 		<span class="message_content" style="color:gray;font-style:italic">
 			<img class="profile-image" src="{{profileImage userId}}"/>
 			<strong>{{usernameFromId userId}}</strong> created {{action.type}} 
-			<a href="/board/{{currentBoardId}}/action/{{actionId}}/description">{{actionUid action}}: {{actionTitle action}}</a>
+			<a href="/board/{{currentBoardId}}/action/{{action._id}}/description">{{actionUid action}}: {{actionTitle action}}</a>
 			in {{action.channel}} channel at {{timestampToTime timestamp}}
 		</span>
 	</div>	
