@@ -9,6 +9,7 @@ Meteor.methods({
       case 'create-comment': activity.activityTemplate = 'createCommentActivity'; break;
       case 'action-attr-change': activity.activityTemplate = 'actionAttrChangeActivity'; break;
       case 'action-milestone-change': activity.activityTemplate = 'actionMilestoneChangeActivity'; break;
+      case 'action-archived-change': activity.activityTemplate = 'actionArchivedChangeActivity'; break;
     }
     var activityId = Messages.insert(activity);
   },

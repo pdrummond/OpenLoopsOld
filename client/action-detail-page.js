@@ -21,13 +21,23 @@ Template.actionDetailPage.helpers({
 
 	isSectionActive: function(data) {
 		return data.hash.section == Session.get('currentSection')?'block':'none';
+	},
+
+	archivedLabel: function() {
+		return this.archived ? "Archived" : "Not Archived";
 	}
 });
 
 Template.actionDetailPage.events({
+
+	'click #archived-check': function() {
+		this.archived = !this.archived;
+		Meteor.call('updateActionArchived', this._id, this.archived, Session.get('channel'));
+	},
+
 	'click #back-icon': function() {
 		var channel = Session.get('channel') || "general";
-		Router.go('/board/' + Session.get('currentBoard')._id + "/channel/" + channel + "/messages");
+		Router.go('/board/' + Session.get('currentBoard')._id + "/channel/" + channel + "/messages");		
 	},
 
 	'dblclick #action-title': function() {

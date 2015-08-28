@@ -4,6 +4,7 @@ Meteor.methods({
 		action.timestamp = Date.now();
 		action.userId = Meteor.userId();
 		action.status = action.status || 'new';      
+		action.archived = false;
 		action.uid = Meteor.isServer?incrementCounter(Counters, action.boardId):0;
 
 		var actionId = Actions.insert(action);
@@ -50,6 +51,18 @@ Meteor.methods({
 			attr:'status',
 			actionOldAttr: oldStatus,
 			actionNewAttr: newStatus,
+			boardId: action.boardId,
+			activityChannel: channel,
+		});
+	},
+
+	updateActionArchived:function(actionId, newArchived, channel) {    
+		Actions.update(actionId, {$set: {archived: newArchived}});
+		var action = Actions.findOne(actionId);
+
+		Meteor.call('createActivity', {
+			activityType: 'action-archived-change',
+			action: action,
 			boardId: action.boardId,
 			activityChannel: channel,
 		});

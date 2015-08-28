@@ -82,3 +82,9 @@ Template.actionItem.events({
 		Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");	
 	}
 });
+
+Template.actionArchivedChangeActivity.helpers({
+	archivedOrRestored: function() {
+		return this.action.archived == true? 'archived':'restored';
+	}
+});

@@ -9,6 +9,13 @@
       <span>        
         {{> actionStatusDropdown}}
       </span>
+
+      <span style="float:right;">
+        <div class="ui checkbox">
+          <input id="archived-check" type="checkbox" name="archived" checked="{{archived}}">
+          <label style='color:white'>{{archivedLabel}}</label>
+        </div>        
+      </span>
     </div>
     <div class="ui menu" style="margin:0">
       <a id="description-button" class="item {{isButtonActive buttonName='description'}}">
@@ -52,7 +59,7 @@
       </div>
       <div id="comments-section" style="display:{{isSectionActive section='comments'}}">
         <div class = "ui container" style="width:1024px">
-        {{> comments}}
+          {{> comments}}
         </div>
       </div>
       <div id="activity-section" style="display:{{isSectionActive section='activity'}}">
