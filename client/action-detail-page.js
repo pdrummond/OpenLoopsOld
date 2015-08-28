@@ -81,11 +81,11 @@ Template.actionDetailPage.events({
 	}
 });
 
-Template.taskDetailMilestoneItem.events({
+Template.milestoneMenuItem.events({
 	'click': function() {		
-		Meteor.call('updateMessageMilestoneId', Session.get('selectedAction')._id, this._id, Session.get('channel'));
+		Meteor.call('updateActionMilestoneId', Session.get('selectedAction')._id, this._id, Session.get('channel'));
 	}
-})
+});
 
 Template.editor.onRendered( function() {
 	var self = this;

@@ -419,7 +419,7 @@ body {
   font-weight: bold;
 }
 
-.action .header:hover {
+.action .header:hover, .milestone .header:hover {
   cursor:pointer;
   color:#0098FF !important;  
 }

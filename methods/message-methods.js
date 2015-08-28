@@ -40,27 +40,5 @@ Meteor.methods({
   		var milestone = Milestones.findOne({messageId: message._id});
   		Milestones.update(milestone._id, {$set: {text: newText}});
   	}
-  },
-
-  updateMessageMilestoneId:function(messageId, milestoneId, channel) {
-    var task = Messages.findOne(messageId);
-    var oldMilestone;
-    var oldMilestoneTitle;
-    if(task.milestone) {
-      oldMilestone = Milestones.findOne(task.milestone);
-      oldMilestoneTitle = oldMilestone.title;
-    }
-    Messages.update(messageId, {$set: {milestone: milestoneId}});
-    var newMilestone = Milestones.findOne(milestoneId);
-    var newMilestoneTitle = newMilestone.title;
-
-    Meteor.call('createActivity', {
-      action: 'task-milestone-change',
-      task: task,
-      taskOldMilestoneTitle: oldMilestoneTitle,
-      taskNewMilestoneTitle: newMilestoneTitle,
-      boardId: task.boardId,
-      activityChannel: channel,
-    });
   }
 })

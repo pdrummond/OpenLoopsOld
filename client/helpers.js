@@ -20,6 +20,16 @@ Template.registerHelper('actionTitle', function (action) {
 	return action.title;
 });
 
+Template.registerHelper('actionHideIfNoMilestone', function (action) {
+	var milestone = Milestones.findOne(action.milestoneId);
+	return milestone == null?'hide':'';
+});
+
+Template.registerHelper('actionMilestoneTitle', function (action) {
+	var milestone = Milestones.findOne(action.milestoneId);	
+	return milestone == null?"No Milestone":milestone.title;
+});
+
 Template.registerHelper('actionUid', function (action) {
 	return "#" + Boards.findOne(action.boardId).prefix + "-" + action.uid;
 });
@@ -88,9 +98,9 @@ Template.registerHelper("truncateCommentText", function (obj, text, maxSize) {
 		"... (<a href='/board/" + 
 			Session.get('currentBoard')._id + "/action/" + obj.action._id + 
 			"/comments/" + obj.comment._id + "'> Read More </a>)";	
-	} else {
-		return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
-	}
+} else {
+	return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
+}
 });
 
 Template.registerHelper("currentUserName", function () {
@@ -121,12 +131,12 @@ Template.registerHelper('comments', function (context) {
 
 
 Template.registerHelper('timeAgo', function (context, options) {
-    Session.get("time");
-    if (context) {
-        return moment(context).fromNow();
-    }
+	Session.get("time");
+	if (context) {
+		return moment(context).fromNow();
+	}
 });
 
 Meteor.setInterval(function() {
-    Session.set("time", new Date().getTime());
+	Session.set("time", new Date().getTime());
 }, 60000);

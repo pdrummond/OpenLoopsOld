@@ -1,5 +1,5 @@
-
 Meteor.startup(function() {
+	Session.setDefault('activeActionTab', 'actions');
 	Session.setDefault('actionLimit', 30);
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
 	Session.setDefault('commentLimit', OpenLoops.COMMENT_LIMIT_INC);
@@ -181,11 +181,6 @@ Template.actions.onRendered(function() {
 	});
 });
 
-Template.milestoneItem.events({
-	'click': function() {
-		Meteor.call('updateMessageMilestoneId', Session.get('selectedMessage')._id, this._id, Session.get('channel'));
-	}
-});
 
 Template.boardList.events({	
 	"click #create-board-button": function() {
@@ -447,12 +442,13 @@ OpenLoops = {
 				value = false;
 			}
 			if(field == "milestone") {
-				//if the filter is milestone:sprint1 then we need to convert this to the milestone:<milestoneId>				
+				//if the filter is milestone:sprint1 then we need to convert this to the milestoneId:<milestoneId>
+				field = "milestoneId";
 				var milestones = Milestones.find({title:value}).fetch();
 				if(milestones.length > 0) {
 					value = milestones[0]._id;
 				}
-			}			
+			}
 			filter[field] = value; 
 			match = re.exec(filterString);			
 		}
@@ -526,7 +522,7 @@ OpenLoops = {
 		Meteor.call('createMilestone', {
 			boardId: Session.get('currentBoard')._id,			
 			title: title, 
-		}, callback);
+		}, Session.get('channel'), callback);
 	}
 }
 

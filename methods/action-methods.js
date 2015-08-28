@@ -56,6 +56,29 @@ Meteor.methods({
 		});
 	},
 
+	updateActionMilestoneId:function(actionId, milestoneId, channel) {
+		var action = Actions.findOne(actionId);
+		var oldMilestone;
+		var oldMilestoneTitle;
+		if(action.milestoneId) {
+			oldMilestone = Milestones.findOne(action.milestoneId);
+			oldMilestoneTitle = oldMilestone.title;
+		}
+		Actions.update(actionId, {$set: {milestoneId: milestoneId}});
+		var newMilestone = Milestones.findOne(milestoneId);
+		var newMilestoneTitle = newMilestone.title;
+
+		Meteor.call('createActivity', {
+			activityType: 'action-attr-change',
+			action: action,
+			attr: 'milestone',
+			actionOldAttr: oldMilestoneTitle,
+			actionNewAttr: newMilestoneTitle,
+			boardId: action.boardId,
+			activityChannel: channel,
+		});
+	},
+
 	updateActionArchived:function(actionId, newArchived, channel) {    
 		Actions.update(actionId, {$set: {archived: newArchived}});
 		var action = Actions.findOne(actionId);

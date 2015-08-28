@@ -2,8 +2,8 @@ Meteor.publish('channels', function () {
     return Channels.find();
 });
 
-Meteor.publish('milestones', function () {
-    return Milestones.find();
+Meteor.publish('milestones', function (boardId) {    
+    return Milestones.find({boardId: boardId});
 });
 
 Meteor.publish('filters', function () {
@@ -47,6 +47,10 @@ Meteor.publish('actions', function (opts) {
     };*/
     var filter = _.extend({boardId: opts.board._id, archived: false}, opts.filter);
     console.log("FILTER: " + JSON.stringify(filter, null, 4));
+
+    Counts.publish(this, 'action-open-count', Actions.find(_.extend({boardId: opts.board._id, archived: false}, opts.filter)), { noReady: true });
+    Counts.publish(this, 'action-archived-count', Actions.find(_.extend({boardId: opts.board._id, archived: true}, opts.filter)), { noReady: true });
+    
     return Actions.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 

@@ -6,7 +6,6 @@ Router.configure({
     Meteor.subscribe('boards'),
     Meteor.subscribe('boardMembers'),
     Meteor.subscribe('channels'),
-    Meteor.subscribe('milestones'),
     Meteor.subscribe('filters'),
     Meteor.subscribe('allUsernames')
     ];
@@ -34,6 +33,7 @@ Router.route('/board/:boardId/channel/:channel/messages', function () {
   if(!board) {
     this.render("notFound");
   } else {
+    Meteor.subscribe('milestones', board._id);
     Session.set('currentBoard', board);
     Session.set('channel', this.params.channel);
     this.render('messageListPage');
@@ -44,6 +44,7 @@ Router.route('/board/:boardId/action/:_id/:section', {
   name: 'actionDetailPage',
   waitOn: function() {
     return [
+    Meteor.subscribe('milestones', this.params.boardId),
     Meteor.subscribe('singleAction', this.params._id),
     Meteor.subscribe('comments', this.params._id)
     ];
@@ -56,6 +57,7 @@ Router.route('/board/:boardId/action/:_id/:section', {
       if(action != null) {
         Session.set('selectedAction', action);
         Session.set('currentSection', this.params.section);
+        console.log("selectedAction: " + JSON.stringify(action, null, 4));
         return action;
       } else {
         return null;
@@ -72,6 +74,7 @@ Router.route('/board/:boardId/action/:_id/comments/:commentId', {
   template: 'actionDetailPage',
   waitOn: function() {
     return [
+    Meteor.subscribe('milestones', this.params.boardId),
     Meteor.subscribe('singleAction', this.params._id),
     Meteor.subscribe('comments', this.params._id)
     ];
