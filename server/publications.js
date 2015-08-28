@@ -27,7 +27,15 @@ Meteor.publish('comments', function(actionId) {
 });
 
 Meteor.publish('messages', function (opts) {
-    return Messages.find({}, {limit: opts.limit, sort: {timestamp: -1}});
+
+    var filter = {
+        $or: [
+            {type: 'activity', boardId: opts.board._id, },
+            {type: 'message',  boardId: opts.board._id, channel: opts.channel}
+        ]
+    };
+    console.log("MESSAGES FILTER: " + JSON.stringify(filter, null, 4));
+    return Messages.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
 Meteor.publish('actions', function (opts) {
@@ -46,7 +54,7 @@ Meteor.publish('actions', function (opts) {
         ]
     };*/
     var filter = _.extend({boardId: opts.board._id, archived: false}, opts.filter);
-    console.log("FILTER: " + JSON.stringify(filter, null, 4));
+    //console.log("ACTION FILTER: " + JSON.stringify(filter, null, 4));
 
     Counts.publish(this, 'action-open-count', Actions.find(_.extend({boardId: opts.board._id, archived: false}, opts.filter)), { noReady: true });
     Counts.publish(this, 'action-archived-count', Actions.find(_.extend({boardId: opts.board._id, archived: true}, opts.filter)), { noReady: true });
