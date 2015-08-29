@@ -240,6 +240,15 @@ body {
   min-height: 36px;
 }
 
+.chat.message.same .message_username, .message.same .message_profile-pic, .message.same .message_timestamp {
+  display:none;
+}
+
+.chat.message.same {
+  margin-top:0px;
+  min-height:10px;
+}
+
 .message:hover {
   background-color:whitesmoke;
   border-radius:5px;

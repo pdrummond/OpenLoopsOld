@@ -20,6 +20,13 @@ Template.comments.onRendered(function() {
 	});*/
 });
 
+Template.message.onRendered(function() {
+	if(this.$('.message').prev('.chat.message').attr('data-userid') == this.data.userId) {
+		this.$('.message').addClass("same");
+	} else {
+		this.$('.message').removeClass("same");
+	}
+});
 
 Template.messages.onCreated(function() {
 	var self = this;
