@@ -8,7 +8,7 @@
 			<a id="labels-tab" class="{{activeTab 'labels'}} item"><i class="tag icon"></i> Labels</a>
 			<a id="searches-tab" class="{{activeTab 'searches'}} item"><i class="search icon"></i> Searches</a>
 		</div>
-		<div class="ui bottom attached {{activeTab 'actions'}} tab" data-tab="first">			
+		<div class="ui bottom attached {{activeTab 'actions'}} tab" data-tab="first" style="height:100%">
 
 			<div id="filter-box" style="padding-top:10px">
 				<div class="ui left action input" style="padding-left:15px;margin-right:10px">
@@ -39,7 +39,7 @@
 				</a>			
 			</div>		
 			<div id="action-list" style="height:100%">
-				<div class="ui cards" style="padding:10px;padding-left:15px;height:100%;overflow-y:scroll">
+				<div class="ui cards" style="padding:10px;padding-left:15px;height:100%;padding-bottom:200px; overflow-y:scroll">
 					{{#each actions}}
 					{{> actionItem}}
 					{{/each}}
