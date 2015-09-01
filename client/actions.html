@@ -1,123 +1,119 @@
 <template name="actions">
-
-	<div id="actions-wrapper">
-
-		<div  class="ui top tabular pointing secondary menu" style='margin-bottom:0'>
-			<a id="actions-tab" class="{{activeTab 'actions'}} item"><i class="warning circle icon"></i> Actions</a>
-			<a id="milestones-tab" class="{{activeTab 'milestones'}} item"><i class="flag icon"></i> Milestones</a>
-			<a id="labels-tab" class="{{activeTab 'labels'}} item"><i class="tag icon"></i> Labels</a>
-			<a id="searches-tab" class="{{activeTab 'searches'}} item"><i class="search icon"></i> Searches</a>
-		</div>
-		<div class="ui bottom attached {{activeTab 'actions'}} tab" data-tab="first">			
-
-			<div id="filter-box" style="padding-top:10px">
-				<div class="ui left action input" style="padding-left:15px;margin-right:10px">
-					<div class="ui dropdown button" style="padding:10px">
-						<div class="text">Filters</div>
-						<i class="dropdown icon"></i>
-						<div class="menu">
-							<div id="clear-all-filters" class="item">Clear All Filters</div>
-							<div class="divider"></div>
-							<div class="header">Saved Filters</div>
-							{{#each filters}}
-							{{> filterItem}}
-							{{/each}}
-							<div class="header">Common Filters</div>
-							<div class="item">status:in-progress</div>
-							<div class="item">status:done</div>
-						</div>
-					</div>
-					<input class="input-box_filter" type="text" placeholder="Type filter here..." value="{{filterString}}" style="width:390px;font-size: 100%;" />
-				</div>
-			</div>
-			<div class="ui small text menu" style="margin: 0;margin-left: 10px;">		
-				<a id="actions-open-label" class="item">
-					<i class='icon circle'></i> {{getPublishedCount 'action-open-count'}} Open
-				</a>
-				<a id="actions-archived-label" class="item">
-					<i class='icon archive'></i> {{getPublishedCount 'action-archived-count'}}  Archived
-				</a>			
-			</div>		
-			<div id="action-list" style="height:100%">
-				<div class="ui cards" style="padding:10px;padding-left:15px;height:100%;overflow-y:scroll">
-					{{#each actions}}
-					{{> actionItem}}
-					{{/each}}
-				</div>
-			</div>			
-		</div>
-		<div class="ui bottom attached tab {{activeTab 'milestones'}}" data-tab="second">
-			<div class="ui small text menu" style="margin: 0;margin-left: 10px;">		
-				<a class="active item">
-					<i class='icon circle'></i> {{actionCount}} Open
-				</a>
-				<a class="item">
-					<i class='icon archive'></i> {{archivedCount}} Archived
-				</a>			
-			</div>	
-			<div class="ui cards" style="margin-left:8px">
-				{{#each milestones}}
-					{{> milestoneCard}}
-				{{/each}}				
-			</div>
-		</div>	
-		<div class="ui bottom attached tab {{activeTab 'labels'}}" data-tab="third">
-			<div class="ui divided selection list">
-				<a class="item">
-					<div class="right floated content">
-						<strong>6</strong> open <strong>19</strong> Closed
-					</div>
-					<div class="ui red horizontal label">#important</div>
-					<p style="font-size:80%;margin-top:5px">Very important stuff that always takes priority.</p>
-				</a>
-				<a class="item">
-					<div class="right floated content">
-						<strong>6</strong> open <strong>19</strong> Closed
-					</div>
-					<div class="ui purple horizontal label">#now</div>
-					<p style="font-size:80%;margin-top:5px">Tasks that need doing right now</p>
-				</a>
-				<a class="item">
-					<div class="right floated content">
-						<strong>6</strong> open <strong>19</strong> Closed
-					</div>
-					<div class="ui red horizontal label">#next</div>
-					<p style="font-size:80%;margin-top:5px">Tasks that I will be doing next</p>
-				</a>
-				<a class="item">
-					<div class="right floated content">
-						<strong>6</strong> open <strong>19</strong> Closed
-					</div>
-					<div class="ui horizontal label">#soon</div>
-					<p style="font-size:80%;margin-top:5px">Tasks I'll get round to doing soon(ish)</p>
-				</a>
-			</div>
-		</div>	
-		<div class="ui bottom attached tab {{activeTab 'searches'}}" data-tab="forth">
-			<div class="ui divided selection list">				
-				<div class="item" style="padding:10px">
-					<div class="right floated content">
-						<strong>6</strong> open <strong>19</strong> Closed
-					</div>
-					<i class="search icon"></i>
-					<div class="content">
-						
-						All In-progress Tasks
-					</div>
-				</div>
-				<div class="item"  style="padding:10px">
-					<div class="right floated content">
-						<strong>6</strong> open <strong>19</strong> Closed
-					</div>
-					<i class="search icon"></i>
-					<div class="content">
-						
-						Bugs from Milestone 1
-					</div>
-				</div>
-			</div>
-		</div>
+	<div  class="ui top tabular pointing secondary menu" style='margin-bottom:0'>
+		<a id="actions-tab" class="{{activeTab 'actions'}} item"><i class="warning circle icon"></i> Actions</a>
+		<a id="milestones-tab" class="{{activeTab 'milestones'}} item"><i class="flag icon"></i> Milestones</a>
+		<a id="labels-tab" class="{{activeTab 'labels'}} item"><i class="tag icon"></i> Labels</a>
+		<a id="searches-tab" class="{{activeTab 'searches'}} item"><i class="search icon"></i> Searches</a>
 	</div>
+	<div class="ui bottom attached {{activeTab 'actions'}} tab" data-tab="first" style="height:100%">			
+
+		<div id="filter-box" style="padding-top:10px">
+			<div class="ui left action input" style="padding-left:15px;margin-right:10px">
+				<div class="ui dropdown button" style="padding:10px">
+					<div class="text">Filters</div>
+					<i class="dropdown icon"></i>
+					<div class="menu">
+						<div id="clear-all-filters" class="item">Clear All Filters</div>
+						<div class="divider"></div>
+						<div class="header">Saved Filters</div>
+						{{#each filters}}
+						{{> filterItem}}
+						{{/each}}
+						<div class="header">Common Filters</div>
+						<div class="item">status:in-progress</div>
+						<div class="item">status:done</div>
+					</div>
+				</div>
+				<input class="input-box_filter" type="text" placeholder="Type filter here..." value="{{filterString}}" style="width:390px;font-size: 100%;" />
+			</div>
+		</div>
+		<div class="ui small text menu" style="margin: 0;margin-left: 10px;">		
+			<a id="actions-open-label" class="item">
+				<i class='icon circle'></i> {{getPublishedCount 'action-open-count'}} Open
+			</a>
+			<a id="actions-archived-label" class="item">
+				<i class='icon archive'></i> {{getPublishedCount 'action-archived-count'}}  Archived
+			</a>			
+		</div>		
+		<div id="action-list" style="height:100%">
+			<div class="ui cards" style="padding:10px;padding-left:15px;height:100%;overflow-y:scroll">
+				{{#each actions}}
+				{{> actionItem}}
+				{{/each}}
+			</div>
+		</div>			
+	</div>
+	<div class="ui bottom attached tab {{activeTab 'milestones'}}" data-tab="second">
+		<div class="ui small text menu" style="margin: 0;margin-left: 10px;">		
+			<a class="active item">
+				<i class='icon circle'></i> {{actionCount}} Open
+			</a>
+			<a class="item">
+				<i class='icon archive'></i> {{archivedCount}} Archived
+			</a>			
+		</div>	
+		<div class="ui cards" style="margin-left:8px">
+			{{#each milestones}}
+			{{> milestoneCard}}
+			{{/each}}				
+		</div>
+	</div>	
+	<div class="ui bottom attached tab {{activeTab 'labels'}}" data-tab="third">
+		<div class="ui divided selection list">
+			<a class="item">
+				<div class="right floated content">
+					<strong>6</strong> open <strong>19</strong> Closed
+				</div>
+				<div class="ui red horizontal label">#important</div>
+				<p style="font-size:80%;margin-top:5px">Very important stuff that always takes priority.</p>
+			</a>
+			<a class="item">
+				<div class="right floated content">
+					<strong>6</strong> open <strong>19</strong> Closed
+				</div>
+				<div class="ui purple horizontal label">#now</div>
+				<p style="font-size:80%;margin-top:5px">Tasks that need doing right now</p>
+			</a>
+			<a class="item">
+				<div class="right floated content">
+					<strong>6</strong> open <strong>19</strong> Closed
+				</div>
+				<div class="ui red horizontal label">#next</div>
+				<p style="font-size:80%;margin-top:5px">Tasks that I will be doing next</p>
+			</a>
+			<a class="item">
+				<div class="right floated content">
+					<strong>6</strong> open <strong>19</strong> Closed
+				</div>
+				<div class="ui horizontal label">#soon</div>
+				<p style="font-size:80%;margin-top:5px">Tasks I'll get round to doing soon(ish)</p>
+			</a>
+		</div>
+	</div>	
+	<div class="ui bottom attached tab {{activeTab 'searches'}}" data-tab="forth">
+		<div class="ui divided selection list">				
+			<div class="item" style="padding:10px">
+				<div class="right floated content">
+					<strong>6</strong> open <strong>19</strong> Closed
+				</div>
+				<i class="search icon"></i>
+				<div class="content">
+
+					All In-progress Tasks
+				</div>
+			</div>
+			<div class="item"  style="padding:10px">
+				<div class="right floated content">
+					<strong>6</strong> open <strong>19</strong> Closed
+				</div>
+				<i class="search icon"></i>
+				<div class="content">
+
+					Bugs from Milestone 1
+				</div>
+			</div>
+		</div>
+	</div>	
 
 </template>
 
