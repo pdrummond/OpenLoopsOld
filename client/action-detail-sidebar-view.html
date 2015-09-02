@@ -31,7 +31,7 @@
 		</div>
 		<div class="content">
 			<div style="margin-left:25px;width:450px;">
-			{{description}}
+			{{#markdown}}{{description}}{{/markdown}}
 			</div>
 		</div>
 		<div class="title">
@@ -40,7 +40,7 @@
 		</div>
 		<div class="content">
 			<div style="margin-left:25px;width:450px;">
-			<p>Comments will go here</p>
+			{{> comments}}
 			</div>
 		</div>
 		<div class="title">

@@ -460,7 +460,7 @@ OpenLoops = {
 			match = re.exec(filterString);			
 		}
 		if(remainingText && remainingText.length > 0) {
-			filter["$or"] = [{title: {$regex:remainingText}}, {text: {$regex:remainingText}}];
+			filter["$or"] = [{title: {$regex:remainingText}}, {description: {$regex:remainingText}}, {text: {$regex:remainingText}}];
 		}
 		//filter.channel = Session.get('channel');		
 		console.log("Current filter is: " + JSON.stringify(filter));

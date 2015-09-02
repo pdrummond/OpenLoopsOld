@@ -7,7 +7,7 @@ Template.rightSidebar.helpers({
 
 Template.actionDetailSidebarView.helpers({
 	selectedSidebarAction: function() {
-		return Session.get('selectedSidebarAction');
+		return Session.get('selectedAction');
 	}
 });
 
@@ -140,7 +140,7 @@ Template.actionItem.helpers({
 Template.actionItem.events({
 	'click .action .header': function() {		
 		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
-		Session.set('selectedSidebarAction', this);
+		Session.set('selectedAction', this);
 	}
 });
 

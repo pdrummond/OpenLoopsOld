@@ -650,3 +650,15 @@ pre {
     overflow: hidden;
     border-left: 1px solid lightgray;
 }
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+ 
+::-webkit-scrollbar-track {
+    background:white;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background:lightgray;    
+}
