@@ -1,4 +1,41 @@
 
+Template.rightSidebar.helpers({
+	rightSidebarTemplate: function() {
+		return Session.get('rightSidebarTemplate') || 'actions';
+	}
+});
+
+Template.actionDetailSidebarView.helpers({
+	selectedSidebarAction: function() {
+		return Session.get('selectedSidebarAction');
+	}
+});
+
+Template.actionDetailSidebarView.events({
+	'click #full-screen-icon': function() {
+		Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");
+	},
+
+	'click #back-icon': function() {
+		Session.set('rightSidebarTemplate', 'actions');
+	},
+	
+	'click .status.item': function(e) {
+		e.preventDefault();		
+		var newStatus = $(e.target).attr('data-value');
+		if(newStatus && newStatus.length > 0){
+			Meteor.call('updateActionStatus', this._id, newStatus, Session.get('channel'));
+		}
+	}
+});
+
+Template.actionDetailSidebarView.onRendered(function() {
+	this.$('.ui.accordion').accordion();
+	this.$('.ui.dropdown').dropdown({
+		action: 'hide'
+	});
+});
+
 Template.actions.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
@@ -90,7 +127,7 @@ Template.actionItem.onRendered(function() {
 
 	this.$('.ui.dropdown').dropdown({
 		action: 'hide'
-	});	
+	});
 });
 
 Template.actionItem.helpers({
@@ -101,8 +138,9 @@ Template.actionItem.helpers({
 });
 
 Template.actionItem.events({
-	'click .action .header': function() {
-		Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");	
+	'click .action .header': function() {		
+		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
+		Session.set('selectedSidebarAction', this);
 	}
 });
 

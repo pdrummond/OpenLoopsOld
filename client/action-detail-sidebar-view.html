@@ -1,0 +1,57 @@
+<template name="actionDetailSidebarView">
+	{{#with selectedSidebarAction}}
+	<div class="header" style="background:black;color:white;padding:10px;padding-bottom:20px">
+		<i id="back-icon" class="left arrow icon" style="position: absolute;top: 5px;left: 5px;"></i> 
+		<i id="full-screen-icon" class="maximize icon" style="position: absolute;top: 5px;right: 5px;"></i> 
+		<h1>        
+			<span id="action-title">
+
+				<i class="big {{actionIcon this}} {{actionIconColor this}} icon"></i>
+				{{title}} 
+				<span class="action-uid" style="color:gray">{{actionUid this}}</span>
+			</span>			
+		</h1>
+	</div>	
+	<div class="ui fluid accordion">
+		<div class="active title">
+			<i class="dropdown icon"></i>
+			Details
+		</div>
+		<div class="active content">
+			<table class="ui celled table" style="margin-left:25px;width:450px;">
+			<tr><td>Status</td><td><strong>{{> actionStatusDropdown}}</strong></td></tr>
+			<tr><td>Milestone</td><td><strong>Backlog</strong></td></tr>
+			<tr><td>Reporter</td><td><strong>pdrummond</strong></td></tr>
+			<tr><td>Created Date</td><td><strong>9th May 2015</strong></td></tr>
+			</table>
+		</div>
+		<div class="title">
+			<i class="dropdown icon"></i>
+			Description
+		</div>
+		<div class="content">
+			<div style="margin-left:25px;width:450px;">
+			{{description}}
+			</div>
+		</div>
+		<div class="title">
+			<i class="dropdown icon"></i>		
+			Comments			
+		</div>
+		<div class="content">
+			<div style="margin-left:25px;width:450px;">
+			<p>Comments will go here</p>
+			</div>
+		</div>
+		<div class="title">
+			<i class="dropdown icon"></i>
+			Activity
+		</div>
+		<div class="content">
+			<div style="margin-left:25px;width:450px;">
+			<p>Activity will go here</p>
+			</div>
+		</div>
+	</div>
+	{{/with}}
+</template>

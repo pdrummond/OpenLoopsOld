@@ -73,7 +73,7 @@ Template.actionDetailPage.events({
 	},	
 
 	'click .status.item': function(e) {
-		e.preventDefault();
+		e.preventDefault();		
 		var newStatus = $(e.target).attr('data-value');
 		if(newStatus && newStatus.length > 0){
 			Meteor.call('updateActionStatus', this._id, newStatus, Session.get('channel'));
