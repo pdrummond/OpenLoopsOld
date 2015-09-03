@@ -28,14 +28,15 @@ Meteor.publish('comments', function(actionId) {
 
 Meteor.publish('messages', function (opts) {
 
-    var filter = {
+    //This filter only needed if the activity is across all channels and the messages are per channel
+    /*var filter = {
         $or: [
-            {type: 'activity', boardId: opts.board._id, },
+            {type: 'activity', boardId: opts.board._id, 
             {type: 'message',  boardId: opts.board._id, channel: opts.channel}
         ]
     };
-    console.log("MESSAGES FILTER: " + JSON.stringify(filter, null, 4));
-    return Messages.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
+    console.log("MESSAGES FILTER: " + JSON.stringify(filter, null, 4));*/
+    return Messages.find({boardId: opts.board._id, channel: opts.channel}, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
 Meteor.publish('actions', function (opts) {

@@ -12,7 +12,8 @@ Meteor.methods({
 		Meteor.call('createActivity', {
 			activityType: 'create-action',
 			action: Actions.findOne(actionId),
-			boardId: action.boardId,	
+			boardId: action.boardId,
+			channel: action.channel
     	});
 
 		return actionId;
@@ -31,7 +32,8 @@ Meteor.methods({
 			actionOldAttr: oldTitle,
 			actionNewAttr: newTitle,
 			boardId: action.boardId,
-			activityChannel: channel,
+			channel: channel,
+			activityChannel: channel
 		});
 	},
 
@@ -52,6 +54,7 @@ Meteor.methods({
 			actionOldAttr: oldStatus,
 			actionNewAttr: newStatus,
 			boardId: action.boardId,
+			channel: channel,
 			activityChannel: channel,
 		});
 	},
@@ -75,6 +78,7 @@ Meteor.methods({
 			actionOldAttr: oldMilestoneTitle,
 			actionNewAttr: newMilestoneTitle,
 			boardId: action.boardId,
+			channel: channel,
 			activityChannel: channel,
 		});
 	},
@@ -87,6 +91,7 @@ Meteor.methods({
 			activityType: 'action-archived-change',
 			action: action,
 			boardId: action.boardId,
+			channel: channel,
 			activityChannel: channel,
 		});
 	},
