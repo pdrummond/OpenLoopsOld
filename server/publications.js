@@ -27,7 +27,7 @@ Meteor.publish('comments', function(actionId) {
 });
 
 Meteor.publish('messages', function (opts) {
-
+    console.log("PUBLISHING 'messages' for channel: " + opts.channel);
     //This filter only needed if the activity is across all channels and the messages are per channel
     /*var filter = {
         $or: [
@@ -37,6 +37,11 @@ Meteor.publish('messages', function (opts) {
     };
     console.log("MESSAGES FILTER: " + JSON.stringify(filter, null, 4));*/
     return Messages.find({boardId: opts.board._id, channel: opts.channel}, {limit: opts.limit, sort: {timestamp: -1}});
+});
+
+Meteor.publish('actionDetailMessages', function (opts) {    
+    console.log("PUBLISHING 'actionDetailMessages' for channel: " + opts.channel);
+    return Messages.find({boardId: opts.board._id, channel: opts.channel}, {limit: opts.limit, sort: {timestamp: 1}});
 });
 
 Meteor.publish('actions', function (opts) {
@@ -53,7 +58,7 @@ Meteor.publish('actions', function (opts) {
             {$and: [{type: 'activity'},     _.extend({boardId: opts.board._id}, opts.filter)]},
             {$and: [{type: 'message'},      _.extend({boardId: opts.board._id, channel: opts.channel}, opts.filter)]}
         ]
-    };*/
+    };*/    
     var filter = _.extend({boardId: opts.board._id, archived: false}, opts.filter);
     //console.log("ACTION FILTER: " + JSON.stringify(filter, null, 4));
 

@@ -8,12 +8,25 @@ Template.rightSidebar.helpers({
 Template.actionDetailSidebarView.helpers({
 	selectedSidebarAction: function() {
 		return Session.get('selectedAction');
+	},
+
+});
+
+Template.actionDetailMessages.helpers({
+
+	messages: function() {	
+		console.log("getting action detail comments");	
+		return Messages.find({channel: Session.get('selectedAction').channel});
 	}
+
 });
 
 Template.actionDetailSidebarView.events({
 	'click #full-screen-icon': function() {
-		Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");
+		//Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");
+		Session.set('messageLimit', 30);
+		Session.set('filterString', '');
+		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/" + this.channel + "/messages");
 	},
 
 	'click #back-icon': function() {
@@ -34,6 +47,19 @@ Template.actionDetailSidebarView.onRendered(function() {
 	this.$('.ui.dropdown').dropdown({
 		action: 'hide'
 	});
+});
+
+Template.actionDetailSidebarView.onCreated(function() {
+	var self = this;
+	self.autorun(function() {
+		self.subscribe('actionDetailMessages', {			
+			board: Session.get('currentBoard'),
+			channel: Session.get('selectedAction').channel,
+			limit: Session.get('messageLimit'),
+		}, function() {
+			//Do nothing here.
+		});
+	});	
 });
 
 Template.actions.onCreated(function() {

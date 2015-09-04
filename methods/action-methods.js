@@ -9,12 +9,19 @@ Meteor.methods({
 
 		var actionId = Actions.insert(action);
 
+		action = Actions.findOne(actionId);
+
 		Meteor.call('createActivity', {
 			activityType: 'create-action',
-			action: Actions.findOne(actionId),
+			action: action, 
 			boardId: action.boardId,
 			channel: action.channel
     	});
+
+    	var channelId = Meteor.call('createChannel', {boardId: action.boardId, type: 'action-channel', name: action.title, action: action});
+    	var channel = Channels.findOne(channelId);
+
+    	Actions.update(actionId, {$set: {channel: channel.name}});
 
 		return actionId;
 	},

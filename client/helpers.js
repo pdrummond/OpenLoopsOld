@@ -50,6 +50,30 @@ Template.registerHelper('currentBoardId', function (context) {
 	return Session.get('currentBoard')._id;
 });
 
+Template.registerHelper('channelName', function () {	
+	return Session.get('channel');
+});
+
+Template.registerHelper('channelUid', function () {	
+	var channelUid = '';
+	var channel = Channels.findOne({name: Session.get('channel'), boardId: Session.get('currentBoard')._id});	
+	if(channel.type == 'action-channel') {
+		channelUid = "#" + Boards.findOne(channel.action.boardId).prefix + "-" + channel.action.uid;
+	}
+	return channelUid;
+});
+
+
+Template.registerHelper('channelIcon', function (name) {	
+	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoard')._id});
+	return channel.type == 'action-channel'?'tasks': 'comments outline';
+});
+
+Template.registerHelper('channelTypeLabel', function (name) {	
+	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoard')._id});
+	return channel.type == 'action-channel'?'Action': 'Discussion';
+});
+
 Template.registerHelper('channels', function (context) {
 	return Channels.find({boardId: Session.get('currentBoard')._id});
 });

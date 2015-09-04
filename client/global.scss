@@ -117,8 +117,8 @@ body {
   line-height: 53px;
   font-weight: 900;
   padding: 0 1rem;
-  color: #ffffff;
-  background: black;
+  color: #B3B3B3;
+  background: #042029;
   border-bottom: 2px solid gray;
   float: left;
   cursor: pointer;
@@ -146,9 +146,8 @@ body {
 .listings {
   height: 100%;
   width: 220px;
-  float: left;
-  color: #ab9ba9;
-  background-color: black;
+  float: left;  
+  background-color: #042029;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -191,8 +190,9 @@ body {
 /* line 26, ../tests/sass/components/_listings.scss */
 .channel {
   height: 24px;
+  width: 220px;
   line-height: 24px;
-  color: #ffffff;
+  color: #999999;
   padding-left: 1rem;
   cursor:pointer;
 }
@@ -217,6 +217,7 @@ body {
 /* line 51, ../tests/sass/components/_listings.scss */
 .channel.active {
   background: #118FAD;
+  color:white;
 }
 
 /* line 55, ../tests/sass/components/_listings.scss */
@@ -311,7 +312,7 @@ body {
   width: 220px;
   height: 100%;
   cursor: pointer;
-  background: black;  
+  background: #042029;  
   padding: 7px 0 9px 8px;
   height: 4.5rem;
   position: fixed;
@@ -335,7 +336,7 @@ body {
 /* line 29, ../tests/sass/components/_user-menu.scss */
 .user-menu_username {
   display: block;
-  color: #ffffff;
+  color: #B3B3B3;
   font-weight: 900;
   line-height: 1.5rem;
   margin-top: .2rem;  
@@ -661,4 +662,10 @@ pre {
  
 ::-webkit-scrollbar-thumb {
     background:lightgray;    
+}
+
+.one-line-only {
+    white-space: nowrap;
+    text-overflow: ellipsis; 
+    overflow-x: hidden;
 }

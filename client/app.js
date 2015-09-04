@@ -21,11 +21,14 @@ Template.comments.onRendered(function() {
 });
 
 Template.message.onRendered(function() {
-	if(this.$('.message').prev('.chat.message').attr('data-userid') == this.data.userId) {
-		this.$('.message').addClass("same");
-	} else {
-		this.$('.message').removeClass("same");
-	}
+	var self = this;
+	Meteor.setTimeout(function() {
+		if(self.$('.message').prev('.chat.message').attr('data-userid') == self.data.userId) {
+			self.$('.message').addClass("same");
+		} else {
+			self.$('.message').removeClass("same");
+		}
+	}, 10);	
 });
 
 Template.messages.onCreated(function() {
@@ -76,7 +79,7 @@ Template.messages.onRendered(function() {
 
 Template.messages.helpers({
 	messages: function() {  	
-		return Messages.find({}, {sort: {timestamp: 1}});
+		return Messages.find({channel: Session.get('channel')}, {sort: {timestamp: 1}});
 	},
 
 	noMessages: function() {		
@@ -110,13 +113,6 @@ Template.messageHolder.helpers({
 		}		
 		return template;		
 	}
-});
-
-
-Template.channelName.helpers({
-	channelName: function() {
-		return Session.get('channel');
-	},
 });
 
 Template.header.helpers({	
@@ -514,8 +510,7 @@ OpenLoops = {
 	createAction: function(actionType, text) {
 		actionType == actionType || 'task';
 		Meteor.call('createAction', {
-			boardId: Session.get('currentBoard')._id,
-			channel: Session.get('channel'),
+			boardId: Session.get('currentBoard')._id,			
 			type: actionType,
 			title: text 
 		}, function(error, result) {

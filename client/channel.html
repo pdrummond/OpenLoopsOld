@@ -1,11 +1,11 @@
 <template name="channel">
-	<li class="channel {{active}}">
-		<a class="channel_name">
+	<li class="channel {{active}} one-line-only">
+		<a class="channel_name" title="{{name}} ({{channelTypeLabel name}})">
 			<!--<span class="unread">
 				0
 			</span>-->
 			<span>				
-				<span class="channel-name">{{name}}</span>
+				<span class="channel-name"><i class="{{channelIcon name}} icon"></i> {{name}}</span>
 			</span>
 		</a>
 	</li>
