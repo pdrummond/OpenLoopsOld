@@ -63,6 +63,11 @@ Template.registerHelper('channelUid', function () {
 	return channelUid;
 });
 
+Template.registerHelper('channelDescription', function (name) {	
+	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoard')._id});
+	return channel.description || "No Description";
+});
+
 
 Template.registerHelper('channelIcon', function (name) {	
 	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoard')._id});

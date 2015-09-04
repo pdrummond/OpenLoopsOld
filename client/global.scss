@@ -641,6 +641,7 @@ pre {
 }
 
 #actions-wrapper {
+    z-index:99;
     width: 500px;
     height: 100%;
     background: white;
@@ -668,4 +669,35 @@ pre {
     white-space: nowrap;
     text-overflow: ellipsis; 
     overflow-x: hidden;
+}
+
+#new-channel-overlay {
+    position: absolute;
+    width: 100%;
+    left: 220px;
+    z-index: 999999;
+    background: white;
+    top: 0px;
+    height: 100%;
+    padding-top:10px;
+}
+
+#new-channel-overlay input, #new-channel-overlay textarea {
+  border:1px solid whitesmoke;  
+  font-size:18px;
+  border-radius:none;
+  resize:none;
+
+}
+
+#new-channel-overlay input:focus, #new-channel-overlay textarea:focus {
+  background:whitesmoke;
+}
+
+.main-wrapper .message-history .channel-description {
+    color: gray;
+    font-size: 16px;
+    margin-top: -20px;    
+    margin-bottom: 10px;
+    padding-bottom: 30px;
 }

@@ -149,7 +149,7 @@ Template.filterItem.events({
 Template.listings.events({
 	'submit .new-channel-form': function(e) {		
 		e.stopPropagation();
-		e.preventDefault();
+		e.preventDefault(); 
 		var name = $('.channel-input').val();
 		if(name && name.length > 0) {
 			$('.new-channel-form').hide();
@@ -160,10 +160,12 @@ Template.listings.events({
 			});
 			Session.set('channel', name);
 		}
+		
 	},
 	'click .add-channel-button': function() {
 		$('.new-channel-form').show();
 		$('.channel-input').focus();
+		//$("#new-channel-overlay").fadeIn();
 	}
 });
 
@@ -190,7 +192,6 @@ Template.actions.onRendered(function() {
 		action:'hide'
 	});
 });
-
 
 Template.boardList.events({	
 	"click #create-board-button": function() {
