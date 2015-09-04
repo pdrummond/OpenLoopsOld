@@ -21,14 +21,21 @@ Template.comments.onRendered(function() {
 });
 
 Template.message.onRendered(function() {
-	var self = this;
+	//This code makes messages from the same person as the previous message
+	//have the 'same' class which hides the user profile and other classes to the
+	//text flows.  Currently, it's not quite good enough so disabling for now until
+	//I can work on it more and give it some polish. Issues are:
+	// - There is a flicker for a couple of ms where the profile image is shown
+	// - The time of the previous msg isn't taken into account.  Messages should only
+	// - be joined if there were created within a certain period. 
+	/*var self = this;
 	Meteor.setTimeout(function() {
 		if(self.$('.message').prev('.chat.message').attr('data-userid') == self.data.userId) {
 			self.$('.message').addClass("same");
 		} else {
 			self.$('.message').removeClass("same");
 		}
-	}, 10);	
+	}, 0);*/	
 });
 
 Template.messages.onCreated(function() {
