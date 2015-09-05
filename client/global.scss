@@ -84,6 +84,7 @@ body {
 
 /* line 23, ../tests/sass/_layout.scss */
 .app-header {
+  transition: all 0.5s ease;
   position: fixed;
   top: 0;
   left: 0;
@@ -93,6 +94,7 @@ body {
 
 /* line 31, ../tests/sass/_layout.scss */
 .main-wrapper {
+  transition: all 0.5s ease;
   height: 100%;
   padding-top: 50px;
   padding-bottom: 64px;
@@ -100,6 +102,7 @@ body {
 
 /* line 35, ../tests/sass/_layout.scss */
 .footer {
+  transition: all 0.5s ease;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -153,12 +156,15 @@ body {
 }
 
 /* line 11, ../tests/sass/components/_main.scss */
-.message-history {
+.main-wrapper .message-history {
+  padding-top:20px;
+  padding-left:20px;
+  padding-bottom:50px;
+  padding-right: 10px;
   margin-left: 220px;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100%;
-  padding: 0 18px 2rem 1.5rem;
+  height: 100%;  
 }
 
 /* line 4, ../tests/sass/components/_listings.scss */
@@ -641,6 +647,7 @@ pre {
 }
 
 #actions-wrapper {
+    transition: all 0.5s ease;
     z-index:99;
     width: 500px;
     height: 100%;
@@ -694,10 +701,10 @@ pre {
   background:whitesmoke;
 }
 
-.main-wrapper .message-history .channel-description {
+.app-header .channel-circle-buttons {
     color: gray;
     font-size: 16px;
-    margin-top: -20px;    
-    margin-bottom: 10px;
-    padding-bottom: 30px;
+    position: relative;
+    left: 245px;
+    top: -15px;
 }
