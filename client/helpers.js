@@ -80,7 +80,7 @@ Template.registerHelper('channelTypeLabel', function (name) {
 });
 
 Template.registerHelper('channels', function (context) {
-	return Channels.find({boardId: Session.get('currentBoard')._id});
+	return Channels.find({boardId: Session.get('currentBoard')._id}, {sort: {timestamp: 1}});
 });
 
 Template.registerHelper('filters', function (context) {

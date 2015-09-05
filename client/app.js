@@ -38,73 +38,6 @@ Template.message.onRendered(function() {
 	}, 0);*/	
 });
 
-Template.messages.onCreated(function() {
-	var self = this;
-	self.autorun(function() {
-		self.subscribe('messages', {			
-			board: Session.get('currentBoard'),
-			channel: Session.get('channel'),
-			limit: Session.get('messageLimit'),			
-		}, function() {
-			setTimeout(function() {
-				if(Session.get('messageLimit') == OpenLoops.MESSAGE_LIMIT_INC) {
-					OpenLoops.scrollBottom();					
-				}				
-			}, 50);
-		});
-	});	
-});
-
-Template.messages.onRendered(function() {
-	console.log("messages.onRendered()");
-	Mousetrap.bind(['mod+m'], function() {
-		var type = Session.get("messageCreationType");
-		if(type === "message") {
-			type = "task";
-		} else if(type == "task") {
-			type = "milestone";
-		} else if(type == "milestone") {
-			type = "message";
-		}
-		console.log("changing to " + type);
-		Session.set("messageCreationType", type);
-		return false;
-	});
-	$(".message-history").scroll(function() {		
-		/*if($(".message-history").scrollTop() < 500) {
-			console.log("checkScroll: " + $(".message-history").scrollTop());
-			var newLimit = Session.get('messageLimit') + OpenLoops.MESSAGE_LIMIT_INC;
-			Session.set('messageLimit', newLimit);
-			window.scrollBy(500, 0);
-		}*/
-
-		/*if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-			alert(bottom);
-		}*/
-	});
-});
-
-Template.messages.helpers({
-	messages: function() {  	
-		return Messages.find({channel: Session.get('channel')}, {sort: {timestamp: 1}});
-	},
-
-	noMessages: function() {		
-		return Messages.find({template: {$ne: 'welcomeMessage'}}, {sort: {timestamp: 1}}).count() == 0;
-	},
-
-	welcomeMessageNotPresent: function() {
-		var count = Messages.find({template: 'welcomeMessage'}).count();
-		return count == 0;
-	}
-});
-
-Template.messages.events({
-	'click #show-earlier-link': function() {
-		var newLimit = Session.get('messageLimit') + OpenLoops.MESSAGE_LIMIT_INC;
-		Session.set('messageLimit', newLimit);
-	}
-});
 
 Template.messageHolder.helpers({
 	archivedClass: function() {
@@ -183,6 +116,7 @@ Template.channel.events({
 	'click': function() {		
 		Session.set('messageLimit', 30);
 		Session.set('filterString', '');
+		Session.set('messageListPage.viewTemplate', 'channelMessagesView');
 		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/" + this.name + "/messages");
 	}
 });
@@ -326,29 +260,6 @@ Template.footer.events({
 	}
 });
 
-Template.messageListPage.events({
-	'click #close-sidebar-button': function() {
-		$('.ui.sidebar').sidebar('toggle');
-	}
-});
-
-Template.messageListPage.helpers({
-	messageDetailTemplate: function() {
-		var template = this.template || "MessageDetailComponent";
-		switch(this.type) {
-			case 'task': template = 'TaskMessageDetailComponent'; break;
-			case 'milestone': template = 'MilestoneMessageDetailComponent'; break;
-		}
-		return template;
-	},
-
-	selectedMessage: function() {	
-		return Session.get('selectedMessage');
-	}
-});
-
-
-
 Template.boardSettingsDialog.onRendered(function() {
 	this.$('.menu .item').tab();
 	this.$('.ui.dropdown').dropdown({
@@ -423,128 +334,3 @@ Template.boardMember.helpers({
 		return this.role === 'ADMIN'?'spy':'user';
 	}	
 });
-
-OpenLoops = {
-
-	onFilterInput: function() {
-		var self = this;
-		if(this.keyTimer) {
-			clearTimeout(this.keyTimer);
-		}
-		this.keyTimer = setTimeout(function() {
-			Session.set("filterString", $(".input-box_filter").val());
-		}, 1000);
-	},
-
-	getFilter: function(filterString) {
-		var filter = {};		
-		var remainingText = filterString;
-		var re = new RegExp("([\\w\\.-]+)\\s*:\\s*([\\w\\.-]+)", "g");
-		var match = re.exec(filterString);
-		while (match != null) {	   
-			var field = match[1].trim();
-			var value = match[2].trim();
-			remainingText = remainingText.replace(field, '');
-			remainingText = remainingText.replace(value, '');
-			remainingText = remainingText.replace(/:/g, '');
-			if(value == "true") {
-				value = true;
-			} else if(value == "false") {
-				value = false;
-			}
-			if(field == "milestone") {
-				//if the filter is milestone:sprint1 then we need to convert this to the milestoneId:<milestoneId>
-				field = "milestoneId";
-				var milestones = Milestones.find({title:value}).fetch();
-				if(milestones.length > 0) {
-					value = milestones[0]._id;
-				}
-			}
-			filter[field] = value; 
-			match = re.exec(filterString);			
-		}
-		if(remainingText && remainingText.length > 0) {
-			filter["$or"] = [{title: {$regex:remainingText}}, {description: {$regex:remainingText}}, {text: {$regex:remainingText}}];
-		}
-		//filter.channel = Session.get('channel');		
-		console.log("Current filter is: " + JSON.stringify(filter));
-		return filter;
-	},
-
-	scrollBottom: function() {
-		$('.message-history').scrollTop($('.message-history')[0].scrollHeight);
-	},
-
-	scrollToElement: function(wrapperEl, el) {
-		$('html, body').animate({
-			scrollTop: $(el).offset().top
-		}, 200);
-	},
-
-	scrollBottomAnimate: function() {
-		$(".message-history").stop().animate({scrollTop:$('.message-history')[0].scrollHeight}, 500, 'swing');
-	},
-
-	createHabotMessage: function(text) {
-		Meteor.call('createHabotMessage', {
-			boardId: Session.get('currentBoard')._id,
-			channel: Session.get('channel'),			
-			text: text,  
-		}, function(error, result) {
-			if(error) {
-				alert("Error: " + error);
-			} else {
-				OpenLoops.scrollBottomAnimate();
-			}
-		});
-	},
-
-	createMessage: function(messageType, text) {
-		messageType == messageType || 'message';
-		Meteor.call('createMessage', {
-			boardId: Session.get('currentBoard')._id,
-			channel: Session.get('channel'),
-			type: messageType,
-			text: text,  
-		}, function(error, result) {
-			if(error) {
-				alert("Error: " + error);
-			} else {
-				OpenLoops.scrollBottomAnimate();
-			}
-		});
-	},
-
-	createAction: function(actionType, text) {
-		actionType == actionType || 'task';
-		Meteor.call('createAction', {
-			boardId: Session.get('currentBoard')._id,			
-			type: actionType,
-			title: text 
-		}, function(error, result) {
-			if(error) {
-				alert("Error: " + error);
-			}
-		});
-	},
-
-	createMilestone: function(title, callback) {
-		Meteor.call('createMilestone', {
-			boardId: Session.get('currentBoard')._id,			
-			title: title, 
-		}, Session.get('channel'), callback);
-	}
-}
-
-OpenLoops.TaskStatus = {
-	'new': {label: 'New', color: 'teal'},
-	'open': {label: 'Open', color: 'green'},
-	'in-progress': {label: 'In Progress', color: 'purple'},
-	'blocker': {label: 'Blocker', color: 'red'},
-	'in-test': {label: 'In-Test', color: 'yellow'},
-	'done': {label: 'Done', color: 'blue'}
-}
-
-OpenLoops.DEFAULT_STATUS_VALUE = "new";
-OpenLoops.MESSAGE_LIMIT_INC = 30;
-OpenLoops.COMMENT_LIMIT_INC = 50;

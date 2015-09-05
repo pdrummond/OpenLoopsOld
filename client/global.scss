@@ -98,6 +98,7 @@ body {
   height: 100%;
   padding-top: 50px;
   padding-bottom: 64px;
+  padding-right: 500px;
 }
 
 /* line 35, ../tests/sass/_layout.scss */
@@ -164,6 +165,12 @@ body {
   margin-left: 220px;
   overflow-y: auto;
   overflow-x: hidden;
+  height: 100%;  
+}
+
+.main-wrapper .channel-view {
+  padding-top:5px;  
+  padding-left:225px;
   height: 100%;  
 }
 
@@ -474,6 +481,12 @@ body {
     box-shadow: none;
 }
 
+.editor-preview {
+  position:relative;
+  height:100%;
+  border-top: 1px solid lightgray;
+}
+
 .editor-view {
   overflow: hidden;
 }
@@ -523,15 +536,15 @@ body {
 .editor-wrap,
 .preview-wrap {
   position: absolute;
-  top: 216px;  
+  top: 0px;  
   bottom: 0px;
   width: 50%;
-  height: calc( 100% - 216px );
+  xheight: calc( 100% - 216px );
 }
 
 .editor-wrap {
   left: 0px;
-  border-right: 5px solid black;
+  border-right: 1px solid lightgray;
 
   .CodeMirror {
     height: 100%;
@@ -569,8 +582,8 @@ body {
 .preview-wrap.full-width {
   width:100%;
   background: #fff;
-  padding-left:20%;
-  padding-right:20%;
+  xpadding-left:20%;
+  xpadding-right:20%;
   z-index: 8;
 }
 

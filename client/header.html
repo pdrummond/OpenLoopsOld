@@ -5,9 +5,10 @@
 			{{> channelName}}
 		</div>		
 		<div id="channel-circle-buttons" style="position:absolute;right:5px;top:10px">		
-			<button class="ui circular icon button" title="description"><i class="book icon"></i></button>
-			<button class="ui circular icon button" title="members"><i class="user icon"></i> 3</button>
-			<button id="toggle-right-sidebar-button" class="ui circular icon button" title="members"><i class="right arrow icon"></i></button>
+			<button id="channel-messages-button" class="ui circular icon {{isCircleButtonActive 'channelMessagesView'}} toggle button" title="description"><i class="comments outline icon"></i></button>
+			<button id="channel-description-button" class="ui circular icon {{isCircleButtonActive 'channelDescriptionView'}} toggle button" title="description"><i class="book icon"></i></button>
+			<button id="channel-members-button" class="ui circular icon {{isCircleButtonActive 'channelMembersView'}} toggle button" title="members"><i class="user icon"></i> 3</button>
+			<button id="toggle-right-sidebar-button" class="ui circular icon toggle button" title="members"><i class="right arrow icon"></i></button>
 		</div>
 	</div>
 </template>
