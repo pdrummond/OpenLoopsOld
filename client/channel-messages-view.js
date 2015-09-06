@@ -46,7 +46,7 @@ Template.channelMessagesView.onRendered(function() {
 
 Template.channelMessagesView.helpers({
 	messages: function() {  	
-		return Messages.find({channel: Session.get('channel')}, {sort: {timestamp: 1}});
+		return Messages.find({}, {sort: {timestamp: 1}});
 	},
 
 	noMessages: function() {		

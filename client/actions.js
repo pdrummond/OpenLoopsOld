@@ -23,10 +23,10 @@ Template.actionDetailMessages.helpers({
 
 Template.actionDetailSidebarView.events({
 	'click #full-screen-icon': function() {
-		//Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");
-		Session.set('messageLimit', 30);
+		Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");
+		/*Session.set('messageLimit', 30);
 		Session.set('filterString', '');
-		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/" + this.channel + "/messages");
+		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/" + this.channel + "/messages");*/
 	},
 
 	'click #back-icon': function() {

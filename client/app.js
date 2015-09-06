@@ -96,9 +96,9 @@ Template.listings.events({
 		
 	},
 	'click .add-channel-button': function() {
-		//$('.new-channel-form').show();
-		//$('.channel-input').focus();
-		//$("#new-channel-overlay").fadeIn();		
+		$('.new-channel-form').show();
+		$('.channel-input').focus();
+		$("#new-channel-overlay").fadeIn();		
 	},
 
 	'click #create-channel-button': function() {
