@@ -1,0 +1,67 @@
+
+<template name="createChannelDialog">
+	<div id="createChannelDialog" class="ui modal">		
+		<div class="header">
+			What would you like to create?
+		</div>
+		<div class=" content">
+			<div class="ui top secondary pointing menu create-channel-tabs">
+				<a class="item active" data-tab="discussion-tab"><i class="comments outline icon"></i> Discussion</a>
+				<a class="item" data-tab="action-tab"><i class="tasks icon"></i> Action</a>				
+			</div>
+			<div class="ui top attached tab segment active" data-tab="discussion-tab">	
+				<form class="ui form">
+					<div class="field">
+						<label>Discussion Name: </label>
+						<input autofocus type="text" name="discussion-name" placeholder="Enter name of discussion here">
+					</div>				
+				</form>
+			</div>		
+			<div class="ui top attached tab segment" data-tab="action-tab">
+				<form class="ui form">
+					<div class="field">
+						<label>Action Title: </label>
+						<input autofocus type="text" name="action-title" placeholder="Enter title for action here">
+					</div>
+					<div class="field">
+						<label>Action Description: </label>
+						<textarea  name="action-description" placeholder="Enter description here"></textarea>
+					</div>
+					<div class="inline fields">
+						<label for="task-type">Type:</label>
+						<div class="field">
+							<div class="ui radio checkbox">
+								<input type="radio" name="action-type" data-type='task' checked="checked" tabindex="0" class="hidden">
+								<label>Task</label>
+							</div>
+						</div>
+						<div class="field">
+							<div class="ui radio checkbox">
+								<input type="radio" name="action-type" data-type='bug' tabindex="0" class="hidden">
+								<label>Bug</label>
+							</div>
+						</div>
+						<div class="field">
+							<div class="ui radio checkbox">
+								<input type="radio" name="action-type" data-type='todo' tabindex="0" class="hidden">
+								<label>Todo</label>
+							</div>
+						</div>						
+					</div>					
+				</form>				
+			</div>			
+
+		</div>
+		<div class="actions">
+			<div class="ui black deny button">
+				Cancel
+			</div>
+			<div id="create-board-submit-button" class="ui positive right labeled icon button">
+				Create
+				<i class="checkmark icon"></i>
+			</div>
+		</div>
+
+	</div>
+</template>
+

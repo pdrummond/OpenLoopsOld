@@ -96,9 +96,44 @@ Template.listings.events({
 		
 	},
 	'click .add-channel-button': function() {
-		$('.new-channel-form').show();
-		$('.channel-input').focus();
-		//$("#new-channel-overlay").fadeIn();
+		//$('.new-channel-form').show();
+		//$('.channel-input').focus();
+		//$("#new-channel-overlay").fadeIn();		
+	},
+
+	'click #create-channel-button': function() {
+		$('#createChannelDialog').modal({
+			closable: true,
+			blurring: true,
+			onApprove : function() {
+				var activeTab = $('#createChannelDialog .create-channel-tabs .active').attr('data-tab');
+				debugger;
+				if(activeTab === 'action-tab') {
+					var actionTitle = $("#createChannelDialog input[name='action-title']").val();
+					var actionDescription = $("#createChannelDialog textarea[name='action-description']").val();
+					var actionType = $("#createChannelDialog input[type='radio']:checked").attr('data-type');
+					if(actionTitle != null && actionTitle.length > 0) {
+						OpenLoops.createAction(actionType, actionTitle);
+					} else {
+						return false;
+					} 
+				} else {
+					var channelName = $("#createChannelDialog input[name='discussion-name']").val();
+					if(channelName != null && channelName.length > 0) {
+						Meteor.call('createChannel', {
+							boardId: Session.get('currentBoard')._id,
+							name: channelName,
+							type: 'discussion-channel'
+						});
+					} else {
+						return false;
+					} 
+				}
+			}
+		});		
+		//$("#boardSettingsDialog input[name='title']").val(board.title);
+		//$("#boardSettingsDialog input[name='prefix']").val(board.prefix);
+		$('#createChannelDialog').modal('show');
 	}
 });
 

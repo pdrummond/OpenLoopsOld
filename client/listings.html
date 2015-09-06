@@ -1,12 +1,15 @@
 <template name="listings">
 	<div class="listings">
 		<div class="listings_channels">
+			<button id="create-channel-button" class="ui green button" style="margin-left:50px;margin-bottom:10px;">
+				<i class="plus icon"></i>Create
+			</button>
 			<div>
-				<h2 class="listings_header" style="float:left">Channels</h2>
+				<h2 class="listings_header" style="float:left">Recent</h2>
 				<i class="add-channel-button icon plus" style="cursor:pointer;float:right;margin-right:10px;color:gray"></i>
 			</div>
 			<form class="new-channel-form ui fluid input" style="display:none;clear:both">
-  				<input class="channel-input" type="text" placeholder="Channel Name" style="margin:5px;margin-left:15px"/>
+				<input class="channel-input" type="text" placeholder="Channel Name" style="margin:5px;margin-left:15px"/>
 			</form>			
 			<ul class="channel_list" style="clear:both">	
 				{{#each channels}}
