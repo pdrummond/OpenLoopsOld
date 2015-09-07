@@ -5,7 +5,7 @@ Meteor.methods({
 		action.userId = Meteor.userId();
 		action.status = action.status || 'new';      
 		action.archived = false;
-		action.uid = Meteor.isServer?incrementCounter(Counters, action.boardId):0;
+		action.mid = Meteor.isServer?incrementCounter(Counters, action.boardId):0;
 
 		var actionId = Actions.insert(action);
 

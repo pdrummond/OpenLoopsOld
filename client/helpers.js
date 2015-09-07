@@ -30,8 +30,8 @@ Template.registerHelper('actionMilestoneTitle', function (action) {
 	return milestone == null?"No Milestone":milestone.title;
 });
 
-Template.registerHelper('actionUid', function (action) {
-	return "#" + Boards.findOne(action.boardId).prefix + "-" + action.uid;
+Template.registerHelper('midLabel', function (message) {
+	return "#" + Boards.findOne(message.boardId).prefix + "-" + message.mid;
 });
 
 Template.registerHelper('actionStatusLabel', function (action) {	
@@ -54,11 +54,11 @@ Template.registerHelper('channelName', function () {
 	return Session.get('channel');
 });
 
-Template.registerHelper('channelUid', function () {	
+Template.registerHelper('channelMid', function () {	
 	var channelUid = '';
 	var channel = Channels.findOne({name: Session.get('channel'), boardId: Session.get('currentBoard')._id});	
 	if(channel.type == 'action-channel') {
-		channelUid = "#" + Boards.findOne(channel.action.boardId).prefix + "-" + channel.action.uid;
+		channelUid = "#" + Boards.findOne(channel.action.boardId).prefix + "-" + channel.action.mid;
 	}
 	return channelUid;
 });

@@ -18,6 +18,7 @@ Meteor.methods({
     });
     message.timestamp = Date.now();
     message.userId = Meteor.userId();
+    message.mid = Meteor.isServer?incrementCounter(Counters, message.boardId):0;
 
     var messageId = Messages.insert(message);
 

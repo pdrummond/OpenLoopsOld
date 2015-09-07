@@ -9,7 +9,7 @@
 			<i class="{{actionIcon this}} {{actionIconColor this}} icon"></i> {{title}}
 			</div>
 			<div class="meta">
-				<div style="font-size:90%"><span class="action-uid">{{actionUid this}}</span> opened by {{usernameFromId userId}} {{timeAgo timestamp}}</div>
+				<div style="font-size:90%"><span class="action-uid">{{midLabel this}}</span> opened by {{usernameFromId userId}} {{timeAgo timestamp}}</div>
 				<div class="left floated">
 					<div class="ui mini labels">
 						<a class="ui label">
@@ -26,33 +26,6 @@
 			</div>
 		</div>
 	</div>
-
-<!--<div class="item">
-	<div class="ui raised segment">
-			<div class="right floated content">
-				<span class="ui mini {{actionStatusColor this}} label">{{actionStatusLabel this}}</span>
-			</div>
-			<i class="big {{actionIcon this}} icon"></i>
-			<div class="content">
-				<div class="header">{{title}}</div>
-				<div class="description">
-					<span class="action-uid">{{actionUid this}}</span> opened 11 hours ago by pdrummond  <i class="flag icon" style="color:#ccc"></i><span style="margin-left:-3px">backlog</span>
-				</div>
-			</div>
-		</div>
-	</div>-->
-
-	<!--<div class="action item" style="padding-top:10px;padding-bottom:10px">
-		<div class="header" style="display:flex;justify-content:space-between">
-			<span><i class="{{actionIcon this}} icon"></i> {{title}}</span>
-			<span class="ui mini {{actionStatusColor this}} label">{{actionStatusLabel this}}</span>
-		</div>
-
-		<div class="description" style="font-size:80%;color:#767676">
-		<span class="action-uid">{{actionUid this}}</span> opened 11 hours ago by pdrummond  <i class="flag icon" style="color:#ccc"></i><span style="margin-left:-3px">backlog</span>
-		</div>
-		
-	</div>-->
 </template>
 
 <template name="milestoneDropdownItem">

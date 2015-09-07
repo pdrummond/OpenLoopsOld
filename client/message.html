@@ -2,7 +2,8 @@
 	<div class="chat message" data-userid={{userId}}>
 		<img src="{{profileImage userId}}" class="message_profile-pic"/>
 		<a href="" class="message_username">{{usernameFromId userId}}</a>
-		<span class="message_timestamp">{{timestampToTime timestamp}}</span>
+		<span class="message_timestamp">{{midLabel this}}</span>
+		<span class="message_timestamp">{{timeAgo timestamp}}</span>
 		<span class="message_star"></span>		
 		<span class="message_content {{archivedClass}}">{{text}}</span>
 	</div>
