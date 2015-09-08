@@ -167,6 +167,14 @@ Template.actionItem.events({
 	'click .action .header': function() {		
 		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
 		Session.set('selectedAction', this);
+	},
+
+	'mouseover .action.item .action-check': function(e) {
+		$(e.target).removeClass('square outline').addClass('checkmark box');
+	},
+
+	'mouseout .action.item .action-check': function(e) {
+		$(e.target).removeClass('checkmark box').addClass('square outline');
 	}
 });
 

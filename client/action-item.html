@@ -1,16 +1,17 @@
 <template name="actionItem">
 
-	<div class="item">
-		<i class="square outline icon"></i>
-		<i class="{{actionIcon this}} {{actionIconColor this}} icon"></i>
-		<div class="right floated content">
-			<a class="ui image label">
-				<img src="http://semantic-ui.com/images/avatar/small/joe.jpg">
-				pdrummond
-			</a>
-		</div>	
+	<div class="action item">		
+		
+		<i class="action-check big square outline icon"></i>
 		<div class="content">
-			{{title}}
+			<div class="header">
+				{{title}}				
+			</div>
+			<div class="description" style="margin-top:5px;color: #A3A3A3;font-size: 12px;">
+				<i class="{{actionIcon this}} {{actionIconColor this}} icon"></i>
+				<span class="action-uid">{{midLabel this}}</span> opened by {{usernameFromId userId}} {{timeAgo timestamp}}
+				<span id="milestone-label" class='{{actionHideIfNoMilestone this}}'>| <i class="flag icon" style="color:#ccc"></i><span style="margin-left:-3px">{{actionMilestoneTitle this}}</span></span>
+			</div>
 		</div>
 	</div>
 
@@ -35,7 +36,7 @@
 					</div>
 				</div>
 				<div class="right floated " style="margin-left:-10px">
-					<span id="milestone-label" class='{{actionHideIfNoMilestone this}}'><i class="flag icon" style="color:#ccc"></i><span style="margin-left:-3px">{{actionMilestoneTitle this}}</span></span>
+					
 				</div>
 			</div>
 		</div>

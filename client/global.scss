@@ -725,3 +725,13 @@ pre {
 .subject-label:hover {
   color: #0098FF;
 }
+
+.hashtag {
+  color: #0098FF;
+  cursor:pointer;
+}
+
+.action.item .action-check {
+  width:35px;
+  color:gray;
+}
