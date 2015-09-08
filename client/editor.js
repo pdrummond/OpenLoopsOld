@@ -1,7 +1,7 @@
 Template.editor.onRendered( function() {
 	var self = this;
 
-	var description = OpenLoops.getChannelDescription(Session.get('channel'));
+	var description = this.data.description || '';//OpenLoops.getChannelDescription(Session.get('channel'));
 
 	Meteor.promise( "convertMarkdown", description).then( function( html ) {
 		if(description == null || description.trim().length == 0) {
@@ -31,7 +31,7 @@ Template.editor.events({
 			Meteor.promise( "convertMarkdown", text)
 			.then( function( html ) {
 				$( "#preview" ).html( html );
-				return Meteor.promise( "updateChannelDescription", Session.get('channel'), text);
+				return Meteor.promise( "updateActionDescription", this.data._id, text);
 			})
 			.catch( function( error ) {
 				Bert.alert( error.reason, "danger" );

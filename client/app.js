@@ -62,8 +62,8 @@ Template.messageHolder.helpers({
 });
 
 Template.header.helpers({	
-	filterString: function() {
-		return Session.get('filterString');
+	messageFilterString: function() {
+		return Session.get('messageFilterString');
 	},
 
 	messagesFilterActive: function() {

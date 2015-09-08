@@ -96,7 +96,7 @@ body {
 .main-wrapper {
   transition: all 0.5s ease;
   height: 100%;
-  padding-top: 50px;
+  padding-top: 60px;
   padding-bottom: 64px;
   padding-right: 500px;
 }
@@ -115,17 +115,12 @@ body {
 
 /* line 1, ../tests/sass/components/_header.scss */
 .board-menu {
-  position: relative;
-  width: 220px;
-  height: 50px;
-  line-height: 53px;
+  display: inline-block;
+  padding: 0 .5rem 0 1.5rem;
+  color: #555459;
+  font-size: 1.4rem;
   font-weight: 900;
-  padding: 0 1rem;
-  color: #B3B3B3;
-  background: #042029;
-  border-bottom: 2px solid gray;
-  float: left;
-  cursor: pointer;
+  line-height: 53px;  
 }
 
 /* line 19, ../tests/sass/components/_header.scss */
@@ -162,7 +157,7 @@ body {
   padding-left:20px;
   padding-bottom:50px;
   padding-right: 10px;
-  margin-left: 220px;
+  xmargin-left: 220px;
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;  
