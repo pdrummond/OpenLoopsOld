@@ -41,6 +41,7 @@ Template.message.onRendered(function() {
 Template.message.events({
 	'click .subject-label': function() {
 		$("#subject-input").val(this.subject);
+		Session.set('messageFilterString', "[" + this.subject + "]");
 	}
 });
 
@@ -70,6 +71,12 @@ Template.header.helpers({
 		var filterString = Session.get('filterString');
 		return filterString == null || filterString.length == 0 ? 'active' : '';
 	}
+});
+
+Template.header.events( {
+	'keyup .message-filter-input': function(e) {
+		OpenLoops.onMessageFilterInput();
+	},
 });
 
 Template.filterItem.helpers({

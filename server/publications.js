@@ -34,7 +34,7 @@ Meteor.publish('messages', function (opts) {
             {type: 'message',  boardId: opts.board._id, channel: opts.channel}
         ]
     };
-    return Messages.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
+    return Messages.find(opts.filter, {limit: opts.limit, sort: {timestamp: -1}});
     //console.log("MESSAGES FILTER: " + JSON.stringify(filter, null, 4));*/
     //return Messages.find({boardId: opts.board._id, channel: opts.channel}, {limit: opts.limit, sort: {timestamp: -1}});
 });

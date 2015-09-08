@@ -119,7 +119,7 @@ Template.actions.events({
 	},
 
 	'keyup .input-box_filter': function(e) {
-		OpenLoops.onFilterInput(e);
+		OpenLoops.onFilterInput();
 	},
 
 	'click #create-filter-button': function() {

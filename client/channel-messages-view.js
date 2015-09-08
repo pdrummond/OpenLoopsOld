@@ -1,7 +1,8 @@
 Template.channelMessagesView.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
-		self.subscribe('messages', {			
+		self.subscribe('messages', {
+			filter: OpenLoops.getMessageFilter(Session.get('messageFilterString')),
 			board: Session.get('currentBoard'),
 			channel: Session.get('channel'),
 			limit: Session.get('messageLimit'),			
