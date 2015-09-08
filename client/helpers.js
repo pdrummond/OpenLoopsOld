@@ -34,6 +34,14 @@ Template.registerHelper('midLabel', function (message) {
 	return "#" + Boards.findOne(message.boardId).prefix + "-" + message.mid;
 });
 
+Template.registerHelper('subjectLabel', function (message) {
+	if(message.subject) {
+		return "[" + message.subject + "]: ";
+	} else {
+		return '';
+	}
+});
+
 Template.registerHelper('actionStatusLabel', function (action) {	
 	return OpenLoops.ActionStatusMeta[action.status].label || 'ERR: No Status';
 });

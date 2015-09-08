@@ -38,6 +38,12 @@ Template.message.onRendered(function() {
 	}, 0);*/	
 });
 
+Template.message.events({
+	'click .subject-label': function() {
+		$("#subject-input").val(this.subject);
+	}
+});
+
 
 Template.messageHolder.helpers({
 	archivedClass: function() {
@@ -252,6 +258,7 @@ Template.footer.events({
 
 	'keypress input': function(e) {
 		var inputVal = $('.input-box_text').val();
+		var subjectVal = $('#subject-input').val();
 		if(!!inputVal) {
 			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
 			if (charCode == 13) {
@@ -286,7 +293,7 @@ Template.footer.events({
 						console.log("command:" + JSON.stringify(commandData));
 					}   
 				} else {
-					OpenLoops.createMessage('message', inputVal);
+					OpenLoops.createMessage('message', inputVal, subjectVal);
 				}
 				$('.input-box_text').val("");
 				return false;

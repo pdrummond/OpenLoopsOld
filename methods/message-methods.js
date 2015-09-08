@@ -13,6 +13,7 @@ Meteor.methods({
     check(message, {
       type: String,
       text: String,
+      subject: String,
       boardId: String,
       channel: String,
     });
