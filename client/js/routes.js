@@ -5,7 +5,6 @@ Router.configure({
     return [
     Meteor.subscribe('boards'),
     Meteor.subscribe('boardMembers'),
-    Meteor.subscribe('channels'),
     Meteor.subscribe('filters'),
     Meteor.subscribe('allUsernames')
     ];
@@ -28,17 +27,16 @@ Router.route('/', function () {
   this.render('boardList');
 }, {name: 'boardList'});
 
-Router.route('/board/:boardId/channel/:channel/messages', function () {
+Router.route('/board/:boardId/messages', function () {
   var board = Boards.findOne(this.params.boardId);
   if(!board) {
     this.render("notFound");
   } else {
     Meteor.subscribe('milestones', board._id);
     Session.set('currentBoard', board);
-    Session.set('channel', this.params.channel);
-    this.render('messageListPage');
+    this.render('boardPage');
   }
-}, {name: 'messageListPage'});
+}, {name: 'boardPage'});
 
 Router.route('/board/:boardId/action/:_id/:section', {
   name: 'actionDetailPage',
@@ -123,5 +121,6 @@ pwd
 ]);
 
 
-Router.onBeforeAction(requireLogin, {only: ['boardList', 'messageListPage', 'actionDetailPage', 'actionDetailCommentPage']});
-//Router.onBeforeAction('dataNotFound', {only: ['messageListPage', 'actionDetailPage', 'actionDetailCommentPage']});
+Router.onBeforeAction(requireLogin, {only: ['boardList', 'boardPage', 'actionDetailPage', 'actionDetailCommentPage']});
+//Router.onBeforeAction('dataNotFound', {only: ['boardPage', 'actionDetailPage', 'actionDetailCommentPage']});
+

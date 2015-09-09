@@ -1,18 +1,14 @@
 Meteor.startup(function() {
-	Session.setDefault('messageListPage.viewTemplate', 'channelMessagesView');
+	Session.setDefault('boardPage.viewTemplate', 'messageHistoryView');
 });
 
 Template.header.events({
 	'click #channel-messages-button': function() {
-		Session.set('messageListPage.viewTemplate', 'channelMessagesView');
-	},
-	
-	'click #channel-description-button': function() {
-		Session.set('messageListPage.viewTemplate', 'channelDescriptionView');
-	},
+		Session.set('boardPage.viewTemplate', 'messageHistoryView');
+	},	
 
 	'click #channel-members-button': function() {
-		Session.set('messageListPage.viewTemplate', 'channelMembersView');
+		Session.set('boardPage.viewTemplate', 'channelMembersView');
 	},
 
 	'click #toggle-right-sidebar-button': function() {

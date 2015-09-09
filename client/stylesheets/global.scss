@@ -97,7 +97,7 @@ body {
   transition: all 0.5s ease;
   height: 100%;
   padding-top: 60px;
-  padding-bottom: 64px;
+  padding-bottom: 60px;
   padding-right: 500px;
 }
 
@@ -107,7 +107,7 @@ body {
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 64px;
+  height: 50px;
   right:500px;
   background-color:white;
   z-index:999;
@@ -734,4 +734,12 @@ pre {
 .action.item .action-check {
   width:35px;
   color:gray;
+}
+
+.command-box-input {
+    resize: none;
+    height: 80px;
+    border: 1px solid lightgray;
+    margin-left: 18px;
+    width: 95%;
 }

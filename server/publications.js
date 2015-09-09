@@ -1,43 +1,8 @@
-Meteor.publish('channels', function () {
-    return Channels.find();
-});
-
-Meteor.publish('milestones', function (boardId) {    
-    return Milestones.find({boardId: boardId});
-});
-
-Meteor.publish('filters', function () {
-    return Filters.find();
-});
-
-Meteor.publish('boards', function () {
-    return Boards.find();
-});
-
-Meteor.publish('boardMembers', function() {
-    return BoardMembers.find();
-});
 
 Meteor.publish('singleAction', function (id) {
     return Actions.find(id);
 });
 
-Meteor.publish('comments', function(actionId) {
-    return Comments.find({actionId: actionId});
-});
-
-Meteor.publish('messages', function (opts) {
-    console.log("PUBLISHING 'messages' for channel: " + opts.channel);    
-    var filter = {
-        $or: [
-            {type: 'activity', boardId: opts.board._id},
-            {type: 'message',  boardId: opts.board._id, channel: opts.channel}
-        ]
-    };
-    return Messages.find(opts.filter, {limit: opts.limit, sort: {timestamp: -1}});
-    //console.log("MESSAGES FILTER: " + JSON.stringify(filter, null, 4));*/
-    //return Messages.find({boardId: opts.board._id, channel: opts.channel}, {limit: opts.limit, sort: {timestamp: -1}});
-});
 
 Meteor.publish('actionDetailMessages', function (opts) {    
     console.log("PUBLISHING 'actionDetailMessages' for channel: " + opts.channel);

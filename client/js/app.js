@@ -164,7 +164,7 @@ Template.channel.events({
 	'click': function() {		
 		Session.set('messageLimit', 30);
 		Session.set('filterString', '');
-		Session.set('messageListPage.viewTemplate', 'channelMessagesView');
+		Session.set('boardPage.viewTemplate', 'messageHistoryView');
 		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/" + this.name + "/messages");
 	}
 });
@@ -173,67 +173,6 @@ Template.actions.onRendered(function() {
 	this.$('.ui.dropdown').dropdown({
 		action:'hide'
 	});
-});
-
-Template.boardList.events({	
-	"click #create-board-button": function() {
-		$('#createBoardDialog').modal({
-			closable: false,
-			blurring: true,
-			onApprove : function() {
-				var board = {
-					title: $("#createBoardDialog input[name='title']").val(),
-					prefix: $("#createBoardDialog input[name='prefix']").val(),
-				};
-				Meteor.call("createBoard", board, function(error, result) {
-					if (error) {
-						return alert(error.reason);
-					}
-				});
-			}
-		});
-		$('#createBoardDialog').modal('show');
-	},
-});
-
-Template.boardMenu.onRendered(function() {
-	this.$('.ui.dropdown').dropdown();
-});
-
-Template.boardMenu.events({
-	'click #show-all-boards': function() {
-		Router.go("/");
-	},
-
-	'click #board-settings': function() {		
-		var board = Session.get('currentBoard');
-		$('#boardSettingsDialog').modal({
-			closable: true,
-			blurring: true,
-			onApprove : function() {
-				board = _.extend(board, {					
-					title: $("#boardSettingsDialog input[name='title']").val(),
-					prefix: $("#boardSettingsDialog input[name='prefix']").val(),
-				});
-				Meteor.call("updateBoard", board, function(error, result) {
-					if (error) {
-						return alert(error.reason);
-					}
-				});
-			}
-		});		
-		$("#boardSettingsDialog input[name='title']").val(board.title);
-		$("#boardSettingsDialog input[name='prefix']").val(board.prefix);
-		$('#boardSettingsDialog').modal('show');
-	}
-});
-
-Template.board.events({
-	'click': function() {		
-		Session.set('currentBoard', this);
-		Session.set('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
-		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/general/messages");
-	}
 });
 
 Template.footer.onRendered(function() {
