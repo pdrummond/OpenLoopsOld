@@ -30,8 +30,8 @@ Template.registerHelper('actionMilestoneTitle', function (action) {
 	return milestone == null?"No Milestone":milestone.title;
 });
 
-Template.registerHelper('midLabel', function (message) {
-	return "#" + Boards.findOne(message.boardId).prefix + "-" + message.mid;
+Template.registerHelper('ridLabel', function (resource) {
+	return "#" + Boards.findOne(resource.boardId).prefix + "-" + resource.rid;
 });
 
 Template.registerHelper('subjectLabel', function (message) {

@@ -59,13 +59,13 @@ Meteor.publish('actions', function (opts) {
             {$and: [{type: 'message'},      _.extend({boardId: opts.board._id, channel: opts.channel}, opts.filter)]}
         ]
     };*/    
-    var filter = _.extend({boardId: opts.board._id, archived: false}, opts.filter);
+    var filter = _.extend({boardId: opts.board._id, type: 'action', archived: false}, opts.filter);
     //console.log("ACTION FILTER: " + JSON.stringify(filter, null, 4));
 
     Counts.publish(this, 'action-open-count', Actions.find(_.extend({boardId: opts.board._id, archived: false}, opts.filter)), { noReady: true });
     Counts.publish(this, 'action-archived-count', Actions.find(_.extend({boardId: opts.board._id, archived: true}, opts.filter)), { noReady: true });
     
-    return Actions.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
+    return Items.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
 Meteor.publish("allUsernames", function () {
