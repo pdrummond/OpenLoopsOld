@@ -1,5 +1,5 @@
 
-Template.registerHelper('actionIcon', function (action) {	
+Template.registerHelper('itemIcon', function (action) {	
 	switch(action.type) {
 		case 'task': return 'warning circle'; 
 		case 'bug': return 'bug';
@@ -8,7 +8,7 @@ Template.registerHelper('actionIcon', function (action) {
 });
 
 
-Template.registerHelper('actionIconColor', function (action) {	
+Template.registerHelper('itemIconColor', function (action) {	
 	switch(action.type) {
 		case 'task': return 'green'; 
 		case 'bug': return 'red';

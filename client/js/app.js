@@ -202,7 +202,8 @@ Template.footer.events({
 		Session.set('messageCreationType', 'milestone');
 	},
 
-	'keypress input': function(e) {
+	'keypress .input-box_text': function(e) {
+		$("#subjectSuggestionPopup").fadeOut();
 		var inputVal = $('.input-box_text').val();
 		var subjectVal = $('#subject-input').val();
 		if(!!inputVal) {

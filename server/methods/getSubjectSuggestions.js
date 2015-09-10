@@ -1,6 +1,7 @@
 Meteor.methods({
-	getSubjectSuggestions: function() {
-		var suggestions = Items.find({type: {$not: "activity"}}, {limit: opts.limit, sort: {timestamp: -1}}).fetch();
+	getSubjectSuggestions: function(opts) {
+		opts = opts || {};
+		var suggestions = Items.find({text: {$regex:opts.subjectText}}, {limit: 20, sort: {timestamp: -1}}).fetch();
 		return suggestions;
 	}
 });
