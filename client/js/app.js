@@ -1,4 +1,5 @@
 Meteor.startup(function() {
+	Session.setDefault('newItemType', 'message');
 	Session.setDefault('activeActionTab', 'actions');
 	Session.setDefault('actionLimit', 30);
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
@@ -55,9 +56,11 @@ Template.messageHolder.helpers({
 		var template;		
 		switch(this.type) {
 			case 'message': template = 'message'; break;
+			case 'task': template = 'actionItem'; break;
 			case 'activity': template = 'activityMessage'; break;			
 			default: template = 'message'; break;
 		}		
+		console.log("Template for " + this.type + " is: " + template);
 		return template;		
 	}
 });
@@ -173,80 +176,6 @@ Template.actions.onRendered(function() {
 	this.$('.ui.dropdown').dropdown({
 		action:'hide'
 	});
-});
-
-Template.footer.onRendered(function() {
-	this.$('.ui.dropdown').dropdown();
-});
-
-Template.footer.helpers({
-	messageCreationType: function() {
-		return Session.get('messageCreationType') || "message";
-	}
-});
-
-Template.footer.events({
-	'click #logout-menu-item': function() {
-		Meteor.logout();
-	},
-
-	'click #create-box-message-menu-item': function() {
-		Session.set('messageCreationType', 'message');
-	},
-
-	'click #create-box-task-menu-item': function() {
-		Session.set('messageCreationType', 'task');
-	},
-
-	'click #create-box-milestone-menu-item': function() {
-		Session.set('messageCreationType', 'milestone');
-	},
-
-	'keypress .input-box_text': function(e) {
-		$("#subjectSuggestionPopup").fadeOut();
-		var inputVal = $('.input-box_text').val();
-		var subjectVal = $('#subject-input').val();
-		if(!!inputVal) {
-			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-			if (charCode == 13) {
-				e.stopPropagation();
-				if(inputVal.indexOf('/') == 0) {
-					var commandData = inputVal.match(/\/(\w+) (\w+) (.*)/);
-					if(commandData && commandData.length == 4) {
-						var command = commandData[1];
-						var itemType = commandData[2];
-						var commandContent = commandData[3];
-
-						switch(command) {
-							case 'create': {
-								if(itemType == "milestone") {
-									OpenLoops.createMilestone(commandContent, function(error, result) {
-										if(error) {
-											alert("Error: " + error);
-										}
-									});	
-								} else {
-									OpenLoops.createAction(itemType, commandContent, function(error, result) {
-										if(error) {
-											alert("Error: " + error);
-										} else {
-										//??
-									}
-								});
-								}
-								break;
-							}
-						}
-						console.log("command:" + JSON.stringify(commandData));
-					}   
-				} else {
-					OpenLoops.createMessage('message', inputVal, subjectVal);
-				}
-				$('.input-box_text').val("");
-				return false;
-			}    
-		}
-	}
 });
 
 Template.boardSettingsDialog.onRendered(function() {

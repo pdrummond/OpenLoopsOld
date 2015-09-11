@@ -1,15 +1,11 @@
 
-Template.registerHelper('itemIcon', function (action) {	
-	switch(action.type) {
-		case 'task': return 'warning circle'; 
-		case 'bug': return 'bug';
-		default: return 'circle';
-	}
+Template.registerHelper('itemIcon', function (item) {	
+	return OpenLoops.getItemIcon(item);
 });
 
 
-Template.registerHelper('itemIconColor', function (action) {	
-	switch(action.type) {
+Template.registerHelper('itemIconColor', function (item) {	
+	switch(item.type) {
 		case 'task': return 'green'; 
 		case 'bug': return 'red';
 		default: return 'green';
@@ -42,11 +38,11 @@ Template.registerHelper('subjectLabel', function (message) {
 	}
 });
 
-Template.registerHelper('actionStatusLabel', function (action) {	
+Template.registerHelper('itemStatusLabel', function (action) {	
 	return OpenLoops.ActionStatusMeta[action.status].label || 'ERR: No Status';
 });
 
-Template.registerHelper('actionStatusColor', function (action) {	
+Template.registerHelper('itemStatusColor', function (action) {	
 	return OpenLoops.ActionStatusMeta[action.status].color || 'ERR: No Color';
 });
 
