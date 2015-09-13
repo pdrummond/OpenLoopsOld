@@ -1,3 +1,9 @@
+<template name="rightSidebar">
+	<div id="actions-wrapper">
+		{{> Template.dynamic template=rightSidebarTemplate}}
+	</div>
+</template>
+
 <template name="actions">
 	<div  class="ui top tabular pointing secondary menu" style='margin-bottom:0'>
 		<a id="actions-tab" class="{{activeTab 'actions'}} item"><i class="warning circle icon"></i> Actions</a>

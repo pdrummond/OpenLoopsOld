@@ -34,9 +34,9 @@ Router.route('/board/:boardId/messages', function () {
   } else {
     Meteor.subscribe('milestones', board._id);
     Session.set('currentBoard', board);
-    this.render('boardPage');
+    this.render('messageHistoryPage');
   }
-}, {name: 'boardPage'});
+}, {name: 'messageHistoryPage'});
 
 Router.route('/board/:boardId/action/:_id/:section', {
   name: 'actionDetailPage',
@@ -121,6 +121,6 @@ pwd
 ]);
 
 
-Router.onBeforeAction(requireLogin, {only: ['boardList', 'boardPage', 'actionDetailPage', 'actionDetailCommentPage']});
-//Router.onBeforeAction('dataNotFound', {only: ['boardPage', 'actionDetailPage', 'actionDetailCommentPage']});
+Router.onBeforeAction(requireLogin, {only: ['boardList', 'messageHistoryPage', 'actionDetailPage', 'actionDetailCommentPage']});
+//Router.onBeforeAction('dataNotFound', {only: ['messageHistoryPage', 'actionDetailPage', 'actionDetailCommentPage']});
 

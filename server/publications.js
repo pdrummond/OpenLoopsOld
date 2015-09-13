@@ -1,3 +1,6 @@
+Meteor.publish('messages', function (opts) {    
+    return Messages.find(opts.filter, {limit: opts.limit, sort: {timestamp: -1}});
+});
 
 Meteor.publish('singleAction', function (id) {
     return Actions.find(id);

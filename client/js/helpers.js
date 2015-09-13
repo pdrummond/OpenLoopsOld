@@ -26,16 +26,19 @@ Template.registerHelper('actionMilestoneTitle', function (action) {
 	return milestone == null?"No Milestone":milestone.title;
 });
 
-Template.registerHelper('sidLabel', function (resource) {
-	return "#" + Boards.findOne(resource.boardId).prefix + "-" + resource.sid;
+Template.registerHelper('sidLabel', function (item) {
+	return OpenLoops.getSidLabel(item);
 });
 
-Template.registerHelper('subjectLabel', function (message) {
-	if(message.subject) {
-		return "[" + message.subject + "]: ";
-	} else {
-		return '';
-	}
+Template.registerHelper('subjectLabel', function (item) {
+	var subjectLabel = '';
+	if(item.subjectItemId) {
+		var subjectItem = Items.findOne(item.subjectItemId);
+		if(subjectItem) {
+			subjectLabel = "[" + OpenLoops.getSidLabel(subjectItem) + " " + subjectItem.title + "]: ";
+		}
+	} 
+	return subjectLabel;
 });
 
 Template.registerHelper('itemStatusLabel', function (action) {	

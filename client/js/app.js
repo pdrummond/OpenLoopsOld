@@ -1,14 +1,3 @@
-Meteor.startup(function() {
-	Session.setDefault('newItemType', 'message');
-	Session.setDefault('activeActionTab', 'actions');
-	Session.setDefault('actionLimit', 30);
-	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
-	Session.setDefault('commentLimit', OpenLoops.COMMENT_LIMIT_INC);
-	Session.setDefault('messageCreationType', "message");
-	Session.setDefault('currentSection', "description");
-});
-
-
 Template.comments.onRendered(function() {
 	/*this.editor = CodeMirror.fromTextArea( this.find( "#comment-reply-textarea" ), {
 		lineNumbers: false,
@@ -41,8 +30,10 @@ Template.message.onRendered(function() {
 
 Template.message.events({
 	'click .subject-label': function() {
-		$("#subject-input").val(this.subject);
-		Session.set('messageFilterString', "[" + this.subject + "]");
+		Session.set('newSubjectItemId', this.subjectItemId);
+		Session.set('newSubjectItemType', Items.findOne(this.subjectItemId).type);
+		$("#message-input").focus();
+		//Session.set('messageFilterString', "[" + this.subject + "]");
 	}
 });
 
@@ -57,6 +48,7 @@ Template.messageHolder.helpers({
 		switch(this.type) {
 			case 'message': template = 'message'; break;
 			case 'task': template = 'actionItem'; break;
+			case 'bug': template = 'actionItem'; break;
 			case 'activity': template = 'activityMessage'; break;			
 			default: template = 'message'; break;
 		}		
