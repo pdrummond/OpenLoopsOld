@@ -21,18 +21,6 @@ Template.actionDetailMessages.helpers({
 
 });
 
-Template.actions.onCreated(function() {
-	var self = this;
-	self.autorun(function() {
-		self.subscribe('actions', {
-			filter: OpenLoops.getFilter(Session.get('filterString')),
-			board: Session.get('currentBoard'),
-			channel: Session.get('channel'),
-			limit: Session.get('actionLimit'),
-		});
-	});	
-});
-
 Template.actions.onRendered(function() {
 	this.$('.menu .item').tab();	
 });

@@ -35,7 +35,7 @@ Template.registerHelper('subjectLabel', function (item) {
 	if(item.subjectItemId) {
 		var subjectItem = Items.findOne(item.subjectItemId);
 		if(subjectItem) {
-			subjectLabel = "[" + OpenLoops.getSidLabel(subjectItem) + " " + subjectItem.title + "]: ";
+			subjectLabel = "<span class='subject-label' title='" + subjectItem.title + "'>[" + OpenLoops.getSidLabel(subjectItem) + "]:</span>";
 		}
 	} 
 	return subjectLabel;

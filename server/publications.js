@@ -2,14 +2,23 @@ Meteor.publish('messages', function (opts) {
     return Messages.find(opts.filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
+Meteor.publish('subjectSuggestions', function(opts) {    
+    var subjectText = opts.subjectText || '';
+    console.log('publication subjectSuggestions');
+    return Items.find({
+        $and: [{
+            $or: [{type: 'bug'}, {type:'task'}]}, {title: {'$regex': subjectText}}]
+        }, 
+        {limit: 20, sort: {timestamp: -1}});
+});
+
 Meteor.publish('singleAction', function (id) {
     return Items.find(id);
 });
 
 
-Meteor.publish('actionDetailMessages', function (opts) {    
-    console.log("PUBLISHING 'actionDetailMessages' for channel: " + opts.channel);
-    return Messages.find({boardId: opts.board._id, channel: opts.channel}, {limit: opts.limit, sort: {timestamp: 1}});
+Meteor.publish('itemMessages', function (opts) {    
+    return Messages.find({boardId: opts.board._id, subjectItemId: opts.subjectItemId}, {limit: opts.limit, sort: {timestamp: 1}});
 });
 
 Meteor.publish('actions', function (opts) {
@@ -41,5 +50,5 @@ Meteor.publish("allUsernames", function () {
     "username": 1,    
     "profileImage": 1,
     "services.github.username": 1
-  }});
+}});
 });

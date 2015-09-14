@@ -33,7 +33,14 @@ Router.route('/board/:boardId/messages', function () {
     this.render("notFound");
   } else {
     Meteor.subscribe('milestones', board._id);
+    Meteor.subscribe('actions', {
+      filter: OpenLoops.getFilter(Session.get('filterString')),
+      board: Session.get('currentBoard'),
+      channel: Session.get('channel'),
+      limit: Session.get('actionLimit'),
+    });
     Session.set('currentBoard', board);
+
     this.render('messageHistoryPage');
   }
 }, {name: 'messageHistoryPage'});
@@ -44,6 +51,7 @@ Router.route('/board/:boardId/action/:_id/:section', {
     return [
     Meteor.subscribe('milestones', this.params.boardId),
     Meteor.subscribe('singleAction', this.params._id),
+    Meteor.subscribe('subjectSuggestions', {subjectText: ''}),
     Meteor.subscribe('comments', this.params._id)
     ];
   },

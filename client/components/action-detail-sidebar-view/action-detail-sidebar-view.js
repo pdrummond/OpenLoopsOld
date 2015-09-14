@@ -16,11 +16,30 @@ Template.actionDetailSidebarView.events({
 		if(newStatus && newStatus.length > 0){
 			Meteor.call('updateActionStatus', this._id, newStatus, Session.get('channel'));
 		}
+	},
+
+	'keyup #comment-input': function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+		if (charCode == 13) {			
+			var inputVal = $("#comment-input").val();
+			if(inputVal != null && inputVal.length > 0) {
+				OpenLoops.createMessage(inputVal, this._id);
+				$("#comment-input").val('');
+			}	
+		}
+	}
+});
+
+Template.actionDetailMessages.helpers({
+	actionMessages: function() {		
+		return Messages.find({subjectItemId: this._id}, {sort: {timestamp: 1}});
 	}
 });
 
 Template.actionDetailSidebarView.onRendered(function() {
-	this.$('.ui.accordion').accordion();
+	$('.menu .item').tab();
 	this.$('.ui.dropdown').dropdown({
 		action: 'hide'
 	});
@@ -29,9 +48,9 @@ Template.actionDetailSidebarView.onRendered(function() {
 Template.actionDetailSidebarView.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
-		self.subscribe('actionDetailMessages', {			
+		self.subscribe('itemMessages', {			
 			board: Session.get('currentBoard'),
-			channel: Session.get('selectedAction').channel,
+			subjectItemId: this._id,			
 			limit: Session.get('messageLimit'),
 		}, function() {
 			//Do nothing here.

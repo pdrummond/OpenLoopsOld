@@ -22,7 +22,7 @@ Template.messageHistoryView.onCreated(function() {
 });
 
 Template.messageHistoryView.helpers({
-	messages: function() {  	
+	messages: function() { 
 		return Messages.find({}, {sort: {timestamp: 1}});
 	},
 });
@@ -76,7 +76,14 @@ Template.footer.helpers({
 	},
 
 	subjectSuggestions: function() {
-		return Session.get('subjectSuggestions');
+		var subjectText = Session.get('newSubjectText') || '';
+		return Items.find({title: {'$regex':subjectText}});
+        /*$and: [{
+            $or: [{type: 'bug'}, {type:'task'}]}, {title: {$regex:subjectText}}]
+        }, 
+        {limit: 20, sort: {timestamp: -1}});*/
+
+		//Session.get('subjectSuggestions');
 	},
 
 	newItemIcon: function() {
@@ -159,14 +166,16 @@ Template.footer.events({
 
 		var subjectText = $("#subject-input").val();
 		if(subjectText != null && subjectText.length > 0) {
-			Meteor.call('getSubjectSuggestions', {subjectText: subjectText}, function(error, result) {			
+			$("#subjectSuggestionPopup").fadeIn();
+			Session.set('newSubjectText', subjectText);
+			/*Meteor.subscribe('subjectSuggestions', {subjectText: subjectText}, function(error, result) {			
 				if(!error) {
 					Session.set('subjectSuggestions', result);
 					if(result.length > 0) {
 						$("#subjectSuggestionPopup").fadeIn();
 					}
 				}
-			});
+			});*/
 		} else {			
 			$("#subjectSuggestionPopup").fadeOut();
 		}	
