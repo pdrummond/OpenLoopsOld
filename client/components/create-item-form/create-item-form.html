@@ -1,0 +1,29 @@
+<template name="createItemForm">
+	<form class="ui form"  style="padding:10px;background:#FBFBFB">
+		<h1>Create {{createItemFormLabel}}</h1>
+		<div class="field">
+			<label>Title: </label>
+			<input autofocus type="text" name="title" placeholder="Enter title here">
+		</div>
+		<div class="field">
+			<label>Description: </label>
+			<textarea  name="action-description" placeholder="Enter description here"></textarea>
+		</div>
+		<div class="field">
+			<label>Members: </label>
+			<input type="text" name="members" placeholder="Enter list of team members here">
+		</div>
+
+		<div class="field">
+			<label>Labels: </label>
+			<input type="text" name="members" placeholder="Enter labels here">
+		</div>
+
+		<div class="ui buttons" style="float:right">
+			<button id="cancel-button" class="ui button">Cancel</button>
+			<div class="or"></div>
+			<button id="submit-button" class="ui positive button">Create</button>
+		</div>
+
+	</form>
+</template>

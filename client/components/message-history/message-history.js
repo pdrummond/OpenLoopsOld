@@ -58,6 +58,41 @@ Template.header.events({
 			$('.footer').css('right', '500px');
 		}
 	},
+
+	'click #create-post-menu-item': function() {
+		Session.set('createItemForm.type', 'post');
+		Session.set('createItemForm.label', 'Post');
+		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
+		Session.set('rightSidebarTemplate', 'createItemForm');
+	},
+
+	'click #create-discussion-menu-item': function() {
+		Session.set('createItemForm.type', 'discussion');
+		Session.set('createItemForm.label', 'Discussion');
+		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
+		Session.set('rightSidebarTemplate', 'createItemForm');
+	},
+
+	'click #create-task-menu-item': function() {
+		Session.set('createItemForm.type', 'task');
+		Session.set('createItemForm.label', 'Task');
+		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
+		Session.set('rightSidebarTemplate', 'createItemForm');
+	},
+
+	'click #create-bug-menu-item': function() {
+		Session.set('createItemForm.type', 'bug');
+		Session.set('createItemForm.label', 'Bug');
+		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
+		Session.set('rightSidebarTemplate', 'createItemForm');
+	},
+
+	'click #create-todo-menu-item': function() {
+		Session.set('createItemForm.type', 'todo');
+		Session.set('createItemForm.label', 'Todo');
+		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
+		Session.set('rightSidebarTemplate', 'createItemForm');
+	}
 });
 
 Template.header.helpers({
@@ -66,7 +101,12 @@ Template.header.helpers({
 	}
 });
 
-Template.footer.onRendered(function() {
+Template.header.onRendered(function() {	
+	this.$('.ui.dropdown').dropdown({on: 'hover'});	
+});
+
+
+Template.footer.onRendered(function() {	
 	this.$('.ui.dropdown').dropdown();
 });
 
