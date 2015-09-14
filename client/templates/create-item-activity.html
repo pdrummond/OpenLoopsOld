@@ -1,13 +1,12 @@
-<template name="createActionActivity">
+<template name="createItemActivity">
 	<div class="activity message" data-userid={{userId}}>
 		<img src="{{profileImage userId}}" class="message_profile-pic"/>
 		<a href="" class="message_username">{{usernameFromId userId}}</a>
 		<span class="message_timestamp">{{timeAgo timestamp}}</span>
 		<span class="message_star"></span>	
 		<span class="message_content" style="color:#8b898f;font-style:italic">
-			created {{action.type}} 
-			<a href="/board/{{currentBoardId}}/action/{{action._id}}/description">{{midLabel action}}: {{actionTitle action}}</a>
-			in {{action.channel}} channel
+			created {{item.type}} 
+			<a href="/board/{{currentBoardId}}/action/{{action._id}}/description">{{sidLabel item}}: {{itemTitle item}}</a>
 		</span>
 	</div>	
 </template>

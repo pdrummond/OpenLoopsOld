@@ -1,0 +1,26 @@
+<template name="actionItem">
+
+	<div class="action item">		
+		<div class="right floated content">
+			<div class="ui mini button {{itemStatusColor this}}">{{itemStatusLabel this}}</div>
+		</div>
+		<i class="action-check big square outline icon"></i>
+		<div class="content">
+			<div class="header">
+				{{title}}				
+			</div>
+			<div class="description" style="margin-top:5px;color: #A3A3A3;font-size: 12px;">
+				<i class="{{itemIcon this}} {{itemIconColor this}} icon"></i>
+				<span class="item-sid">{{sidLabel this}}</span> opened by {{usernameFromId userId}} {{timeAgo timestamp}}
+				<span id="milestone-label" class='{{itemHideIfNoMilestone this}}'>| <i class="flag icon" style="color:#ccc"></i><span style="margin-left:-3px">{{itemMilestoneTitle this}}</span></span>
+			</div>
+		</div>
+	</div>	
+</template>
+
+<template name="milestoneDropdownItem">
+	<div class="milestone item" data-value={{_id}}>		
+		<i class='flag icon' ></i> {{title}}
+	</div>
+</template>
+

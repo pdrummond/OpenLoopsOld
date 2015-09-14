@@ -12,17 +12,17 @@ Template.registerHelper('itemIconColor', function (item) {
 	}
 });
 
-Template.registerHelper('actionTitle', function (action) {
-	return action.title;
+Template.registerHelper('itemTitle', function (item) {
+	return item.title;
 });
 
-Template.registerHelper('actionHideIfNoMilestone', function (action) {
-	var milestone = Milestones.findOne(action.milestoneId);
+Template.registerHelper('itemHideIfNoMilestone', function (item) {
+	var milestone = Milestones.findOne(item.milestoneId);
 	return milestone == null?'hide':'';
 });
 
-Template.registerHelper('actionMilestoneTitle', function (action) {
-	var milestone = Milestones.findOne(action.milestoneId);	
+Template.registerHelper('itemMilestoneTitle', function (item) {
+	var milestone = Milestones.findOne(item.milestoneId);	
 	return milestone == null?"No Milestone":milestone.title;
 });
 
@@ -41,12 +41,12 @@ Template.registerHelper('subjectLabel', function (item) {
 	return subjectLabel;
 });
 
-Template.registerHelper('itemStatusLabel', function (action) {	
-	return OpenLoops.ActionStatusMeta[action.status].label || 'ERR: No Status';
+Template.registerHelper('itemStatusLabel', function (item) {	
+	return OpenLoops.ActionStatusMeta[item.status].label || 'ERR: No Status';
 });
 
-Template.registerHelper('itemStatusColor', function (action) {	
-	return OpenLoops.ActionStatusMeta[action.status].color || 'ERR: No Color';
+Template.registerHelper('itemStatusColor', function (item) {	
+	return OpenLoops.ActionStatusMeta[item.status].color || 'ERR: No Color';
 });
 
 Template.registerHelper('boards', function (context) {

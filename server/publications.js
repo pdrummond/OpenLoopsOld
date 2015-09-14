@@ -3,7 +3,7 @@ Meteor.publish('messages', function (opts) {
 });
 
 Meteor.publish('singleAction', function (id) {
-    return Actions.find(id);
+    return Items.find(id);
 });
 
 
@@ -16,7 +16,7 @@ Meteor.publish('actions', function (opts) {
 	//console.log("opts: " + JSON.stringify(opts));	
 	check(opts.filter, Object);
 	check(opts.limit, Number);
-	if(opts.limit > Actions.find().count()) {
+	if(opts.limit > Items.find().count()) {
 		opts.limit = 0;
 	}
     /*var filter = {
@@ -27,11 +27,11 @@ Meteor.publish('actions', function (opts) {
             {$and: [{type: 'message'},      _.extend({boardId: opts.board._id, channel: opts.channel}, opts.filter)]}
         ]
     };*/    
-    var filter = _.extend({boardId: opts.board._id, type: 'action', archived: false}, opts.filter);
+    var filter = _.extend({boardId: opts.board._id, itemType: 'action', archived: false}, opts.filter);
     //console.log("ACTION FILTER: " + JSON.stringify(filter, null, 4));
 
-    Counts.publish(this, 'action-open-count', Actions.find(_.extend({boardId: opts.board._id, archived: false}, opts.filter)), { noReady: true });
-    Counts.publish(this, 'action-archived-count', Actions.find(_.extend({boardId: opts.board._id, archived: true}, opts.filter)), { noReady: true });
+    //Counts.publish(this, 'action-open-count', Actions.find(_.extend({boardId: opts.board._id, archived: false}, opts.filter)), { noReady: true });
+    //Counts.publish(this, 'action-archived-count', Actions.find(_.extend({boardId: opts.board._id, archived: true}, opts.filter)), { noReady: true });
     
     return Items.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
