@@ -12,11 +12,11 @@
 			</span>			
 		</h1>
 	</div>	
-	<div class="ui fluid accordion">
-		<div class="active title">
+	<div class="ui fluid accordion" style="overflow-y:hidden">
+		<div class="title">
 			<i style="margin-left:5px" class="table icon"></i> <strong>Details</strong>
 		</div>
-		<div class="active content">
+		<div class="content">
 			<table class="ui celled table" style="margin-left:25px;width:450px;">
 				<tr><td>Status</td><td><strong>{{> actionStatusDropdown}}</strong></td></tr>
 				<tr><td>Milestone</td><td><strong>Backlog</strong></td></tr>
@@ -32,12 +32,16 @@
 				{{#markdown}}{{description}}{{/markdown}}
 			</div>
 		</div>
-		<div class="title">			
+		<div class="active title">			
 			<i style="margin-left:5px" class="comments outline icon"></i> <strong>Discussion</strong>
 		</div>
-		<div class="content">
-			<div style="margin-left:25px;width:450px;">
-				{{> actionDetailMessages}}
+		<div class="active content full-height" style="position:relative">
+			<div class="full-height" style="margin-left:25px;width:450px;">
+				{{> actionDetailMessages}}				
+			</div>
+			<div class="ui fluid icon input" style="position: absolute;bottom: 5px;width:100%;padding: 5px;">
+				<input id="action-comment-input" type="text" placeholder="Add your comment here" >
+				<i class="comment icon"></i>
 			</div>
 		</div>		
 	</div>
@@ -46,10 +50,10 @@
 
 <template name="actionDetailMessages">
 
-		<div class="ui list message-history" style="padding:5px">			
-			{{#each messages}}
-			{{> messageHolder}}
-			{{/each}}		
-		</div>
+	<div class="ui list message-history" style="padding:5px;">
+		{{#each messages}}
+		{{> messageHolder}}
+		{{/each}}		
+	</div>
 	
 </template>

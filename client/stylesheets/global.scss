@@ -743,3 +743,13 @@ pre {
     margin-left: 18px;
     width: 95%;
 }
+
+#actions-wrapper .message-history {
+  padding:0px !important;
+  height:70%;
+  overflow-y:scroll;
+}
+
+.full-height {
+  height: 100% !important;
+}
