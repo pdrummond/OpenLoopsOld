@@ -24,7 +24,7 @@ Template.actionDetailSidebarView.events({
 		var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
 		if (charCode == 13) {			
 			var inputVal = $("#comment-input").val();
-			if(inputVal != null && inputVal.length > 0) {
+			if(inputVal != null && inputVal.length > 0) {				
 				OpenLoops.createMessage(inputVal, this._id);
 				$("#comment-input").val('');
 			}	

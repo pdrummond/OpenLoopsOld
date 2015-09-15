@@ -3,19 +3,17 @@ Meteor.publish('messages', function (opts) {
 });
 
 Meteor.publish('subjectSuggestions', function(opts) {    
-    var subjectText = opts.subjectText || '';
-    console.log('publication subjectSuggestions');
-    return Items.find({
-        $and: [{
-            $or: [{type: 'bug'}, {type:'task'}]}, {title: {'$regex': subjectText}}]
-        }, 
-        {limit: 20, sort: {timestamp: -1}});
+    console.log("subjectSuggestions PUBLISHED");
+    if(opts && opts.subjectText && opts.subjectText.length > 0) {
+        return Items.find({title: {'$regex': subjectText}}, {limit: 20, sort: {timestamp: -1}});
+    } else {
+        return Items.find();//{}, {limit: 20, sort: {timestamp: -1}});
+    }
 });
 
 Meteor.publish('singleAction', function (id) {
     return Items.find(id);
 });
-
 
 Meteor.publish('itemMessages', function (opts) {    
     return Messages.find({boardId: opts.board._id, subjectItemId: opts.subjectItemId}, {limit: opts.limit, sort: {timestamp: 1}});

@@ -8,6 +8,9 @@ Template.registerHelper('itemIconColor', function (item) {
 	switch(item.type) {
 		case 'task': return 'green'; 
 		case 'bug': return 'red';
+		case 'todo': return 'orange';
+		case 'post': return 'blue';
+		case 'discussion': return 'purple';
 		default: return 'green';
 	}
 });
@@ -28,6 +31,11 @@ Template.registerHelper('itemMilestoneTitle', function (item) {
 
 Template.registerHelper('sidLabel', function (item) {
 	return OpenLoops.getSidLabel(item);
+});
+
+Template.registerHelper('activitySubjectLabel', function (item) {
+	var subjectLabel = "<span class='activity-subject-label' title='" + item.title + "'>[" + OpenLoops.getSidLabel(item) + "]:</span>";
+	return subjectLabel;
 });
 
 Template.registerHelper('subjectLabel', function (item) {
@@ -138,6 +146,16 @@ Template.registerHelper("truncateCommentText", function (obj, text, maxSize) {
 	return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
 }
 });
+
+Template.registerHelper("truncateItemText", function (obj, text, maxSize) {	
+	if(text.length > maxSize) {
+		return parseMarkdown(text.substring(0, maxSize)).replace(/^<p>/, '').replace(/<\/p>$/,'') + 
+		"... (<span>Read More</span>)";	
+	} else {
+		return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
+	}
+});
+
 
 Template.registerHelper("currentUserName", function () {
 	var user = Meteor.user();

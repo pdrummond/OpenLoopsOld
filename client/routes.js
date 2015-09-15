@@ -32,10 +32,11 @@ Router.route('/board/:boardId/messages', function () {
   if(!board) {
     this.render("notFound");
   } else {
+    Meteor.subscribe('subjectSuggestions', {subjectText: ''});
     Meteor.subscribe('milestones', board._id);
     Meteor.subscribe('actions', {
       filter: OpenLoops.getFilter(Session.get('filterString')),
-      board: Session.get('currentBoard'),
+      board: board,
       channel: Session.get('channel'),
       limit: Session.get('actionLimit'),
     });
@@ -50,8 +51,7 @@ Router.route('/board/:boardId/action/:_id/:section', {
   waitOn: function() {
     return [
     Meteor.subscribe('milestones', this.params.boardId),
-    Meteor.subscribe('singleAction', this.params._id),
-    Meteor.subscribe('subjectSuggestions', {subjectText: ''}),
+    Meteor.subscribe('singleAction', this.params._id),    
     Meteor.subscribe('comments', this.params._id)
     ];
   },

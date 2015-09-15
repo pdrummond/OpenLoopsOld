@@ -4,7 +4,7 @@
 		<i id="back-icon" class="left arrow icon" style="position: absolute;top: 5px;left: 5px;"></i> 
 		<i id="full-screen-icon" class="maximize icon" style="position: absolute;top: 5px;right: 5px;"></i> 
 		<h1>    
-			<i style="float:left" class="big {{itemIcon this}} {{itemIconColor this}} icon"></i>    
+			<i style="float:left;top:5px;position: relative;" class="big {{itemIcon this}} {{itemIconColor this}} icon"></i>    
 			<div style="padding-left:50px">
 			<div class="item-sid" style="text-transform:uppercase;font-size:12px;color:gray">{{sidLabel this}}</div>
 			<span id="action-title">{{title}}</span>
@@ -18,7 +18,7 @@
 	</div>
 	<div id="tab-wrapper" style="height:calc( 100% - 220px );overflow-y:scroll">
 		<div class="ui active basic tab segment" data-tab="first" style="margin:20px;font-size:16px">
-			{{description}}
+			{{#markdown}}{{text}}{{/markdown}}
 		</div>
 		<div class="ui basic tab segment" data-tab="second"  style="margin:10px;position:relative">
 			{{> actionDetailMessages}}

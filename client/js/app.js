@@ -37,6 +37,31 @@ Template.message.events({
 	}
 });
 
+Template.createPostActivity.events({
+	'click .activity-subject-label': function() {		
+		Session.set('newSubjectItemId', this.item._id);
+		Session.set('newSubjectItemType', this.item.type);
+		$("#message-input").focus();
+	},
+
+	'click .sid-label': function() {
+		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
+		Session.set('selectedAction', this.item);
+	}
+});
+
+Template.createItemActivity.events({
+	'click .activity-subject-label': function() {		
+		Session.set('newSubjectItemId', this.item._id);
+		Session.set('newSubjectItemType', this.item.type);
+		$("#message-input").focus();
+	},
+
+	'click .sid-label': function() {
+		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
+		Session.set('selectedAction', this.item);
+	}
+});
 
 Template.messageHolder.helpers({
 	archivedClass: function() {

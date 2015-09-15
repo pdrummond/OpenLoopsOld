@@ -33,7 +33,7 @@ Template.actions.helpers({
 	},
 
 	actions: function() {  	
-		return Items.find({}, {sort: {timestamp: 1}});
+		return Items.find({itemType: 'action'}, {sort: {timestamp: 1}});
 	},
 
 	actionCount: function() {
@@ -93,35 +93,6 @@ Template.actions.events({
 		if(filter != null) {
 			Meteor.call('deleteFilter', filter._id);
 		}
-	}
-});
-
-Template.actionItem.onRendered(function() {
-
-	this.$('.ui.dropdown').dropdown({
-		action: 'hide'
-	});
-});
-
-Template.actionItem.helpers({
-	milestoneLabel: function() {
-		var milestone =  Milestones.findOne(this.milestone);
-		return milestone?milestone.title:'No Milestone';
-	},	
-});
-
-Template.actionItem.events({
-	'click .action .header': function() {		
-		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
-		Session.set('selectedAction', this);
-	},
-
-	'mouseover .action.item .action-check': function(e) {
-		$(e.target).removeClass('square outline').addClass('checkmark box');
-	},
-
-	'mouseout .action.item .action-check': function(e) {
-		$(e.target).removeClass('checkmark box').addClass('square outline');
 	}
 });
 

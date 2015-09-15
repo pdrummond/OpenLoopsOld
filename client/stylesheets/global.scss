@@ -645,6 +645,16 @@ pre {
   font-style:normal;
 }
 
+.activity-post {
+  padding-left:20px;
+  padding-top:20px;
+  padding-bottom:10px;
+  padding-right:50px;
+  color:black;
+  font-style:normal;
+}
+
+
 #comments-section .ui.comments {
   max-width:none;
 }
@@ -717,12 +727,12 @@ pre {
     top: -15px;
 }
 
-.subject-label {
-      color: green;
-    cursor: pointer;
+.subject-label, .activity-subject-label {
+  color: green;
+  cursor: pointer;
 }
 
-.subject-label:hover {
+.subject-label:hover, .activity-subject-label:hover {
   color: #0098FF;
 }
 
@@ -757,3 +767,9 @@ pre {
 #actions-wrapper .subject-label {
   display:none;
 }
+
+.sid-label {   
+  cursor:pointer;
+  color: #0098FF;
+}
+

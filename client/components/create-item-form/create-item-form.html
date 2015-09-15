@@ -1,5 +1,5 @@
 <template name="createItemForm">
-	<form class="ui form"  style="padding:10px;background:#FBFBFB">
+	<form id="createItemForm" class="ui form"  style="padding:10px;background:#FBFBFB">
 		<h1>Create {{createItemFormLabel}}</h1>
 		<div class="field">
 			<label>Title: </label>
@@ -7,16 +7,11 @@
 		</div>
 		<div class="field">
 			<label>Description: </label>
-			<textarea  name="action-description" placeholder="Enter description here"></textarea>
+			<textarea name="description" placeholder="Enter description here"></textarea>
 		</div>
 		<div class="field">
 			<label>Members: </label>
 			<input type="text" name="members" placeholder="Enter list of team members here">
-		</div>
-
-		<div class="field">
-			<label>Labels: </label>
-			<input type="text" name="members" placeholder="Enter labels here">
 		</div>
 
 		<div class="ui buttons" style="float:right">
