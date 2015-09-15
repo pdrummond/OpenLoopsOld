@@ -1,0 +1,20 @@
+<template name="createPostActivity">
+	<div class="activity message" data-userid={{userId}}>
+		<img src="{{profileImage userId}}" class="message_profile-pic"/>
+		<a href="" class="message_username">{{usernameFromId userId}}</a>
+		<span class="message_timestamp">{{timeAgo timestamp}}</span>
+		<span class="message_star"></span>
+		<span class="message_content" style="color:#8b898f;font-style:italic">
+			
+			{{{activitySubjectLabel item}}} created a post
+			<span class="sid-label">{{sidLabel item}}: {{itemTitle item}}</span>
+			<div class="activity-post">
+				<i class="mail outline icon big" style="float:left;color:lightgray"></i>
+				<div style="margin-left:50px">
+				<strong>{{item.title}}</strong>
+				{{{truncateItemText this item.text 500}}}
+				</div>
+			</div>
+		</span>
+	</div>
+</template>
