@@ -1,4 +1,28 @@
+Template.actionDetailSidebarView.onRendered( function() {
+	this.editor = CodeMirror.fromTextArea( this.find( "#item-description-editor" ), {
+		lineNumbers: false,
+		fixedGutter: false,
+		mode: "markdown",
+		lineWrapping: true,
+		indentWithTabs:false,
+	});
+	$(".CodeMirror").hide();	
+});
+
 Template.actionDetailSidebarView.events({
+	'click #edit-description-link': function(event, template) {
+		if($("#item-description").is(":visible")) {
+			$("#item-description").hide();
+			$(".CodeMirror").show();
+			$("#edit-description-link").html("<i class='save icon'></i> Save");
+		} else {
+			Meteor.call('updateItemDescription', Session.get('selectedItemId'), template.editor.getValue());
+			$("#item-description").show();
+			$(".CodeMirror").hide();
+			$("#edit-description-link").html("<i class='pencil icon'></i> Edit");
+		}
+	},
+
 	'click #full-screen-icon': function() {
 		Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");		
 	},

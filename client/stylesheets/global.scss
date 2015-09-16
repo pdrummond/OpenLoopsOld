@@ -779,3 +779,7 @@ pre {
    outline:none;
    cursor:pointer;
 }
+
+#actions-wrapper .CodeMirror {
+  height:calc(100% - 20px);
+}
