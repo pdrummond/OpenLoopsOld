@@ -7,17 +7,8 @@ Template.rightSidebar.helpers({
 
 Template.actionDetailSidebarView.helpers({
 	selectedSidebarAction: function() {
-		return Session.get('selectedAction');
+		return Items.findOne(Session.get('selectedItemId'));
 	},
-
-});
-
-Template.actionDetailMessages.helpers({
-
-	messages: function() {	
-		console.log("getting action detail comments");	
-		return Messages.find({channel: Session.get('selectedAction').channel});
-	}
 
 });
 

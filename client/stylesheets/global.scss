@@ -155,7 +155,7 @@ body {
 .main-wrapper .message-history {
   padding-top:20px;
   padding-left:20px;
-  padding-bottom:50px;
+  padding-bottom:0px;
   padding-right: 10px;
   xmargin-left: 220px;
   overflow-y: auto;
@@ -773,3 +773,9 @@ pre {
   color: #0098FF;
 }
 
+
+
+#show-earlier-link {
+   outline:none;
+   cursor:pointer;
+}

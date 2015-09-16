@@ -46,7 +46,7 @@ Template.createPostActivity.events({
 
 	'click .sid-label': function() {
 		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
-		Session.set('selectedAction', this.item);
+		Session.set('selectedItemId', this.item._id);
 	}
 });
 
@@ -59,7 +59,7 @@ Template.createItemActivity.events({
 
 	'click .sid-label': function() {
 		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
-		Session.set('selectedAction', this.item);
+		Session.set('selectedItemId', this.item._id);
 	}
 });
 

@@ -1,5 +1,5 @@
-Template.registerHelper('selectedAction', function (item) {	
-	return Session.get('selectedAction');
+Template.registerHelper('selectedItem', function (item) {	
+	return Items.findOne(Session.get('selectedItemId'));
 });
 
 Template.registerHelper('itemIcon', function (item) {	

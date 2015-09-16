@@ -3,14 +3,20 @@ Template.actionStatusDropdown.events({
 		e.preventDefault();		
 		var newStatus = $(e.target).attr('data-value');
 		if(newStatus && newStatus.length > 0){
-			Meteor.call('updateItemStatus', Session.get('selectedAction')._id, newStatus);			
+			Meteor.call('updateItemStatus', Session.get('selectedItemId'), newStatus);
+
 		}
 	}
 });
 
 Template.actionStatusDropdown.helpers({
 	selectedActionStatusLabel: function() {
-		var action = Session.get('selectedAction');
+		var action = Items.findOne(Session.get('selectedItemId'));
 		return OpenLoops.ActionStatusMeta[action.status].label || 'ERR: No Status';
+	},
+
+	selectedActionStatusColor: function() {
+		var action = Items.findOne(Session.get('selectedItemId'));
+		return OpenLoops.ActionStatusMeta[action.status].color || 'ERR: No Color';
 	}
 })

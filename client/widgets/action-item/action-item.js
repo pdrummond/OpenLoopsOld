@@ -16,7 +16,7 @@ Template.actionItem.helpers({
 Template.actionItem.events({
 	'click .action .header': function() {		
 		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
-		Session.set('selectedAction', this);
+		Session.set('selectedItemId', this._id);
 	},
 
 	'mouseover .action.item .action-check': function(e) {

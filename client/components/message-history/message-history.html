@@ -14,14 +14,7 @@
 
 <template name="messageHistoryView">	
 	<div class="ui list message-history">		
-		<div style="width:100%;text-align:center">
-			<div id="show-earlier-link" class="ui animated fade button" tabindex="0" style="width:100px">
-				<div class="visible content"><i class="up arrow icon"></i></div>
-				<div class="hidden content">
-					Show More
-				</div>
-			</div>
-		</div>
+		<a id="show-earlier-link"  tabindex="0" style="width:100px"><i class="up arrow icon"></i> Show Older Messages</a>
 		{{#each messages}}
 		{{> messageHolder}}
 		{{/each}}
