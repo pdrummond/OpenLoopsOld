@@ -1,7 +1,7 @@
 
-  <template name="actionStatusDropdown">  
-    <div class="ui small dropdown {{itemStatusColor this}} button">
-      <span class="text" style="color:white">Status: {{itemStatusLabel this}}</span>
+  <template name="actionStatusDropdown" >  
+    <div class="ui small dropdown {{itemStatusColor selectedAction}} button" style="float:right">
+      <span class="text" style="color:white">Status: {{selectedActionStatusLabel}} </span>
       <div class="aligned right menu" style="left:-90px !important">
         <div class="status item" data-value="new">
           <div class="ui teal empty circular label"></div>

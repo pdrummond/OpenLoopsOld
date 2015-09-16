@@ -1,3 +1,6 @@
+Template.registerHelper('selectedAction', function (item) {	
+	return Session.get('selectedAction');
+});
 
 Template.registerHelper('itemIcon', function (item) {	
 	return OpenLoops.getItemIcon(item);

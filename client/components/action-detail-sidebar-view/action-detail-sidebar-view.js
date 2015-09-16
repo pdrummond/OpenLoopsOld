@@ -1,23 +1,12 @@
 Template.actionDetailSidebarView.events({
 	'click #full-screen-icon': function() {
-		Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");
-		/*Session.set('messageLimit', 30);
-		Session.set('filterString', '');
-		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/" + this.channel + "/messages");*/
+		Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");		
 	},
 
 	'click #back-icon': function() {
 		Session.set('rightSidebarTemplate', 'actions');
 	},
 	
-	'click .status.item': function(e) {
-		e.preventDefault();		
-		var newStatus = $(e.target).attr('data-value');
-		if(newStatus && newStatus.length > 0){
-			Meteor.call('updateActionStatus', this._id, newStatus, Session.get('channel'));
-		}
-	},
-
 	'keyup #comment-input': function(e) {
 		e.stopPropagation();
 		e.preventDefault();

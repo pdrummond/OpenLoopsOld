@@ -10,6 +10,7 @@
 			<span id="action-title">{{title}}</span>
 			</div>
 		</h1>
+			{{> actionStatusDropdown}}
 	</div>	
 	<div class="ui top attached secondary pointing tabular menu">
 		<a class="active item" data-tab="first">Description</a>
@@ -25,7 +26,7 @@
 		</div>	
 		<div class="ui basic tab segment" data-tab="third"  style="margin:10px">
 			<table class="ui celled table" style="margin-left:25px;width:400px;">
-				<tr><td>Status</td><td><strong>{{> actionStatusDropdown}}</strong></td></tr>
+				<tr><td>Status</td><td><strong>{{itemStatusLabel this}}</strong></td></tr>
 				<tr><td>Milestone</td><td><strong>Backlog</strong></td></tr>
 				<tr><td>Reporter</td><td><strong>pdrummond</strong></td></tr>
 				<tr><td>Created Date</td><td><strong>9th May 2015</strong></td></tr>
