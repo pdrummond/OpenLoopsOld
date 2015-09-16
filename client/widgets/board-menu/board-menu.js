@@ -4,6 +4,10 @@ Template.boardMenu.onRendered(function() {
 });
 
 Template.boardMenu.events({
+	'click #logout-menu-item': function() {
+		Meteor.logout();
+	},
+
 	'click #show-all-boards': function() {
 		Router.go("/");
 	},
