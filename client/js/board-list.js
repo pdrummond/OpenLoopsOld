@@ -4,6 +4,11 @@ Template.boardList.events({
 		$('#createBoardDialog').modal({
 			closable: false,
 			blurring: true,
+			onVisible: function() {
+				setTimeout(function() {
+					$("#createBoardDialog input[name='title']").focus();
+				}, 1);
+			},
 			onApprove : function() {
 				var board = {
 					title: $("#createBoardDialog input[name='title']").val(),
@@ -17,5 +22,6 @@ Template.boardList.events({
 			}
 		});
 		$('#createBoardDialog').modal('show');
+		
 	},
 });

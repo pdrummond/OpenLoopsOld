@@ -3,8 +3,7 @@ Router.configure({
   notFoundTemplate: 'notFound',
   waitOn: function() { 
     return [
-    Meteor.subscribe('boards'),
-    Meteor.subscribe('boardMembers'),
+    Meteor.subscribe('boards'),    
     Meteor.subscribe('filters'),
     Meteor.subscribe('allUsernames')
     ];
@@ -32,7 +31,7 @@ Router.route('/board/:boardId/messages', function () {
   if(!board) {
     this.render("notFound");
   } else {
-    Meteor.subscribe('subjectSuggestions', {subjectText: ''});
+    Meteor.subscribe('subjectSuggestions', {boardId: this.params.boardId, subjectText: ''});
     Meteor.subscribe('milestones', board._id);
     Meteor.subscribe('actions', {
       filter: OpenLoops.getFilter(Session.get('filterString')),

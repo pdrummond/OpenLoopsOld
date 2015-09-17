@@ -1,5 +1,6 @@
 Meteor.publish('boards', function () {
-    return Boards.find();
+    console.log("board publish userId = " + this.userId);
+    return Boards.find({'members.userId': this.userId});
 });
 
 Meteor.publish('messages', function (opts) {
@@ -10,10 +11,10 @@ Meteor.publish('messages', function (opts) {
 Meteor.publish('subjectSuggestions', function(opts) {    
     console.log("subjectSuggestions PUBLISHED");
     if(opts && opts.subjectText && opts.subjectText.length > 0) {
-        return Items.find({title: {'$regex': subjectText}}, {limit: 20, sort: {timestamp: -1}});
+        return Items.find({boardId: opts.boardId, title: {'$regex': subjectText}}, {limit: 20, sort: {timestamp: -1}});
     } else {
-        return Items.find();//{}, {limit: 20, sort: {timestamp: -1}});
-}
+        return Items.find({boardId: opts.boardId}, {limit: 20, sort: {timestamp: -1}});
+    }
 });
 
 Meteor.publish('singleAction', function (id) {
