@@ -4,7 +4,6 @@ Template.actionStatusDropdown.events({
 		var newStatus = $(e.target).attr('data-value');
 		if(newStatus && newStatus.length > 0){
 			Meteor.call('updateItemStatus', Session.get('selectedItemId'), newStatus);
-
 		}
 	}
 });

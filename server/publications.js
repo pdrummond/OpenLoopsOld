@@ -1,5 +1,10 @@
-Meteor.publish('messages', function (opts) {    
-    return Messages.find(opts.filter, {limit: opts.limit, sort: {timestamp: -1}});
+Meteor.publish('boards', function () {
+    return Boards.find();
+});
+
+Meteor.publish('messages', function (opts) {
+    var filter = _.extend(opts.filter, {boardId: opts.boardId});
+    return Messages.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 
 Meteor.publish('subjectSuggestions', function(opts) {    
@@ -8,7 +13,7 @@ Meteor.publish('subjectSuggestions', function(opts) {
         return Items.find({title: {'$regex': subjectText}}, {limit: 20, sort: {timestamp: -1}});
     } else {
         return Items.find();//{}, {limit: 20, sort: {timestamp: -1}});
-    }
+}
 });
 
 Meteor.publish('singleAction', function (id) {
@@ -16,7 +21,7 @@ Meteor.publish('singleAction', function (id) {
 });
 
 Meteor.publish('itemMessages', function (opts) {    
-    return Messages.find({boardId: opts.board._id, subjectItemId: opts.subjectItemId}, {limit: opts.limit, sort: {timestamp: 1}});
+    return Messages.find({boardId: opts.boardId, subjectItemId: opts.subjectItemId}, {limit: opts.limit, sort: {timestamp: 1}});
 });
 
 Meteor.publish('actions', function (opts) {
@@ -34,7 +39,7 @@ Meteor.publish('actions', function (opts) {
             {$and: [{type: 'message'},      _.extend({boardId: opts.board._id, channel: opts.channel}, opts.filter)]}
         ]
     };*/    
-    var filter = _.extend({boardId: opts.board._id, itemType: 'action', archived: false}, opts.filter);
+    var filter = _.extend({boardId: opts.boardId, itemType: 'action', archived: false}, opts.filter);
     //console.log("ACTION FILTER: " + JSON.stringify(filter, null, 4));
 
     //Counts.publish(this, 'action-open-count', Actions.find(_.extend({boardId: opts.board._id, archived: false}, opts.filter)), { noReady: true });

@@ -9,7 +9,7 @@ Template.messageHistoryView.onCreated(function() {
 	self.autorun(function() {
 		self.subscribe('messages', {
 			filter: OpenLoops.getMessageFilter(Session.get('messageFilterString')),
-			board: Session.get('currentBoard'),			
+			boardId: Session.get('currentBoardId'),
 			limit: Session.get('messageLimit'),			
 		}, function() {
 			setTimeout(function() {

@@ -24,7 +24,7 @@ Template.actions.helpers({
 	},
 
 	actions: function() {  	
-		return Items.find({itemType: 'action'}, {sort: {timestamp: 1}});
+		return Items.find({boardId: Session.get('currentBoardId'), itemType: 'action'}, {sort: {timestamp: 1}});
 	},
 
 	actionCount: function() {
@@ -66,7 +66,7 @@ Template.actions.events({
 			var query = $(".input-box_filter").val();
 			if(query != null && query.length > 0) {
 				Meteor.call('createFilter', {
-					boardId: Session.get('currentBoard')._id,
+					boardId: Session.get('currentBoardId'),
 					channel: Session.get('channel'),
 					title: title, 
 					query: query					

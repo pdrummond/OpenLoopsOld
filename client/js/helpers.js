@@ -65,7 +65,7 @@ Template.registerHelper('boards', function (context) {
 });
 
 Template.registerHelper('currentBoardId', function (context) {
-	return Session.get('currentBoard')._id;
+	return Session.get('currentBoardId');
 });
 
 Template.registerHelper('channelName', function () {	
@@ -74,7 +74,7 @@ Template.registerHelper('channelName', function () {
 
 Template.registerHelper('channelMid', function () {	
 	var channelUid = '';
-	var channel = Channels.findOne({name: Session.get('channel'), boardId: Session.get('currentBoard')._id});	
+	var channel = Channels.findOne({name: Session.get('channel'), boardId: Session.get('currentBoardId')});	
 	if(channel.type == 'action-channel') {
 		channelUid = "#" + Boards.findOne(channel.action.boardId).prefix + "-" + channel.action.mid;
 	}
@@ -82,34 +82,30 @@ Template.registerHelper('channelMid', function () {
 });
 
 Template.registerHelper('channelDescription', function (name) {	
-	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoard')._id});
+	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoardId')});
 	return channel.description || "No Description";
 });
 
 
 Template.registerHelper('channelIcon', function (name) {	
-	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoard')._id});
+	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoardId')});
 	return channel.type == 'action-channel'?'tasks': 'comments outline';
 });
 
 Template.registerHelper('channelTypeLabel', function (name) {	
-	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoard')._id});
+	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoardId')});
 	return channel.type == 'action-channel'?'Action': 'Discussion';
-});
-
-Template.registerHelper('channels', function (context) {
-	return Channels.find({boardId: Session.get('currentBoard')._id}, {sort: {timestamp: 1}});
 });
 
 Template.registerHelper('filters', function (context) {
 	return Filters.find({
-		boardId: Session.get('currentBoard')._id, 
+		boardId: Session.get('currentBoardId'), 
 		channel: Session.get('channel')
 	});
 });
 
 Template.registerHelper('currentBoardTitle', function (context) {
-	return Session.get('currentBoard').title;
+	return Boards.findOne(Session.get('currentBoardId')).title;
 });
 
 Template.registerHelper('profileImage', function (context) {
@@ -139,17 +135,6 @@ Template.registerHelper("timestampToTime", function (timestamp) {
 	return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2);
 });
 
-Template.registerHelper("truncateCommentText", function (obj, text, maxSize) {	
-	if(text.length > maxSize) {
-		return parseMarkdown(text.substring(0, maxSize)).replace(/^<p>/, '').replace(/<\/p>$/,'') + 
-		"... (<a href='/board/" + 
-			Session.get('currentBoard')._id + "/action/" + obj.action._id + 
-			"/comments/" + obj.comment._id + "'> Read More </a>)";	
-} else {
-	return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
-}
-});
-
 Template.registerHelper("truncateItemText", function (obj, text, maxSize) {	
 	if(text.length > maxSize) {
 		return parseMarkdown(text.substring(0, maxSize)).replace(/^<p>/, '').replace(/<\/p>$/,'') + 
@@ -158,7 +143,6 @@ Template.registerHelper("truncateItemText", function (obj, text, maxSize) {
 		return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
 	}
 });
-
 
 Template.registerHelper("currentUserName", function () {
 	var user = Meteor.user();

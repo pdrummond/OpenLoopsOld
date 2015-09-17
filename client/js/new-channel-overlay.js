@@ -6,7 +6,7 @@ Template.newChannelOverlay.events({
 		if(name && name.length > 0) {
 
 			var channel = {
-				boardId: Session.get('currentBoard')._id,
+				boardId: Session.get('currentBoardId'),
 				name: name,
 				type: $('input[name="type"]').val(),
 				members: $('input[name="members"]').val().split(","),

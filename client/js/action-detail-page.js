@@ -33,7 +33,7 @@ Template.actionDetailPage.events({
 
 	'click #back-icon': function() {
 		var channel = Session.get('channel') || "general";
-		Router.go('/board/' + Session.get('currentBoard')._id + "/channel/" + channel + "/messages");		
+		Router.go('/board/' + Session.get('currentBoardId') + "/channel/" + channel + "/messages");		
 	},
 
 	'dblclick #action-title': function() {
@@ -55,13 +55,13 @@ Template.actionDetailPage.events({
 	},	
 
 	'click #description-button': function() {
-		Router.go("/board/" + Session.get('currentBoard')._id + "/action/" + Session.get('selectedAction')._id + "/description");
+		Router.go("/board/" + Session.get('currentBoardId') + "/action/" + Session.get('selectedAction')._id + "/description");
 	},
 	'click #comments-button': function() {
-		Router.go("/board/" + Session.get('currentBoard')._id + "/action/" + Session.get('selectedAction')._id + "/comments");
+		Router.go("/board/" + Session.get('currentBoardId') + "/action/" + Session.get('selectedAction')._id + "/comments");
 	},
 	'click #activity-button': function() {
-		Router.go("/board/" + Session.get('currentBoard')._id + "/action/" + Session.get('selectedAction')._id + "/activity");
+		Router.go("/board/" + Session.get('currentBoardId') + "/action/" + Session.get('selectedAction')._id + "/activity");
 	},
 
 	'click #edit-description': function(e) {
@@ -91,7 +91,7 @@ Template.comments.events({
 		var text = $("#comment-reply-textarea").val();
 		if(text && text.length > 0) {
 			Meteor.call('createComment', {
-				boardId: Session.get('currentBoard')._id,
+				boardId: Session.get('currentBoardId'),
 				actionId: Session.get('selectedAction')._id, 
 				text: text
 			});

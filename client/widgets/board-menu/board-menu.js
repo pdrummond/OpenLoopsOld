@@ -13,7 +13,7 @@ Template.boardMenu.events({
 	},
 
 	'click #board-settings': function() {		
-		var board = Session.get('currentBoard');
+		var board = Boards.findOne(Session.get('currentBoardId'));
 		$('#boardSettingsDialog').modal({
 			closable: true,
 			blurring: true,
@@ -37,8 +37,8 @@ Template.boardMenu.events({
 
 Template.board.events({
 	'click': function() {		
-		Session.set('currentBoard', this);
+		Session.set('currentBoardId', this._id);
 		Session.set('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
-		Router.go("/board/" + Session.get('currentBoard')._id + "/messages");
+		Router.go("/board/" + Session.get('currentBoardId') + "/messages");
 	}
 });

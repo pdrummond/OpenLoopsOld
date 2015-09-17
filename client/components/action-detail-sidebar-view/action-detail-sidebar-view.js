@@ -24,7 +24,7 @@ Template.actionDetailSidebarView.events({
 	},
 
 	'click #full-screen-icon': function() {
-		Router.go('/board/' + Session.get('currentBoard')._id + '/action/' + this._id + "/description");		
+		Router.go('/board/' + Session.get('currentBoardId') + '/action/' + this._id + "/description");		
 	},
 
 	'click #back-icon': function() {
@@ -62,7 +62,7 @@ Template.actionDetailSidebarView.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
 		self.subscribe('itemMessages', {			
-			board: Session.get('currentBoard'),
+			boardId: Session.get('currentBoardId'),
 			subjectItemId: this._id,			
 			limit: Session.get('messageLimit'),
 		}, function() {

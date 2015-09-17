@@ -40,7 +40,7 @@ Router.route('/board/:boardId/messages', function () {
       channel: Session.get('channel'),
       limit: Session.get('actionLimit'),
     });
-    Session.set('currentBoard', board);
+    Session.set('currentBoardId', this.params.boardId);
 
     this.render('messageHistoryPage');
   }
@@ -58,7 +58,7 @@ Router.route('/board/:boardId/action/:_id/:section', {
   data: function() {    
     var board = Boards.findOne(this.params.boardId);
     if(board) {
-      Session.set('currentBoard', board);
+      Session.set('currentBoardId', this.params.boardId);
       var action = Actions.findOne(this.params._id);    
       if(action != null) {
         Session.set('selectedAction', action);
@@ -88,7 +88,7 @@ Router.route('/board/:boardId/action/:_id/comments/:commentId', {
   data: function() {    
     var board = Boards.findOne(this.params.boardId);
     if(board) {
-      Session.set('currentBoard', board);
+      Session.set('currentBoardId', this.params.boardId);
       var action = Actions.findOne(this.params._id);    
       if(action != null) {
         Session.set('selectedAction', action);

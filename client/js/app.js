@@ -121,7 +121,7 @@ Template.listings.events({
 			$('.new-channel-form').hide();
 			$(".channel-input").val('');
 			Meteor.call('createChannel', {
-				boardId: Session.get('currentBoard')._id,
+				boardId: Session.get('currentBoardId'),
 				name: name
 			});
 			Session.set('channel', name);
@@ -154,7 +154,7 @@ Template.listings.events({
 					var channelName = $("#createChannelDialog input[name='discussion-name']").val();
 					if(channelName != null && channelName.length > 0) {
 						Meteor.call('createChannel', {
-							boardId: Session.get('currentBoard')._id,
+							boardId: Session.get('currentBoardId'),
 							name: channelName,
 							type: 'discussion-channel'
 						});
@@ -185,7 +185,7 @@ Template.channel.events({
 		Session.set('messageLimit', 30);
 		Session.set('filterString', '');
 		Session.set('boardPage.viewTemplate', 'messageHistoryView');
-		Router.go("/board/" + Session.get('currentBoard')._id + "/channel/" + this.name + "/messages");
+		Router.go("/board/" + Session.get('currentBoardId') + "/channel/" + this.name + "/messages");
 	}
 });
 
@@ -204,7 +204,7 @@ Template.boardSettingsDialog.onRendered(function() {
 
 Template.boardSettingsDialog.helpers({
 	boardMembers: function() {
-		return BoardMembers.find({boardId: Session.get('currentBoard')._id});
+		return BoardMembers.find({boardId: Session.get('currentBoardId')});
 	}
 });
 
@@ -223,7 +223,7 @@ Template.boardMember.events({
 				alert("No user found with that name.  Please try again"); 
 			} else {
 				Meteor.call('createBoardMember', {
-					boardId: Session.get('currentBoard')._id,
+					boardId: Session.get('currentBoardId'),
 					userId: user._id,
 					role: 'USER'
 				}, function(error, result) {
