@@ -6,9 +6,10 @@
 
 <template name="actions">
 	<div  class="ui top tabular pointing secondary menu" style='margin-bottom:0'>
+		
 		<a id="actions-tab" class="{{activeTab 'actions'}} item"><i class="warning circle icon"></i> Actions</a>
 		<a id="labels-tab" class="{{activeTab 'labels'}} item"><i class="tag icon"></i> Labels</a>
-		<a id="searches-tab" class="{{activeTab 'searches'}} item"><i class="search icon"></i> Searches</a>
+		<a id="people-tab" class="{{activeTab 'people'}} item"><i class="users icon"></i> People</a>
 	</div>
 	<div class="ui bottom attached {{activeTab 'actions'}} tab" data-tab="first" style="height:100%">			
 
@@ -80,7 +81,7 @@
 			</a>
 		</div>
 	</div>	
-	<div class="ui bottom attached tab {{activeTab 'searches'}}" data-tab="forth">
+	<div class="ui bottom attached tab {{activeTab 'people'}}" data-tab="forth">
 		<div class="ui divided selection list">				
 			<div class="item" style="padding:10px">
 				<div class="right floated content">
