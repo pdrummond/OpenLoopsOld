@@ -173,13 +173,7 @@ Template.footer.events({
 
 						switch(command) {
 							case 'create': {
-								if(itemType == "milestone") {
-									OpenLoops.createMilestone(commandContent, function(error, result) {
-										if(error) {
-											alert("Error: " + error);
-										}
-									});	
-								} else {
+								if(itemType == "task" || itemType == "todo" || itemType == "bug") {
 									OpenLoops.createAction(itemType, commandContent, Session.get('newSubjectItemId'), function(error, result) {
 										if(error) {
 											alert("Error: " + error);
@@ -216,10 +210,10 @@ Template.footer.events({
 					}
 				}
 			});*/
-		} else {			
-			$("#subjectSuggestionPopup").fadeOut();
-		}	
-	},
+} else {			
+	$("#subjectSuggestionPopup").fadeOut();
+}	
+},
 
 	/*'click #new-item-icon': function() {		
 		var type = Session.get('newItemType');

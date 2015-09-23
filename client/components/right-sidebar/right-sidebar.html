@@ -7,7 +7,6 @@
 <template name="actions">
 	<div  class="ui top tabular pointing secondary menu" style='margin-bottom:0'>
 		<a id="actions-tab" class="{{activeTab 'actions'}} item"><i class="warning circle icon"></i> Actions</a>
-		<a id="milestones-tab" class="{{activeTab 'milestones'}} item"><i class="flag icon"></i> Milestones</a>
 		<a id="labels-tab" class="{{activeTab 'labels'}} item"><i class="tag icon"></i> Labels</a>
 		<a id="searches-tab" class="{{activeTab 'searches'}} item"><i class="search icon"></i> Searches</a>
 	</div>
@@ -49,21 +48,6 @@
 			</div>
 		</div>			
 	</div>
-	<div class="ui bottom attached tab {{activeTab 'milestones'}}" data-tab="second">
-		<div class="ui small text menu" style="margin: 0;margin-left: 10px;">		
-			<a class="active item">
-				<i class='icon circle'></i> {{actionCount}} Open
-			</a>
-			<a class="item">
-				<i class='icon archive'></i> {{archivedCount}} Archived
-			</a>			
-		</div>	
-		<div class="ui cards" style="margin-left:8px">
-			{{#each milestones}}
-			{{> milestoneCard}}
-			{{/each}}				
-		</div>
-	</div>	
 	<div class="ui bottom attached tab {{activeTab 'labels'}}" data-tab="third">
 		<div class="ui divided selection list">
 			<a class="item">
