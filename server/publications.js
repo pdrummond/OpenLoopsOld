@@ -1,5 +1,8 @@
+Meteor.publish('teamMembers', function () {
+    return TeamMembers.find();
+});
+
 Meteor.publish('boards', function () {
-    console.log("board publish userId = " + this.userId);
     return Boards.find({'members.userId': this.userId});
 });
 

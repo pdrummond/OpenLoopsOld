@@ -3,6 +3,7 @@ Router.configure({
   notFoundTemplate: 'notFound',
   waitOn: function() { 
     return [
+    Meteor.subscribe('teamMembers'),
     Meteor.subscribe('boards'),    
     Meteor.subscribe('filters'),
     Meteor.subscribe('allUsernames')

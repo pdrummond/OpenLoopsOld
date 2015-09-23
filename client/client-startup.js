@@ -6,5 +6,5 @@ Meteor.startup(function() {
 	Session.setDefault('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
 	Session.setDefault('commentLimit', OpenLoops.COMMENT_LIMIT_INC);
 	Session.setDefault('messageCreationType', "message");
-	Session.setDefault('currentSection', "description");
+	Session.setDefault('currentSection', "description");	
 });

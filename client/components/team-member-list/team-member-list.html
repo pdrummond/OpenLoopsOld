@@ -1,0 +1,32 @@
+<template name="teamMemberList">
+	<div class="ui raised segment" data-tab="second">
+		<div class="ui aligned list">
+			{{#each teamMembers}}
+			{{ > teamMember}}
+			{{/each}}
+		</div>
+	</div>
+</template>
+
+
+<template name="teamMember">
+	<div class="item">
+		<div class="right floated content">
+			<div class="ui floating dropdown button" style="position: relative;width:160px;top:1.8px;">
+				<div class="text" ><i class="{{roleIcon}} icon"></i> {{roleName}}</div>
+				<i class="dropdown icon"></i>
+				<div class="menu">
+					<a id="set-admin-user" class="item" href="#link1"><i class="spy icon"></i> Admin</a>
+					<a id="set-normal-user" class="item" href="#link2"><i class="user icon"></i> User</a>		    
+				</div>
+			</div>
+			<div class="ui icon buttons">				
+				<button id="new-member-button" class="ui button"><i class="plus green icon"></i></button>
+				<button id="remove-member-button" class="ui button"><i class="remove red icon"></i></button>
+			</div>
+		</div>		
+		<div class="content">
+			<a class="header">{{_id}}</a>			
+		</div>
+	</div>
+</template>

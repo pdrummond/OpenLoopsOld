@@ -1,5 +1,5 @@
 <template name="boardList">
-	<h1> Boards </h1>
+	<h1 style="padding:10px"> BOARDS </h1>
 	<div class="ui text container">
 		<div class="ui raised segment">
 			<button id="create-board-button" class="ui primary button">
@@ -12,6 +12,12 @@
 			</ul>
 		</div>
 	</div>
+
+		<h1 style="padding:10px"> TEAM MEMBERS </h1>
+	<div class="ui text container">
+		{{> teamMemberList}}
+	</div>
+
 
 	{{> createBoardDialog}}
 </template>
