@@ -25,7 +25,7 @@ Template.messageHistoryView.onCreated(function() {
 						if(message.userId != Meteor.userId() && message.timestamp > messagesReceivedTimeStamp) {
 							var newMessageCount = Session.get('newMessageCount') || 0;
 							Session.set('newMessageCount', ++newMessageCount);
-							$(".chat.message[data-messageid='" + message._id + "']").addClass('new-message');							
+							$(".message[data-messageid='" + message._id + "']").addClass('new-message');							
 						}
 					}
 				});

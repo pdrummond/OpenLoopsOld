@@ -37,7 +37,7 @@ Template.message.events({
 	},
 
 	'click': function() {		
-		$(".chat.message[data-messageid='" + this._id + "']").removeClass('new-message');
+		$(".message[data-messageid='" + this._id + "']").removeClass('new-message');
 	}
 });
 
@@ -51,6 +51,10 @@ Template.createPostActivity.events({
 	'click .sid-label': function() {
 		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
 		Session.set('selectedItemId', this.item._id);
+	},
+
+	'click': function() {		
+		$(".message[data-messageid='" + this._id + "']").removeClass('new-message');
 	}
 });
 
@@ -64,6 +68,10 @@ Template.createItemActivity.events({
 	'click .sid-label': function() {
 		Session.set('rightSidebarTemplate', 'actionDetailSidebarView');
 		Session.set('selectedItemId', this.item._id);
+	},
+
+	'click': function() {		
+		$(".message[data-messageid='" + this._id + "']").removeClass('new-message');
 	}
 });
 
