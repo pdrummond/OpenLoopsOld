@@ -1,21 +1,26 @@
 
 Meteor.startup(function() {	
-	Messages.find().observe({
-		added:function(document) {
-			var newMessageCount = Session.get('newMessageCount') || 0;
-			Session.set('newMessageCount', ++newMessageCount);
-			console.log("BOOM - new message added. " + Session.get('newMessageCount') + " newew Messages");
-		}
-	});
+	
+	Meteor.setInterval(function() {
+		console.log("checking new message toast");
+		
+		updateToastVisibility();
+	}, 2000);
 });
+
+Template.messageHistoryView.onRendered(function() {
+
+	$(".message-history").scroll(function() {		
+		OpenLoops.atBottom = (($(".message-history").scrollTop() + $(".message-history").height()) == $(".message-history")[0].scrollHeight);
+		updateToastVisibility();
+	});
+
+});
+
 Template.newMessagesToast.helpers({
 	newMessagesCount: function() {
 		return Session.get('newMessageCount');
-	},
-
-	showToastClass: function() {
-		return Session.get('newMessageCount') == 0 ? 'hide':'';
-	}
+	},	
 });
 
 Template.newMessagesToast.events({
@@ -24,3 +29,12 @@ Template.newMessagesToast.events({
 		OpenLoops.scrollBottom();
 	}
 })
+
+function updateToastVisibility() {
+	if(Session.get('newMessageCount') > 0 && OpenLoops.atBottom == false) {
+		$("#newMessagesToast").fadeIn();
+	} else {
+		$("#newMessagesToast").fadeOut();
+		Session.set('newMessageCount', 0);
+	}
+}

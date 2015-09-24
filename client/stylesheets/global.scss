@@ -793,3 +793,9 @@ pre {
     min-width: 200px;
     cursor: pointer;
 }
+
+.new-message {
+ background: #F2F2FD !important;
+ transition: all 1.0s ease;
+ display:none;
+}

@@ -34,6 +34,10 @@ Template.message.events({
 		Session.set('newSubjectItemType', Items.findOne(this.subjectItemId).type);
 		$("#message-input").focus();
 		//Session.set('messageFilterString', "[" + this.subject + "]");
+	},
+
+	'click': function() {		
+		$(".chat.message[data-messageid='" + this._id + "']").removeClass('new-message');
 	}
 });
 

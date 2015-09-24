@@ -5,17 +5,30 @@ Template.messageHistoryPage.helpers({
 });
 
 Template.messageHistoryView.onCreated(function() {
-	var self = this;
+	var self = this;	
 	self.autorun(function() {
 		self.subscribe('messages', {
 			filter: OpenLoops.getMessageFilter(Session.get('messageFilterString')),
 			boardId: Session.get('currentBoardId'),
 			limit: Session.get('messageLimit'),			
 		}, function() {
+			var messagesReceivedTimeStamp = new Date().getTime();
+			console.log("messages subscription updated");
 			setTimeout(function() {
 				if(Session.get('messageLimit') == OpenLoops.MESSAGE_LIMIT_INC) {
 					OpenLoops.scrollBottom();					
-				}				
+				}
+				Messages.find().observe({
+					added:function(message) {
+						console.log("message.createdAt: "  + message.timestamp);
+						console.log("rec ts: " + messagesReceivedTimeStamp);
+						if(message.userId != Meteor.userId() && message.timestamp > messagesReceivedTimeStamp) {
+							var newMessageCount = Session.get('newMessageCount') || 0;
+							Session.set('newMessageCount', ++newMessageCount);
+							$(".chat.message[data-messageid='" + message._id + "']").addClass('new-message');							
+						}
+					}
+				});
 			}, 50);
 		});
 	});	
