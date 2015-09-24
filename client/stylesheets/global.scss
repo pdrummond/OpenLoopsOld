@@ -783,3 +783,13 @@ pre {
 #actions-wrapper .CodeMirror {
   height:calc(100% - 20px);
 }
+
+#newMessagesToast {
+    position: absolute;
+    opacity: 0.8 !important;
+    bottom: 50px;
+    right: 10px;
+    z-index: 9999;
+    min-width: 200px;
+    cursor: pointer;
+}

@@ -1,4 +1,6 @@
 Meteor.startup(function() {
+	Session.setDefault('atBottom', true);
+	Session.setDefault('newMessageCount', 0);
 	Session.setDefault('messageHistoryPage.viewTemplate', 'messageHistoryView');
 	Session.setDefault('newItemType', 'message');
 	Session.setDefault('activeActionTab', 'actions');
