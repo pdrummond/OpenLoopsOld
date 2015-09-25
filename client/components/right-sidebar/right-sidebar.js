@@ -78,7 +78,24 @@ Template.actions.events({
 		if(filter != null) {
 			Meteor.call('deleteFilter', filter._id);
 		}
+	},
+
+	'click #clear-all-filters': function() {
+		Session.set('filterString', '');
+	},
+
+	'click #my-open-tasks-filter': function() {
+		Session.set('filterString', 'member:' + Meteor.user().username + ' type:task status:open');
+	},
+
+	'click #all-open-bugs-filter': function() {
+		Session.set('filterString', 'type:bug status:open');
+	},
+
+	'click #all-archived-actions': function() {
+		Session.set('filterString', 'archived:true');
 	}
+
 });
 
 Template.actionArchivedChangeActivity.helpers({

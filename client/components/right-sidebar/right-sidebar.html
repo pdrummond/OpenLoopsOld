@@ -21,13 +21,9 @@
 					<div class="menu">
 						<div id="clear-all-filters" class="item">Clear All Filters</div>
 						<div class="divider"></div>
-						<div class="header">Saved Filters</div>
-						{{#each filters}}
-						{{> filterItem}}
-						{{/each}}
-						<div class="header">Common Filters</div>
-						<div class="item">status:in-progress</div>
-						<div class="item">status:done</div>
+						<div id="my-open-tasks-filter" class="item"> My Open Tasks</div>
+						<div id="all-open-bugs-filter" class="item"> All Open Bugs</div>
+						<div id="all-archived-actions" class="item"> All Archived Actions</div>
 					</div>
 				</div>
 				<input class="input-box_filter" type="text" placeholder="Type filter here..." value="{{filterString}}" style="width:390px;font-size: 100%;" />
