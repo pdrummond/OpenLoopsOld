@@ -6,7 +6,8 @@ Router.configure({
     Meteor.subscribe('teamMembers'),
     Meteor.subscribe('boards'),    
     Meteor.subscribe('filters'),
-    Meteor.subscribe('allUsernames')
+    Meteor.subscribe('allUsernames'),
+    Meteor.subscribe('notifications'),
     ];
   }
 });

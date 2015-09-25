@@ -5,7 +5,8 @@ Meteor.startup(function() {
 		console.log("checking new message toast");
 		
 		updateToastVisibility();
-	}, 2000);
+	}, 2000);	
+
 });
 
 Template.messageHistoryView.onRendered(function() {

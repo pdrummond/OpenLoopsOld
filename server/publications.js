@@ -59,3 +59,7 @@ Meteor.publish("allUsernames", function () {
     "services.github.username": 1
 }});
 });
+
+Meteor.publish('notifications', function() {
+    return Notifications.find({toUserId: this.userId, isRead: false});
+});

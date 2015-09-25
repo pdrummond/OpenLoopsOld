@@ -12,16 +12,13 @@ Template.messageHistoryView.onCreated(function() {
 			boardId: Session.get('currentBoardId'),
 			limit: Session.get('messageLimit'),			
 		}, function() {
-			var messagesReceivedTimeStamp = new Date().getTime();
-			console.log("messages subscription updated");
+			var messagesReceivedTimeStamp = new Date().getTime();			
 			setTimeout(function() {
 				if(Session.get('messageLimit') == OpenLoops.MESSAGE_LIMIT_INC) {
 					OpenLoops.scrollBottom();					
 				}
 				Messages.find().observe({
 					added:function(message) {
-						console.log("message.createdAt: "  + message.timestamp);
-						console.log("rec ts: " + messagesReceivedTimeStamp);
 						if(message.userId != Meteor.userId() && message.timestamp > messagesReceivedTimeStamp) {
 							var newMessageCount = Session.get('newMessageCount') || 0;
 							Session.set('newMessageCount', ++newMessageCount);
@@ -29,9 +26,16 @@ Template.messageHistoryView.onCreated(function() {
 						}
 					}
 				});
+				OpenLoops.Notify.init();
+				Notifications.find().observe({
+					added:function(notification) {
+						console.log("XXXXXXXX");
+						OpenLoops.Notify.show(notification);
+					}
+				});
 			}, 50);
 		});
-	});	
+});	
 });
 
 Template.messageHistoryView.helpers({
@@ -199,8 +203,7 @@ Template.footer.events({
 								}
 								break;
 							}
-						}
-						console.log("command:" + JSON.stringify(commandData));
+						}						
 					}   
 				} else {
 					OpenLoops.createMessage(inputVal, Session.get('newSubjectItemId'));

@@ -55,6 +55,7 @@ mongo@1.1.0
 mongo-livedata@1.0.8
 mousetrap:mousetrap@1.4.6_1
 npm-bcrypt@0.7.8_2
+oaf:html5-desktop-notifications@1.0.0
 observe-sequence@1.0.6
 okgrow:promise@0.9.3
 ordered-dict@1.0.3
