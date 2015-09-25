@@ -172,12 +172,16 @@ Template.footer.events({
 
 	'keypress .input-box_text': function(e) {
 		$("#subjectSuggestionPopup").fadeOut();
-		var inputVal = $('.input-box_text').val();		
-		if(!!inputVal) {
-			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-			if (charCode == 13) {
+		var inputVal = $('.input-box_text').val();
+		var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+		if(charCode == 13 && (inputVal == null || inputVal.length == 0)) {
+			e.preventDefault();
+			e.stopPropagation();
+		} else {			
+			if (charCode == 13 && e.shiftKey == false) {
+				e.preventDefault();
 				e.stopPropagation();
-				if(inputVal.indexOf('/') == 0) {
+				if(inputVal.length > 0 && inputVal.indexOf('/') == 0) {
 					var commandData = inputVal.match(/\/(\w+) (\w+) (.*)/);
 					if(commandData && commandData.length == 4) {
 						var command = commandData[1];
@@ -205,6 +209,12 @@ Template.footer.events({
 				return false;
 			}    
 		}
+	},
+
+	'click #full-screen-message-input': function() {
+		Session.set('zenEditorContent', $('#message-input').val());
+		Session.set('zenEditorTargetInput', '#message-input');
+		$("#zenEditor").show();
 	},
 
 	'keyup #subject-input': function() {

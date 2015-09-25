@@ -97,7 +97,7 @@ body {
   transition: all 0.5s ease;
   height: 100%;
   padding-top: 60px;
-  padding-bottom: 80px;
+  padding-bottom: 110px;
   padding-right: 500px;
 }
 
@@ -107,7 +107,7 @@ body {
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 70px;
+  height: 100px;
   right:500px;
   background-color:white;
   z-index:999;
@@ -267,13 +267,11 @@ body {
 .message_profile-pic {
   position: absolute;
   left: 0;
-  display: block;
-  -moz-border-radius: 0.2rem;
-  -webkit-border-radius: 0.2rem;
-  border-radius: 0.2rem;
+  display: block;  
   width: 36px;
   height: 36px;  
   background-size: cover;
+  border-radius: 30px;
 }
 
 /* line 22, ../tests/sass/components/_message.scss */
@@ -368,9 +366,9 @@ body {
 }
 
 .input-box_text {
-  font-size: .95rem;
-  width: 90%;
-  margin-left: 2%;
+  height:70px;
+  width: 100%;
+  resize:none;
   margin-bottom: auto;
   line-height: 1.2rem;
   border: 2px solid #e0e0e0;
@@ -480,6 +478,7 @@ body {
   position:relative;
   height:100%;
   border-top: 1px solid lightgray;
+  z-index:99999999;
 }
 
 .editor-view {
@@ -535,6 +534,7 @@ body {
   bottom: 0px;
   width: 50%;
   xheight: calc( 100% - 216px );
+  background: white;
 }
 
 .editor-wrap {
@@ -818,6 +818,7 @@ pre {
 }
 
 img.emoji {
+  display:inline !important;
   height: 1.5em;
   width: 1.5em;
   margin: 0 .05em 0 .1em;
@@ -828,4 +829,8 @@ img.emoji {
     width: 20px !important;
     height: 20px !important;
     border-radius: 20px;
+}
+
+.message_content p:nth-child(2) {
+  display:inline;
 }
