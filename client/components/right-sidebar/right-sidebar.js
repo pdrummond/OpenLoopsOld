@@ -20,7 +20,7 @@ Template.actions.onRendered(function() {
 Template.actions.helpers({
 
 	activeTab: function(tabName) {
-		return Session.get('activeActionTab') == tabName? 'active':'';
+		return Session.get('activeActionTab') == tabName ? 'active':'';
 	},
 
 	actions: function() {  	
@@ -46,14 +46,8 @@ Template.actions.events({
 	'click #actions-tab': function() {
 		Session.set('activeActionTab', 'actions');
 	},
-	'click #milestones-tab': function() {
-		Session.set('activeActionTab', 'milestones');
-	},
-	'click #labels-tab': function() {
-		Session.set('activeActionTab', 'labels');
-	},
-	'click #searches-tab': function() {
-		Session.set('activeActionTab', 'searches');
+	'click #people-tab': function() {
+		Session.set('activeActionTab', 'people');
 	},
 
 	'keyup .input-box_filter': function(e) {
