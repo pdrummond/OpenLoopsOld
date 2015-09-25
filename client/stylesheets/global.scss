@@ -797,3 +797,17 @@ pre {
 .new-message {
  background: #F2F2FD !important;
 }
+
+#board-header {
+  position: relative;
+  top: 2px;
+  left: 20px;
+}
+
+#board-header p {
+  display:inline;
+}
+
+#board-header img {  
+  max-height:20px;
+}

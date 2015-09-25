@@ -64,6 +64,11 @@ Template.registerHelper('boards', function (context) {
 	return Boards.find();
 });
 
+Template.registerHelper('currentBoardDescription', function (context) {
+	return Boards.findOne(Session.get('currentBoardId')).description;
+});
+
+
 Template.registerHelper('currentBoardId', function (context) {
 	return Session.get('currentBoardId');
 });

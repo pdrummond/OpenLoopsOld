@@ -25,29 +25,32 @@
 <template name="header">	
 	<div class="app-header">		
 		<div class="channel-menu">			
-			<div style="position:relative">
+			<span style="position:relative">
 				{{> boardMenu}}
-				<div id="message-filter-box" style="display: inline-block;position: relative;top:0px;">
+				<!--<div id="message-filter-box" style="display: inline-block;position: relative;top:0px;">
 					<div class="ui left input" style="padding-left:15px;margin-right:10px">
 						<input class="message-filter-input" type="text" placeholder="Search messages here..." value="{{messageFilterString}}" style="width:390px;font-size: 100%;" />
 					</div>
-				</div>
-				<div id="create-dropdown" class="ui floating green dropdown button">
-					<i class="plus icon"></i> Create
-					<i class="dropdown icon"></i>
-					<div class="menu">
-						<div id="create-post-menu-item" class="item"><i class="mail outline icon"></i> Post</div>
-						<div id="create-discussion-menu-item" class="item"><i class="comments outline icon"></i> Discussion</div>
-						<div id="create-task-menu-item" class="item"><i class="tasks icon"></i> Task</div>
-						<div id="create-bug-menu-item" class="item"><i class="bug icon"></i> Bug</div>
-						<div id="create-todo-menu-item" class="item"><i class="check icon"></i> Todo</div>
-					</div>
-				</div>				
-			</div>			
+				</div>-->					
+			</span>
+			<span id="board-header">
+			{{#markdown}}{{currentBoardDescription}}{{/markdown}}
+			</span>	
 		</div>		
-		<div id="channel-circle-buttons" style="position:absolute;right:5px;top:10px">		
-			<button id="channel-messages-button" class="ui circular icon {{isCircleButtonActive 'channelMessagesView'}} toggle button" title="description"><i class="comments outline icon"></i></button>			
-			<button id="channel-members-button" class="ui circular icon {{isCircleButtonActive 'channelMembersView'}} toggle button" title="members"><i class="user icon"></i> 3</button>
+		<div id="channel-circle-buttons" style="position:absolute;right:5px;top:10px">	
+			<div id="create-dropdown" class="ui floating green dropdown button">
+				<i class="plus icon"></i> Create
+				<i class="dropdown icon"></i>
+				<div class="menu">
+					<div id="create-post-menu-item" class="item"><i class="mail outline icon"></i> Post</div>
+					<div id="create-discussion-menu-item" class="item"><i class="comments outline icon"></i> Discussion</div>
+					<div id="create-task-menu-item" class="item"><i class="tasks icon"></i> Task</div>
+					<div id="create-bug-menu-item" class="item"><i class="bug icon"></i> Bug</div>
+					<div id="create-todo-menu-item" class="item"><i class="check icon"></i> Todo</div>
+				</div>
+			</div>		
+			<!--<button id="channel-messages-button" class="ui circular icon {{isCircleButtonActive 'channelMessagesView'}} toggle button" title="description"><i class="comments outline icon"></i></button>			
+			<button id="channel-members-button" class="ui circular icon {{isCircleButtonActive 'channelMembersView'}} toggle button" title="members"><i class="user icon"></i> 3</button>-->
 			<button id="toggle-right-sidebar-button" class="ui circular icon toggle button" title="members"><i class="right arrow icon"></i></button>
 		</div>
 	</div>
