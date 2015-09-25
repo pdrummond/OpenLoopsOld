@@ -13,19 +13,24 @@ Template.actionDetailSidebarView.helpers({
 });
 
 Template.actions.onRendered(function() {
-	this.$('.menu .item').tab();	
+	this.$('.menu .item').tab();
+	this.$('.ui.dropdown').dropdown({
+		action:'hide'
+	});
 });
 
 
 Template.actions.helpers({
 
+	actionsXX: function() {  	
+		console.log("ACTIONS LIST REFRESHED");
+		return Items.find(_.extend(OpenLoops.getActionFilter(Session.get('actionFilterString')), {boardId: Session.get('currentBoardId'), itemType: 'action'}), {sort: {timestamp: 1}});
+	},
+
 	activeTab: function(tabName) {
 		return Session.get('activeActionTab') == tabName ? 'active':'';
 	},
 
-	actions: function() {  	
-		return Items.find({boardId: Session.get('currentBoardId'), itemType: 'action'}, {sort: {timestamp: 1}});
-	},
 
 	actionCount: function() {
 		return Items.find({archived:false}).count();	
@@ -35,8 +40,8 @@ Template.actions.helpers({
 		return Items.find({archived:true}).count();	
 	},
 	
-	filterString: function() {
-		return Session.get('filterString');
+	actionFilterString: function() {
+		return Session.get('actionFilterString');
 	},
 
 });
@@ -50,8 +55,8 @@ Template.actions.events({
 		Session.set('activeActionTab', 'people');
 	},
 
-	'keyup .input-box_filter': function(e) {
-		OpenLoops.onFilterInput();
+	'keyup .input-box_filter': function(e) {		
+		OpenLoops.onActionFilterInput();
 	},
 
 	'click #create-filter-button': function() {
@@ -70,7 +75,7 @@ Template.actions.events({
 	},
 
 	'click #messages-filter-item': function() {
-		Session.set('filterString', null);
+		Session.set('actionFilterString', null);
 	},
 
 	'click #delete-filter-button': function() {
@@ -81,19 +86,23 @@ Template.actions.events({
 	},
 
 	'click #clear-all-filters': function() {
-		Session.set('filterString', '');
+		Session.set('actionFilterString', '');
+	},
+
+	'click #all-my-actions-filter': function() {
+		Session.set('actionFilterString', 'member:' + Meteor.user().username);
 	},
 
 	'click #my-open-tasks-filter': function() {
-		Session.set('filterString', 'member:' + Meteor.user().username + ' type:task status:open');
+		Session.set('actionFilterString', 'member:' + Meteor.user().username + ' type:task status:open');
 	},
 
 	'click #all-open-bugs-filter': function() {
-		Session.set('filterString', 'type:bug status:open');
+		Session.set('actionFilterString', 'type:bug status:open');
 	},
 
 	'click #all-archived-actions': function() {
-		Session.set('filterString', 'archived:true');
+		Session.set('actionFilterString', 'archived:true');
 	}
 
 });

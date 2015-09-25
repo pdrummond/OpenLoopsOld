@@ -2,6 +2,10 @@ Template.registerHelper('selectedItem', function (item) {
 	return Items.findOne(Session.get('selectedItemId'));
 });
 
+Template.registerHelper('itemMembers', function (item) {	
+	return Items.findOne(item._id).members;
+});
+
 Template.registerHelper('itemIcon', function (item) {	
 	return OpenLoops.getItemIcon(item);
 });
@@ -147,6 +151,10 @@ Template.registerHelper("truncateItemText", function (obj, text, maxSize) {
 	} else {
 		return parseMarkdown(text).replace(/^<p>/, '').replace(/<\/p>$/,'');
 	}
+});
+
+Template.registerHelper("users", function () {
+	return Meteor.users.find();
 });
 
 Template.registerHelper("currentUserName", function () {

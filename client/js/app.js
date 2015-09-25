@@ -199,8 +199,3 @@ Template.channel.events({
 	}
 });
 
-Template.actions.onRendered(function() {
-	this.$('.ui.dropdown').dropdown({
-		action:'hide'
-	});
-});

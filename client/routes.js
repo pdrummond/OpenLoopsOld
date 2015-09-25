@@ -32,10 +32,11 @@ Router.route('/board/:boardId/messages', function () {
   if(!board) {
     this.render("notFound");
   } else {
+    console.log("BOOM!" + Session.get('actionFilterString'));
     Meteor.subscribe('subjectSuggestions', {boardId: this.params.boardId, subjectText: ''});
     Meteor.subscribe('milestones', board._id);
     Meteor.subscribe('actions', {
-      filter: OpenLoops.getFilter(Session.get('filterString')),
+      filter: OpenLoops.getActionFilter(Session.get('actionFilterString')),
       board: board,
       channel: Session.get('channel'),
       limit: Session.get('actionLimit'),

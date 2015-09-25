@@ -1,3 +1,7 @@
+Template.createItemForm.onRendered(function() {
+$('#member-dropdown').dropdown({allowAdditions: true});
+});
+
 Template.createItemForm.helpers({
 	createItemFormLabel: function() {
 		return Session.get('createItemForm.label');
@@ -21,8 +25,9 @@ Template.createItemForm.events({
 
 		var title = $("#createItemForm input[name='title']").val(); 
 		var description = $("#createItemForm textarea[name='description']").val();
+		var members = $("#createItemForm input[name='members']").val();
 		if(title != null && title.length > 0) {
-			OpenLoops.createItem(type, itemType, title, description, Session.get('newSubjectItemId'), function(error, result) {
+			OpenLoops.createItem(type, itemType, title, description, members, Session.get('newSubjectItemId'), function(error, result) {
 				if(error) {
 					alert("Error: " + error);
 				}
@@ -30,4 +35,4 @@ Template.createItemForm.events({
 			Session.set('rightSidebarTemplate', Session.get('previousRightSidebarTemplate') || 'actions');
 		}
 	}
-})
+});

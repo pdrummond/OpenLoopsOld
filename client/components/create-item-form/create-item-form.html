@@ -6,13 +6,23 @@
 			<input autofocus type="text" name="title" placeholder="Enter title here">
 		</div>
 		<div class="field">
+			<label>Members: </label>
+			<div id="member-dropdown" class="ui fluid multiple search normal selection dropdown">
+				<input type="hidden" name="members">
+				<i class="dropdown icon"></i>
+				<div class="default text">Choose Team Members</div>
+				<div class="menu">
+					{{#each users}}
+					{{> teamMemberItem}}
+					{{/each}}
+				</div>
+			</div>
+		</div>
+		<div class="field">
 			<label>Description: </label>
 			<textarea name="description" placeholder="Enter description here"></textarea>
 		</div>
-		<div class="field">
-			<label>Members: </label>
-			<input type="text" name="members" placeholder="Enter list of team members here">
-		</div>
+		
 
 		<div class="ui buttons" style="float:right">
 			<button id="cancel-button" class="ui button">Cancel</button>
@@ -21,4 +31,8 @@
 		</div>
 
 	</form>
+</template>
+
+<template name="teamMemberItem">
+	<div class="item" data-value="{{username}}"> <img src="{{profileImage _id}}" class="profile-image-small"/> {{username}}</div>
 </template>

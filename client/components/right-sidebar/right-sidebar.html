@@ -21,12 +21,13 @@
 					<div class="menu">
 						<div id="clear-all-filters" class="item">Clear All Filters</div>
 						<div class="divider"></div>
+						<div id="all-my-actions-filter" class="item"> All My Actions</div>
 						<div id="my-open-tasks-filter" class="item"> My Open Tasks</div>
 						<div id="all-open-bugs-filter" class="item"> All Open Bugs</div>
 						<div id="all-archived-actions" class="item"> All Archived Actions</div>
 					</div>
 				</div>
-				<input class="input-box_filter" type="text" placeholder="Type filter here..." value="{{filterString}}" style="width:390px;font-size: 100%;" />
+				<input class="input-box_filter" type="text" placeholder="Type filter here..." value="{{actionFilterString}}" style="width:390px;font-size: 100%;" />
 			</div>
 		</div>
 		<div class="ui small text menu" style="margin: 0;margin-left: 10px;">		
@@ -39,7 +40,7 @@
 		</div>		
 		<div id="action-list" style="height:100%;width:490px">
 			<div class="ui middle aligned divided relaxed list" style="padding:10px;padding-left:15px;overflow-y:scroll;height:100%;align-content: flex-start;">
-				{{#each actions}}
+				{{#each actionsXX}}
 				{{> actionItem}}
 				{{/each}}
 			</div>
