@@ -176,6 +176,8 @@ Template.footer.events({
 
 	'keypress .input-box_text': function(e) {
 		$("#subjectSuggestionPopup").fadeOut();
+		Streamy.broadcast('user-is-typing', { userId: Meteor.userId() });
+
 		var inputVal = $('.input-box_text').val();
 		var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
 		if(charCode == 13 && (inputVal == null || inputVal.length == 0)) {

@@ -93,11 +93,10 @@
 </template>
 
 <template name="activeUser">
-	<div class="item">	
+	<div id="active-user-item" class="item" data-active-user-id="{{userId}}">	
 		<img class="ui avatar image" src="{{profileImage userId}}"/>
 		<div class="content">
-			<div class="header">@{{usernameFromId userId}}</div>
-			<div class="description"></div>
+			<span class="header" style="display:inline">@{{usernameFromId userId}}</span><span class="is-typing" style="display:none"> is typing<span class="one">.</span><span class="two">.</span><span class="three">.</span></span>
 		</div>
 	</div>
 </template>

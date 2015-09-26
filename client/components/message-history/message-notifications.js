@@ -7,6 +7,18 @@ Meteor.startup(function() {
 		updateToastVisibility();
 	}, 2000);	
 
+	// Attach an handler for a specific message
+	Streamy.on('user-is-typing', function(d, s) {
+		var user = Meteor.users.findOne(d.userId);
+		if(user._id != Meteor.userId()) {		
+  			$("#active-user-item[data-active-user-id='" + d.userId + "'] .is-typing").show();
+  		}
+
+  	});
+
+  	Meteor.setInterval(function() {
+		$("#active-user-item .is-typing").fadeOut();
+  	}, 3000);
 });
 
 Template.messageHistoryView.onRendered(function() {
