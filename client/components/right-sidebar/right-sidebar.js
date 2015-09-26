@@ -44,6 +44,10 @@ Template.actions.helpers({
 		return Session.get('actionFilterString');
 	},
 
+	activeUsers: function() {
+		return Presences.find();
+	}
+
 });
 
 Template.actions.events({

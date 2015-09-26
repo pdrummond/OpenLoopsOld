@@ -8,6 +8,7 @@ Router.configure({
     Meteor.subscribe('filters'),
     Meteor.subscribe('allUsernames'),
     Meteor.subscribe('notifications'),
+    Meteor.subscribe('userPresence')
     ];
   }
 });

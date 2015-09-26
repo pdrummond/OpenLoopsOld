@@ -1,3 +1,8 @@
+Meteor.publish('userPresence', function() {
+  filter = { userId: { $exists: true }};
+  return Presences.find(filter, { fields: { state: true, userId: true }});
+});
+
 Meteor.publish('teamMembers', function () {
     return TeamMembers.find();
 });
