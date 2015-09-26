@@ -1,22 +1,36 @@
 <template name="boardList">
+	<a id="board-logout" style="padding: 5px;display: block;position: absolute;right: 10px;top: 0px;cursor:pointer">Logout</a>
 	<h1 style="padding:10px"> BOARDS </h1>
 	<div class="ui text container">
 		<div class="ui raised segment">
+			{{#if currentUserIsAdmin}}
 			<button id="create-board-button" class="ui primary button">
 				Create Board
 			</button>
+			{{/if}}
 			<ul>
 				{{#each boards}}
 				{{> boardListItem}}
 				{{/each}}
 			</ul>
+			{{#if noBoards}}
+				{{#if currentUserIsAdmin}}
+					<p>You don't have any boards yet - click on the Create Board button to get started</p>
+				{{else}}
+					<p>You are not a member of any boards - see your admin for access</p>
+				{{/if}}
+			{{/if}}
 		</div>
 	</div>
 
-		<h1 style="padding:10px"> TEAM MEMBERS </h1>
+	{{#if currentUserIsAdmin}}
+
+	<h1 style="padding:10px"> TEAM MEMBERS </h1>
 	<div class="ui text container">
 		{{> teamMemberList}}
 	</div>
+
+	{{/if}}
 
 
 	{{> createBoardDialog}}

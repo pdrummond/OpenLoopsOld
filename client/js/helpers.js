@@ -164,6 +164,10 @@ Template.registerHelper("currentUserName", function () {
 	}
 });
 
+Template.registerHelper("currentUserIsAdmin", function () {
+	return TeamMembers.find({userId: Meteor.userId()}).role == 'ADMIN';
+});
+
 Template.registerHelper("usernameFromId", function (userId) {
 	if(userId === 'habot') {
 		return 'Habot';

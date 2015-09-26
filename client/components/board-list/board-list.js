@@ -1,5 +1,15 @@
 
+Template.boardList.helpers({
+	noBoards: function() {
+		return Boards.find().count() == 0;
+	}
+});
+
 Template.boardList.events({	
+	"click #board-logout": function() {
+		Meteor.logout();
+	},
+
 	"click #create-board-button": function() {
 		$('#createBoardDialog').modal({
 			closable: false,
