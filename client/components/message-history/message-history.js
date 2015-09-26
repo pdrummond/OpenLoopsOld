@@ -19,10 +19,13 @@ Template.messageHistoryView.onCreated(function() {
 				}
 				Messages.find().observe({
 					added:function(message) {
-						if(message.userId != Meteor.userId() && message.timestamp > messagesReceivedTimeStamp) {
-							var newMessageCount = Session.get('newMessageCount') || 0;
-							Session.set('newMessageCount', ++newMessageCount);
-							$(".message[data-messageid='" + message._id + "']").addClass('new-message');							
+						if(message.timestamp > messagesReceivedTimeStamp) {
+
+							if((message.type == 'message' && message.userId != Meteor.userId()) || message.type == 'activity') {
+								var newMessageCount = Session.get('newMessageCount') || 0;
+								Session.set('newMessageCount', ++newMessageCount);
+								$(".message[data-messageid='" + message._id + "']").addClass('new-message');							
+							}
 						}
 					}
 				});

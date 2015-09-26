@@ -75,6 +75,12 @@ Template.createItemActivity.events({
 	}
 });
 
+Template.actionAttrChangeActivity.events({
+	'click': function() {		
+		$(".message[data-messageid='" + this._id + "']").removeClass('new-message');
+	}
+});
+
 Template.messageHolder.helpers({
 	archivedClass: function() {
 		return this.archived?"archived":"";
@@ -176,8 +182,8 @@ Template.listings.events({
 				}
 			}
 		});		
-		$('#createChannelDialog').modal('show');
-	}
+$('#createChannelDialog').modal('show');
+}
 });
 
 Template.channel.helpers({
