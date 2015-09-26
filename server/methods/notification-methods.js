@@ -8,7 +8,9 @@ Meteor.methods({
 				type: String,
 				fromUserId: String,
 				toUserId: String,
-				messageId: String,
+				itemType: Match.Optional(String),
+				messageId: Match.Optional(String),
+				itemId: Match.Optional(String),
 			});		
 			notification.timestamp = Date.now();
 			notification.isRead = false;
