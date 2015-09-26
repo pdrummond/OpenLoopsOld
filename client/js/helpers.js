@@ -165,7 +165,13 @@ Template.registerHelper("currentUserName", function () {
 });
 
 Template.registerHelper("currentUserIsAdmin", function () {
-	return TeamMembers.find({userId: Meteor.userId()}).role == 'ADMIN';
+	var isAdmin = false;
+	if(Meteor.user() != null) {
+		var email = Meteor.user().emails[0].address;
+		isAdmin = TeamMembers.findOne(email).role == 'ADMIN';
+		console.log("isAdmin: " + isAdmin);
+	}
+	return isAdmin;
 });
 
 Template.registerHelper("usernameFromId", function (userId) {
