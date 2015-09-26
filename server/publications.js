@@ -1,3 +1,7 @@
+Meteor.publish('podSettings', function() {
+    return PodSettings.find();
+});
+
 Meteor.publish('userPresence', function() {
   filter = { userId: { $exists: true }};
   return Presences.find(filter, { fields: { state: true, userId: true }});

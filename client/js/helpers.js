@@ -1,3 +1,7 @@
+Template.registerHelper('podPrefix', function () {
+	return PodSettings.findOne('default').podPrefix;
+});
+
 Template.registerHelper('selectedItem', function (item) {	
 	return Items.findOne(Session.get('selectedItemId'));
 });
