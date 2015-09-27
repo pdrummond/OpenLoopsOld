@@ -95,7 +95,7 @@ Template.messageHolder.helpers({
 			case 'activity': template = 'activityMessage'; break;			
 			default: template = 'message'; break;
 		}		
-		console.log("Template for " + this.type + " is: " + template);
+		//console.log("Template for " + this.type + " is: " + template);
 		return template;		
 	}
 });

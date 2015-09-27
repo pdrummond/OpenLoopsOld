@@ -35,7 +35,7 @@ Router.route('/board/:boardId/messages', function () {
   if(!board) {
     this.render("notFound");
   } else {
-    console.log("BOOM!" + Session.get('actionFilterString'));
+
     Meteor.subscribe('subjectSuggestions', {boardId: this.params.boardId, subjectText: ''});
     Meteor.subscribe('milestones', board._id);
     Meteor.subscribe('actions', {
@@ -67,7 +67,7 @@ Router.route('/board/:boardId/action/:_id/:section', {
       if(action != null) {
         Session.set('selectedAction', action);
         Session.set('currentSection', this.params.section);
-        console.log("selectedAction: " + JSON.stringify(action, null, 4));
+        //console.log("selectedAction: " + JSON.stringify(action, null, 4));
         return action;
       } else {
         return null;

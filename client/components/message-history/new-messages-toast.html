@@ -1,5 +1,11 @@
 <template name="newMessagesToast">
-	<div id="newMessagesToast" class="ui compact small floating black message" style="display:none">
+	{{#if atLeastOneNewMessage}}
+	<div id="newMessagesToast" class="ui compact small floating black message" style="display:none">		
+		{{#if oneNewMessage}}
+		<p>{{newMessagesCount}} New Message</p>
+		{{else}}
 		<p>{{newMessagesCount}} New Messages</p>
+		{{/if}}		
 	</div>
+	{{/if}}
 </template>

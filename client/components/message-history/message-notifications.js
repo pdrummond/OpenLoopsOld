@@ -2,8 +2,6 @@
 Meteor.startup(function() {	
 	
 	Meteor.setInterval(function() {
-		console.log("checking new message toast");
-		
 		updateToastVisibility();
 	}, 2000);	
 
@@ -34,6 +32,14 @@ Template.newMessagesToast.helpers({
 	newMessagesCount: function() {
 		return Session.get('newMessageCount');
 	},	
+	
+	atLeastOneNewMessage: function() {
+		return Session.get('newMessageCount') > 0;
+	},
+	
+	oneNewMessage: function() {
+		return Session.get('newMessageCount') == 1;
+	}
 });
 
 Template.newMessagesToast.events({
@@ -49,5 +55,6 @@ function updateToastVisibility() {
 	} else {
 		$("#newMessagesToast").fadeOut();
 		Session.set('newMessageCount', 0);
-	}
+	}	
+	console.log('AT BOTTOM: ' + OpenLoops.atBottom);
 }
