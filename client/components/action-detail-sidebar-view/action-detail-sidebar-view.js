@@ -1,25 +1,40 @@
-Template.actionDetailSidebarView.onRendered( function() {
-	this.editor = CodeMirror.fromTextArea( this.find( "#item-description-editor" ), {
+Template.actionDetailSidebarView.onRendered( function() {	
+	/*this.editor = CodeMirror.fromTextArea( this.find( "#item-description-editor" ), {
 		lineNumbers: false,
 		fixedGutter: false,
 		mode: "markdown",
 		lineWrapping: true,
 		indentWithTabs:false,
 	});
-	$(".CodeMirror").hide();
+	$(".CodeMirror").hide();*/
 	$('.ui.dropdown').dropdown();	
+});
+Template.actionDetailSidebarView.helpers({
+	itemIsAction: function() {
+		return this.type == 'action';
+	}
 });
 
 Template.actionDetailSidebarView.events({
+	'click #fullscreen-description-link': function(event, template) {
+		Session.set('zenEditorContent', $('#item-description-editor').val());
+		Session.set('zenEditorTargetInput', '#item-description-editor');
+		$("#zenEditor").show();
+	},
+
 	'click #edit-description-link': function(event, template) {
 		if($("#item-description").is(":visible")) {
 			$("#item-description").hide();
-			$(".CodeMirror").show();
+			$("#item-description-editor").show();
+			$("#fullscreen-description-link").fadeIn();
+			//$(".CodeMirror").show();
 			$("#edit-description-link").html("<i class='save icon'></i> Save");
 		} else {
-			Meteor.call('updateItemDescription', Session.get('selectedItemId'), template.editor.getValue());
+			Meteor.call('updateItemDescription', Session.get('selectedItemId'), $('#item-description-editor').val());
 			$("#item-description").show();
-			$(".CodeMirror").hide();
+			$("#item-description-editor").hide();
+			$("#fullscreen-description-link").fadeOut();
+			//$(".CodeMirror").hide();
 			$("#edit-description-link").html("<i class='pencil icon'></i> Edit");
 		}
 	},

@@ -22,6 +22,7 @@ Template.registerHelper('itemIconColor', function (item) {
 		case 'todo': return 'orange';
 		case 'post': return 'blue';
 		case 'discussion': return 'purple';
+		case 'article': return 'yellow';
 		default: return 'green';
 	}
 });

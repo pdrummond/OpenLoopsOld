@@ -96,6 +96,13 @@ Template.header.events({
 		Session.set('rightSidebarTemplate', 'createItemForm');
 	},
 
+	'click #create-article-menu-item': function() {
+		Session.set('createItemForm.type', 'article');
+		Session.set('createItemForm.label', 'Article');
+		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
+		Session.set('rightSidebarTemplate', 'createItemForm');
+	},
+
 	'click #create-task-menu-item': function() {
 		Session.set('createItemForm.type', 'task');
 		Session.set('createItemForm.label', 'Task');

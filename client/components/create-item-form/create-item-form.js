@@ -1,6 +1,8 @@
 Template.createItemForm.onRendered(function() {
 	$("#new-item-title-input").focus();
 	$('#member-dropdown').dropdown({allowAdditions: true});
+	
+	this.$('#description-field').toggle(Session.get('createItemForm.type') != 'article');
 });
 
 Template.createItemForm.helpers({
@@ -23,6 +25,7 @@ Template.createItemForm.events({
 		var itemType = 'action';
 		if(type == 'discussion') itemType = 'discussion';
 		if(type == 'post') itemType = 'post';
+		if(type == 'article') itemType = 'article';
 
 		var title = $("#createItemForm input[name='title']").val(); 
 		var description = $("#createItemForm textarea[name='description']").val();

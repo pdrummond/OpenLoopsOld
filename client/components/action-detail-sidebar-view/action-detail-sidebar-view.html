@@ -27,7 +27,9 @@
 				<span id="action-title">{{title}}</span>
 			</div>
 		</h1>
+		{{#if itemIsAction}}
 		{{> actionStatusDropdown}}
+		{{/if}}
 	</div>	
 	<div class="ui top attached secondary pointing tabular menu">
 		<a class="active item" data-tab="first">Description</a>
@@ -36,10 +38,14 @@
 	</div>
 	<div id="tab-wrapper" style="height:calc( 100% - 220px );overflow-y:scroll">
 		<div class="ui active basic tab segment" data-tab="first" style="height:100%">
-			<div style="float:right">
-				<a id="edit-description-link" style="cursor:pointer"><i class="pencil icon"></i> Edit</a>
+			<div style="float:left">
+				<a id="fullscreen-description-link" style="display:none;cursor:pointer"><i class="maximize icon"></i></a>
 			</div>
-			<div style="margin:20px;font-size:16px;height:100%">
+			<div style="float:right">
+				<a id="edit-description-link" style="cursor:pointer"><i class="pencil icon"></i></a>
+				
+			</div>
+			<div style="clear:both;margin-top:10px;font-size:16px;height:100%">
 				<div id="item-description">
 					{{#markdown}}{{#emoji}}{{text}}{{/emoji}}{{/markdown}}
 				</div>
@@ -52,11 +58,12 @@
 		<div class="ui basic tab segment" data-tab="third"  style="margin:10px">
 
 			<table class="ui celled table" style="margin-left:25px;width:400px;">
-				<tr><td>Status</td><td><strong>status</strong></td></tr>
+				<tr><td>Type</td><td><strong>{{itemType}}</strong></td></tr>				
+				<tr><td>Status</td><td><strong>{{status}}</strong></td></tr>				
 				<tr><td>Members</td><td><strong>{{itemMembers this}}</strong></td></tr>
-				<tr><td>Created By</td><td><strong>{{userId}}</strong></td></tr>
+				<tr><td>Created By</td><td><strong>{{usernameFromId userId}}</strong></td></tr>
 				<tr><td>Created Date</td><td><strong>{{formatDate timestamp}}</strong></td></tr>
-				<tr><td>Updated By</td><td><strong>{{formatDate updatedBy}}</strong></td></tr>
+				<tr><td>Updated By</td><td><strong>{{updatedBy}}</strong></td></tr>
 				<tr><td>Updated Date</td><td><strong>{{formatDate updatedDate}}</strong></td></tr>
 			</table>
 		</div>
