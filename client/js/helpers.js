@@ -90,20 +90,10 @@ Template.registerHelper('channelName', function () {
 	return Session.get('channel');
 });
 
-Template.registerHelper('channelMid', function () {	
-	var channelUid = '';
-	var channel = Channels.findOne({name: Session.get('channel'), boardId: Session.get('currentBoardId')});	
-	if(channel.type == 'action-channel') {
-		channelUid = "#" + Boards.findOne(channel.action.boardId).prefix + "-" + channel.action.mid;
-	}
-	return channelUid;
-});
-
 Template.registerHelper('channelDescription', function (name) {	
 	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoardId')});
 	return channel.description || "No Description";
 });
-
 
 Template.registerHelper('channelIcon', function (name) {	
 	var channel = Channels.findOne({name: name || Session.get('channel'), boardId: Session.get('currentBoardId')});

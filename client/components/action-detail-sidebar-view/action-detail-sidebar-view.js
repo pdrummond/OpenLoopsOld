@@ -11,7 +11,7 @@ Template.actionDetailSidebarView.onRendered( function() {
 });
 Template.actionDetailSidebarView.helpers({
 	itemIsAction: function() {
-		return this.type == 'action';
+		return this.itemType == 'action';
 	}
 });
 

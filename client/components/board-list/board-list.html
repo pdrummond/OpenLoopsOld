@@ -14,11 +14,11 @@
 				{{/each}}
 			</ul>
 			{{#if noBoards}}
-				{{#if currentUserIsAdmin}}
-					<p>You don't have any boards yet - click on the Create Board button to get started</p>
-				{{else}}
-					<p>You are not a member of any boards - see your admin for access</p>
-				{{/if}}
+			{{#if currentUserIsAdmin}}
+			<p>You don't have any boards yet - click on the Create Board button to get started</p>
+			{{else}}
+			<p>You are not a member of any boards - see your admin for access</p>
+			{{/if}}
 			{{/if}}
 		</div>
 	</div>
@@ -32,9 +32,9 @@
 
 	<h1 style="padding:10px"> POD SETTINGS </h1>
 	<div class="ui text container">
-	<form>
-		<input id="pod-prefix-input" value="{{podPrefix}}">
-		<button id="save-pod-settings" class="ui button" type="submit">Save Pod Settings</button>
+		<form>
+			<input id="pod-prefix-input" value="{{podPrefix}}">
+			<button id="save-pod-settings" class="ui button" type="submit">Save Pod Settings</button>
 		</form>
 	</div>
 	{{/if}}
@@ -44,7 +44,7 @@
 </template>
 
 <template name="boardListItem">
-	<li><a href="/board/{{_id}}/messages">{{title}} <span style="color:lightgray">{{prefix}}</span></a></li>
+	<li><a href="/board/{{_id}}/messages">{{title}}</a></li>
 </template>
 
 <template name="createBoardDialog">
@@ -59,9 +59,9 @@
 					<input autofocus type="text" name="title" placeholder="Pick a descriptive title for your new board">
 				</div>
 				<div class="field">
-					<label>Board Prefix</label>
-					<input type="text" name="prefix" placeholder="Choose a unique identifier for this board, such as 'PRJ' for example">
-				</div>			
+					<label>Board Header</label>
+					<textarea autofocus type="text" name="description" placeholder="Describe the board here or add announcements, links to related sites, etc (Markdown is supported on all edit fields)"></textarea>
+				</div>
 			</form>
 		</div>
 		<div class="actions">

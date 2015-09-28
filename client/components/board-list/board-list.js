@@ -29,7 +29,7 @@ Template.boardList.events({
 			onApprove : function() {
 				var board = {
 					title: $("#createBoardDialog input[name='title']").val(),
-					prefix: $("#createBoardDialog input[name='prefix']").val(),
+					description: $("#createBoardDialog textarea[name='description']").val(),
 				};
 				Meteor.call("createBoard", board, function(error, result) {
 					if (error) {

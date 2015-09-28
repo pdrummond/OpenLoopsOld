@@ -20,7 +20,6 @@ Template.boardMenu.events({
 			onApprove : function() {
 				board = _.extend(board, {					
 					title: $("#boardSettingsDialog input[name='title']").val(),
-					prefix: $("#boardSettingsDialog input[name='prefix']").val(),
 					description: $("#boardSettingsDialog textarea[name='description']").val(),
 				});
 				Meteor.call("updateBoard", board, function(error, result) {
@@ -31,7 +30,6 @@ Template.boardMenu.events({
 			}
 		});		
 		$("#boardSettingsDialog input[name='title']").val(board.title);
-		$("#boardSettingsDialog input[name='prefix']").val(board.prefix);
 		$("#boardSettingsDialog textarea[name='description']").val(board.description);
 		$('#boardSettingsDialog').modal('show');
 	}
