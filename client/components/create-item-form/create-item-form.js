@@ -1,5 +1,6 @@
 Template.createItemForm.onRendered(function() {
-$('#member-dropdown').dropdown({allowAdditions: true});
+	$("#new-item-title-input").focus();
+	$('#member-dropdown').dropdown({allowAdditions: true});
 });
 
 Template.createItemForm.helpers({
@@ -27,11 +28,7 @@ Template.createItemForm.events({
 		var description = $("#createItemForm textarea[name='description']").val();
 		var members = $("#createItemForm input[name='members']").val();
 		if(title != null && title.length > 0) {
-			OpenLoops.createItem(type, itemType, title, description, members, Session.get('newSubjectItemId'), function(error, result) {
-				if(error) {
-					alert("Error: " + error);
-				}
-			});
+			OpenLoops.createItem(type, itemType, title, description, members, Session.get('newSubjectItemId'));
 			Session.set('rightSidebarTemplate', Session.get('previousRightSidebarTemplate') || 'actions');
 		}
 	}

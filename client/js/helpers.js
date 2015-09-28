@@ -197,9 +197,13 @@ Template.registerHelper('comments', function (context) {
 	return Comments.find({actionId: Session.get('selectedAction')._id});
 });
 
+Template.registerHelper('formatDate', function (context, options) {
+	if (context) {
+		return moment(context).format('MMMM Do YYYY, h:mm:ss a');
+	}
+});
 
 Template.registerHelper('timeAgo', function (context, options) {
-	Session.get("time");
 	if (context) {
 		return moment(context).fromNow();
 	}

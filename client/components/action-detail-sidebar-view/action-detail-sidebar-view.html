@@ -35,11 +35,12 @@
 		<div class="ui basic tab segment" data-tab="third"  style="margin:10px">
 
 			<table class="ui celled table" style="margin-left:25px;width:400px;">
-				<tr><td>Status</td><td><strong>{{itemStatusLabel this}}</strong></td></tr>
-				<tr><td>Milestone</td><td><strong>Backlog</strong></td></tr>
-				<tr><td>Reporter</td><td><strong>pdrummond</strong></td></tr>
-				<tr><td>Created Date</td><td><strong>9th May 2015</strong></td></tr>
+				<tr><td>Status</td><td><strong>status</strong></td></tr>
 				<tr><td>Members</td><td><strong>{{itemMembers this}}</strong></td></tr>
+				<tr><td>Created By</td><td><strong>{{userId}}</strong></td></tr>
+				<tr><td>Created Date</td><td><strong>{{formatDate timestamp}}</strong></td></tr>
+				<tr><td>Updated By</td><td><strong>{{formatDate updatedBy}}</strong></td></tr>
+				<tr><td>Updated Date</td><td><strong>{{formatDate updatedDate}}</strong></td></tr>
 			</table>
 		</div>
 		<div class="ui fluid icon input" style="position:absolute; width:95%; left:12px; bottom:10px">
