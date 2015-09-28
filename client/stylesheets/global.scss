@@ -741,9 +741,14 @@ pre {
   cursor:pointer;
 }
 
+.action.item {
+  background: white;
+}
+
 .action.item .action-check {
   width:35px;
   color:gray;
+
 }
 
 .command-box-input {
@@ -885,4 +890,18 @@ img.emoji {
     100% {
         opacity: 1;
     }
+}
+
+
+.tilt {
+  -webkit-transform: rotate(1deg);
+  
+}
+
+.tilt #loop-content-container {
+  box-shadow: 5px 5px 15px gray;
+}
+
+.tilt #loop-content-container-outer-left {
+  display:none;
 }

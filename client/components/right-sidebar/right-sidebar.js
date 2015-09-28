@@ -22,8 +22,7 @@ Template.actions.onRendered(function() {
 
 Template.actions.helpers({
 
-	actionsXX: function() {  	
-		console.log("ACTIONS LIST REFRESHED");
+	actions: function() {  			
 		return Items.find(_.extend(OpenLoops.getActionFilter(Session.get('actionFilterString')), {boardId: Session.get('currentBoardId'), itemType: 'action'}), {sort: {timestamp: 1}});
 	},
 

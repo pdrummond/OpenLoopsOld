@@ -40,10 +40,10 @@
 		</div>		
 		<div id="action-list" style="height:100%;width:490px">
 			<div class="ui middle aligned divided relaxed list" style="padding:10px;padding-left:15px;overflow-y:scroll;height:100%;align-content: flex-start;">
-				{{#each actionsXX}}
+				{{#sortable items=actions}}
 				{{> actionItem}}
-				{{/each}}
-			</div>
+				{{/sortable}}
+			</div>			
 		</div>			
 	</div>
 	<!--<div class="ui bottom attached tab {{activeTab 'labels'}}" data-tab="third">
