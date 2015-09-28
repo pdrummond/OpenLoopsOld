@@ -68,6 +68,10 @@ Template.registerHelper('itemStatusColor', function (item) {
 	return OpenLoops.ActionStatusMeta[item.status].color || 'ERR: No Color';
 });
 
+Template.registerHelper('boardTitle', function (boardId) {
+	return Boards.findOne(boardId).title;
+});
+
 Template.registerHelper('boards', function (context) {
 	return Boards.find();
 });

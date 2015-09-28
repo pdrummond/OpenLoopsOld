@@ -6,7 +6,8 @@ Template.actionDetailSidebarView.onRendered( function() {
 		lineWrapping: true,
 		indentWithTabs:false,
 	});
-	$(".CodeMirror").hide();	
+	$(".CodeMirror").hide();
+	$('.ui.dropdown').dropdown();	
 });
 
 Template.actionDetailSidebarView.events({
@@ -28,7 +29,7 @@ Template.actionDetailSidebarView.events({
 	},
 
 	'click #back-icon': function() {
-		Session.set('rightSidebarTemplate', 'actions');
+		OpenLoops.showActionListTabInSidebar();
 	},
 	
 	'keyup #comment-input': function(e) {
@@ -70,3 +71,15 @@ Template.actionDetailSidebarView.onCreated(function() {
 		});
 	});	
 });
+
+Template.moveToBoardItem.events({
+	'click': function() {		
+		Meteor.call('updateItemBoardId', Session.get('selectedItemId'), this._id, function(error, result) {
+			if(error) {
+				alert("updateItemBoardId Error");
+			} else {
+				OpenLoops.showActionListTabInSidebar();
+			}
+		});
+	}
+})

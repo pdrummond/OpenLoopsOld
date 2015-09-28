@@ -1,8 +1,25 @@
 <template name="actionDetailSidebarView">
 	{{#with selectedSidebarAction}}
-	<div class="header" style="background:black;color:white;padding:10px;padding-bottom:20px">
-		<i id="back-icon" class="left arrow icon" style="position: absolute;top: 5px;left: 5px;"></i> 
-		<!--<i id="full-screen-icon" class="maximize icon" style="position: absolute;top: 5px;right: 5px;"></i> -->
+	<div class="header" style="background:black;color:white;padding:10px;padding-bottom:20px">		
+		<div class="ui icon top left pointing dropdown" style="position: absolute;top: 5px;left: 5px;">
+			<i class="vertical ellipsis icon"></i>
+			<div class="menu">
+				<div class="item"><span class="text">Rename</span></div>
+				<div class="item"><span class="text">Rename</span></div>
+				<div class="item">
+					<i class="dropdown icon"></i>
+					<span class="text">Move to</span>
+					<div class="menu">
+						{{# each boards}}
+						{{> moveToBoardItem}}
+						{{/each}}
+					</div>
+				</div>
+				<div class="divider"></div>
+				<div class="item"><span class="text">Archive/Restore</span></div>
+			</div>			
+		</div>	
+		<i id="back-icon" class="left arrow icon" style="position: absolute;top: 5px;right: 5px;"></i> 	
 		<h1>    
 			<i style="float:left;top:5px;position: relative;" class="big {{itemIcon this}} {{itemIconColor this}} icon"></i>    
 			<div style="padding-left:50px">
@@ -59,4 +76,10 @@
 		{{/each}}		
 	</div>
 	
+</template>
+
+<template name="moveToBoardItem">
+	<div class="item">
+		<i class="{{color}} square icon"></i>{{title}}
+	</div>
 </template>

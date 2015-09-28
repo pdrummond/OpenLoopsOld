@@ -1,0 +1,12 @@
+<template name="itemMovedToBoardActivity">
+	<div class="activity message" data-messageid={{_id}} data-userid={{userId}}>
+		<img src="{{profileImage userId}}" class="message_profile-pic"/>
+		<a href="" class="message_username">{{usernameFromId userId}}</a>
+		<span class="message_timestamp">{{timeAgo timestamp}}</span>
+		<span class="message_star"></span>
+		<span class="message_content" style="color:#8b898f;font-style:italic">
+			{{{activitySubjectLabel item}}} moved <span class="sid-label">{{sidLabel item}}: {{itemTitle item}}</span> 
+			to this board from <strong>{{boardTitle fromBoardId}}</strong>
+		</span>
+	</div>
+</template>
