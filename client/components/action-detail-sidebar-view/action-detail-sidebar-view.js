@@ -1,14 +1,7 @@
 Template.actionDetailSidebarView.onRendered( function() {	
-	/*this.editor = CodeMirror.fromTextArea( this.find( "#item-description-editor" ), {
-		lineNumbers: false,
-		fixedGutter: false,
-		mode: "markdown",
-		lineWrapping: true,
-		indentWithTabs:false,
-	});
-$(".CodeMirror").hide();*/
-$('.ui.dropdown').dropdown();	
+	$('.ui.dropdown').dropdown();	
 });
+
 Template.actionDetailSidebarView.helpers({
 	itemIsAction: function() {
 		return this.itemType == 'action';
