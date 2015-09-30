@@ -143,6 +143,14 @@ Template.registerHelper("timestampToTime", function (timestamp) {
 	return hours + ':' + minutes.substr(minutes.length-2) + ':' + seconds.substr(seconds.length-2);
 });
 
+Template.registerHelper("truncate", function (text, maxSize) {
+	if(text.length > maxSize) {
+		return text.substr(0, maxSize) + "...";
+	} else {
+		return text;
+	}
+});
+
 Template.registerHelper("truncateItemText", function (obj, text, maxSize) {	
 	if(text.length > maxSize) {
 		return parseMarkdown(text.substring(0, maxSize)).replace(/^<p>/, '').replace(/<\/p>$/,'') + 

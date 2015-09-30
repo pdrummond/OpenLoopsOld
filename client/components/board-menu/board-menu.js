@@ -39,6 +39,7 @@ Template.board.events({
 	'click': function() {		
 		Session.set('currentBoardId', this._id);
 		Session.set('messageLimit', OpenLoops.MESSAGE_LIMIT_INC);
+		OpenLoops.showActionListTabInSidebar();
 		Router.go("/board/" + Session.get('currentBoardId') + "/messages");
 	}
 });

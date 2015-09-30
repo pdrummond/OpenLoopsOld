@@ -6,8 +6,8 @@ Template.actionDetailSidebarView.onRendered( function() {
 		lineWrapping: true,
 		indentWithTabs:false,
 	});
-	$(".CodeMirror").hide();*/
-	$('.ui.dropdown').dropdown();	
+$(".CodeMirror").hide();*/
+$('.ui.dropdown').dropdown();	
 });
 Template.actionDetailSidebarView.helpers({
 	itemIsAction: function() {
@@ -20,9 +20,33 @@ Template.actionDetailSidebarView.helpers({
 });
 
 Template.actionDetailSidebarView.events({
-	'click #archive-menu-item': function() {
+	'click #archive-item-menu-item': function() {
 		Meteor.call('updateItemArchived', this._id, !this.archived);
 	},
+
+	'click #rename-item-menu-item': function() {
+		var title = prompt("Enter new title", this.title);
+		if(title != null && title.length > 0) {
+			Meteor.call('updateItemTitle', this._id, title);
+		}
+	},
+
+	'click #change-item-members-menu-item': function() {
+		var members = prompt("Set members:", this.members.join(','));
+		if(members != null && members.length > 0) {
+			if(members != null && members.length > 0) {
+				var memberList = [];
+				if(members.indexOf(',') != -1) {
+					memberList = members.split(',');
+				} else {
+					memberList.push(members);
+				}
+				Meteor.call('updateItemMembers', this._id, memberList);
+			}
+		}
+	},
+	
+
 	'click #fullscreen-description-link': function(event, template) {
 		Session.set('zenEditorContent', $('#item-description-editor').val());
 		Session.set('zenEditorTargetInput', '#item-description-editor');

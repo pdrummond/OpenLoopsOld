@@ -75,7 +75,7 @@ Template.createItemActivity.events({
 	}
 });
 
-Template.actionAttrChangeActivity.events({
+Template.itemAttrChangeActivity.events({
 	'click': function() {		
 		$(".message[data-messageid='" + this._id + "']").removeClass('new-message');
 	}
