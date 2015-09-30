@@ -743,6 +743,7 @@ pre {
 
 .action.item {
   background: white;
+  cursor: -webkit-grab; cursor: -moz-grab;
 }
 
 .action.item .action-check {

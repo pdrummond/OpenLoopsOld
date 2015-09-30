@@ -23,7 +23,7 @@ Template.actions.onRendered(function() {
 Template.actions.helpers({
 
 	actions: function() {  			
-		return Items.find(_.extend({boardId: Session.get('currentBoardId'), archived:false, itemType: 'action'}, OpenLoops.getActionFilter(Session.get('actionFilterString'))), {sort: {timestamp: 1}});
+		return Items.find(_.extend({boardId: Session.get('currentBoardId'), archived:false, itemType: 'action'}, OpenLoops.getActionFilter(Session.get('actionFilterString'))), {sort: {order: 1}});
 	},
 
 	activeTab: function(tabName) {
@@ -45,6 +45,22 @@ Template.actions.helpers({
 
 	activeUsers: function() {
 		return Presences.find();
+	},
+
+	sortableOptions: function () {
+		return {
+			onSort: function(event) {
+				if(event.oldIndex != event.newIndex) {
+					Meteor.call('createActivity', {
+						activityType: 'item-reordered-activity',
+						item: event.data,
+						oldIndex: event.oldIndex+1,
+						newIndex: event.newIndex+1,				
+						boardId: event.data.boardId
+					});
+				}
+			}
+		};
 	}
 
 });

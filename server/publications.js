@@ -62,7 +62,7 @@ Meteor.publish('actions', function (opts) {
     Counts.publish(this, 'action-open-count', Items.find(_.extend({boardId: opts.board._id, itemType: 'action', archived: false}, opts.filter)), { noReady: true });
     Counts.publish(this, 'action-archived-count', Items.find(_.extend({boardId: opts.board._id, itemType: 'action', archived: true}, opts.filter)), { noReady: true });
     
-    return Items.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
+    return Items.find(filter, {limit: opts.limit, sort: {order: 1}});
 });
 
 Meteor.publish("allUsernames", function () {
