@@ -14,20 +14,16 @@ Template.messageHistoryView.onCreated(function() {
 		}, function() {
 			var messagesReceivedTimeStamp = new Date().getTime();			
 			setTimeout(function() {
-				if(Session.get('messageLimit') == OpenLoops.MESSAGE_LIMIT_INC) {
-					OpenLoops.scrollBottom();					
-				}
+				OpenLoops.scrollBottom();					
 				Messages.find().observe({
 					added:function(message) {
-						console.log("NEW MESSAGE...");						
 						if(OpenLoops.atBottom == false && message.timestamp > messagesReceivedTimeStamp) {
-
-							if((message.type == 'chat-message' && message.userId != Meteor.userId()) || message.type == 'activity') {
+							if(message.userId != Meteor.userId()) {
+								console.log("NEW MESSAGE: " + JSON.stringify(message, null, 4));		
 								var newMessageCount = Session.get('newMessageCount') || 0;
 								Session.set('newMessageCount', ++newMessageCount);								
-								console.log("New Message Count" + Session.get('newMessageCount'));
 								$(".message[data-messageid='" + message._id + "']").addClass('new-message');
-
+								console.log("newMessageCount: " + Session.get('newMessageCount'));
 							}
 						}
 					}
@@ -35,7 +31,6 @@ Template.messageHistoryView.onCreated(function() {
 				OpenLoops.Notify.init();
 				Notifications.find().observe({
 					added:function(notification) {
-						console.log("XXXXXXXX");
 						OpenLoops.Notify.show(notification);
 					}
 				});

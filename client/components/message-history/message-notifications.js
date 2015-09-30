@@ -22,7 +22,10 @@ Meteor.startup(function() {
 Template.messageHistoryView.onRendered(function() {
 
 	$(".message-history").scroll(function() {		
-		OpenLoops.atBottom = (($(".message-history").scrollTop() + $(".message-history").height()) == $(".message-history")[0].scrollHeight);
+		OpenLoops.atBottom = (($(".message-history").scrollTop() + $(".message-history").height()) >= ($(".message-history")[0].scrollHeight-30));
+		console.log("one: " + (($(".message-history").scrollTop() + $(".message-history").height())));
+		console.log("two: " + $(".message-history")[0].scrollHeight);
+		console.log('AT BOTTOM: ' + OpenLoops.atBottom);
 		updateToastVisibility();
 	});
 
@@ -53,8 +56,6 @@ function updateToastVisibility() {
 	if(Session.get('newMessageCount') > 0 && OpenLoops.atBottom == false) {
 		$("#newMessagesToast").fadeIn();
 	} else {
-		$("#newMessagesToast").fadeOut();
-		Session.set('newMessageCount', 0);
-	}	
-	console.log('AT BOTTOM: ' + OpenLoops.atBottom);
+		$("#newMessagesToast").fadeOut();		
+	}
 }
