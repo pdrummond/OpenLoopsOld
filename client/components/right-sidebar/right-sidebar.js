@@ -23,7 +23,7 @@ Template.actions.onRendered(function() {
 Template.actions.helpers({
 
 	actions: function() {  			
-		return Items.find(_.extend(OpenLoops.getActionFilter(Session.get('actionFilterString')), {boardId: Session.get('currentBoardId'), itemType: 'action'}), {sort: {timestamp: 1}});
+		return Items.find(_.extend({boardId: Session.get('currentBoardId'), archived:false, itemType: 'action'}, OpenLoops.getActionFilter(Session.get('actionFilterString'))), {sort: {timestamp: 1}});
 	},
 
 	activeTab: function(tabName) {
@@ -110,8 +110,8 @@ Template.actions.events({
 
 });
 
-Template.actionArchivedChangeActivity.helpers({
+Template.itemArchivedChangeActivity.helpers({
 	archivedOrRestored: function() {
-		return this.action.archived == true? 'archived':'restored';
+		return this.item.archived == true ? 'archived':'restored';
 	}
 });

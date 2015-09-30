@@ -1,13 +1,11 @@
-<template name="actionArchivedChangeActivity">
+<template name="itemArchivedChangeActivity">
 	<div class="activity message" data-messageid={{_id}} data-userid={{userId}}>
 		<img src="{{profileImage userId}}" class="message_profile-pic"/>
 		<a href="" class="message_username">{{usernameFromId userId}}</a>
 		<span class="message_timestamp">{{timeAgo timestamp}}</span>
 		<span class="message_star"></span>		
 		<span class="message_content" style="color:#8b898f;font-style:italic">
-			{{archivedOrRestored}}
-			<a href="/board/{{currentBoardId}}/action/{{action._id}}/description">{{midLabel action}}:{{action.title}}</a> 
-			in {{activityChannel}} channel
+			{{archivedOrRestored}} <span class="sid-label">{{sidLabel item}}: {{itemTitle item}}</span>
 		</span>
 	</div>
 </template>

@@ -12,10 +12,17 @@ Template.actionDetailSidebarView.onRendered( function() {
 Template.actionDetailSidebarView.helpers({
 	itemIsAction: function() {
 		return this.itemType == 'action';
+	},
+
+	archiveMenuItemText: function() {
+		return this.archived?"Restore Item":"Archive Item";
 	}
 });
 
 Template.actionDetailSidebarView.events({
+	'click #archive-menu-item': function() {
+		Meteor.call('updateItemArchived', this._id, !this.archived);
+	},
 	'click #fullscreen-description-link': function(event, template) {
 		Session.set('zenEditorContent', $('#item-description-editor').val());
 		Session.set('zenEditorTargetInput', '#item-description-editor');

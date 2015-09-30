@@ -21,11 +21,11 @@ Meteor.startup(function() {
 
 Template.messageHistoryView.onRendered(function() {
 
-	$(".message-history").scroll(function() {		
+	$(".message-history").scroll(function() {
 		OpenLoops.atBottom = (($(".message-history").scrollTop() + $(".message-history").height()) >= ($(".message-history")[0].scrollHeight-30));
-		console.log("one: " + (($(".message-history").scrollTop() + $(".message-history").height())));
-		console.log("two: " + $(".message-history")[0].scrollHeight);
-		console.log('AT BOTTOM: ' + OpenLoops.atBottom);
+		//console.log("one: " + (($(".message-history").scrollTop() + $(".message-history").height())));
+		//console.log("two: " + $(".message-history")[0].scrollHeight);
+		//console.log('AT BOTTOM: ' + OpenLoops.atBottom);
 		updateToastVisibility();
 	});
 
