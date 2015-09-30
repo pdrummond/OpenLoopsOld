@@ -128,6 +128,14 @@ Template.header.onRendered(function() {
 
 Template.footer.onRendered(function() {	
 	this.$('.ui.dropdown').dropdown();
+	this.$("#show-activity-checkbox").checkbox().first().checkbox({
+		onChecked: function() {
+			Session.set('messageHistory.showActivity', true);
+		},
+		onUnchecked: function() {
+			Session.set('messageHistory.showActivity', false);
+		}
+	});
 });
 
 Template.footer.helpers({
@@ -159,15 +167,16 @@ Template.footer.helpers({
 		$("#subject-input").val(subjectLabel);
 	},
 
-	showActivityCheckBoxClass: function() {
-		return (Session.get('messageHistory.showActivity') == true ? "checked":"");
+	showActivity: function() {
+		return Session.get('messageHistory.showActivity');
 	}
 });
 
 Template.footer.events({
-	'click #show-activity-checkbox': function() {
+	/*'click #show-activity-checkbox': function() {
 		Session.set('messageHistory.showActivity', !Session.get('messageHistory.showActivity'));
-	},
+		$("#show-activity-checkbox").checkbox(Session.get('messageHistory.showActivity')?'check':'uncheck');
+	},*/
 
 	'click #logout-menu-item': function() {
 		Meteor.logout();
