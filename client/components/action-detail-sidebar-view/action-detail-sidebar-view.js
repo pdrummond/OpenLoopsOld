@@ -16,10 +16,29 @@ Template.actionDetailSidebarView.helpers({
 
 	archiveMenuItemText: function() {
 		return this.archived?"Restore Item":"Archive Item";
-	}
+	},
+
+	activeTab: function(tabName) {
+		var activeTab = Session.get('actionDetailSidebarView.activeTab') || "description";
+		return activeTab == tabName ? 'active':'';
+	},
+
 });
 
 Template.actionDetailSidebarView.events({
+	
+	'click #description-tab': function() {
+		Session.set('actionDetailSidebarView.activeTab', 'description');
+	},
+
+	'click #discussion-tab': function() {
+		Session.set('actionDetailSidebarView.activeTab', 'discussion');
+	},
+
+	'click #details-tab': function() {
+		Session.set('actionDetailSidebarView.activeTab', 'details');
+	},
+
 	'click #archive-item-menu-item': function() {
 		Meteor.call('updateItemArchived', this._id, !this.archived);
 	},
@@ -87,13 +106,23 @@ Template.actionDetailSidebarView.events({
 			if(inputVal != null && inputVal.length > 0) {				
 				OpenLoops.createMessage(inputVal, this._id);
 				$("#comment-input").val('');
+				OpenLoops.setItemSidebarTab('discussion');
+				Meteor.setTimeout(function() {
+					OpenLoops.scrollToBottomOfComments();
+				}, 10);
 			}	
 		}
-	}
+	},
+
+	'click #full-screen-comment-input': function() {
+		Session.set('zenEditorContent', $('#comment-input').val());
+		Session.set('zenEditorTargetInput', '#comment-input');
+		$("#zenEditor").show();
+	},
 });
 
-Template.actionDetailMessages.helpers({
-	actionMessages: function() {		
+Template.itemComments.helpers({
+	itemComments: function() {		
 		return Messages.find({subjectItemId: this._id}, {sort: {timestamp: 1}});
 	}
 });

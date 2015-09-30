@@ -28,7 +28,7 @@ Template.registerHelper('itemIconColor', function (item) {
 });
 
 Template.registerHelper('itemTitle', function (item) {
-	return item.title;
+	return OpenLoops.truncateText(item.title, 50);
 });
 
 Template.registerHelper('itemHideIfNoMilestone', function (item) {
@@ -144,11 +144,7 @@ Template.registerHelper("timestampToTime", function (timestamp) {
 });
 
 Template.registerHelper("truncate", function (text, maxSize) {
-	if(text.length > maxSize) {
-		return text.substr(0, maxSize) + "...";
-	} else {
-		return text;
-	}
+	return OpenLoops.truncateText(text, maxSize);
 });
 
 Template.registerHelper("truncateItemText", function (obj, text, maxSize) {	

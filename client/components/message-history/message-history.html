@@ -15,7 +15,7 @@
 </template>
 
 <template name="messageHistoryView">	
-	<div class="ui list message-history" style="position:relative">		
+	<div id="chat-message-list" class="ui list message-history" style="position:relative">		
 		<a id="show-earlier-link"  tabindex="0" style="width:100px"><i class="up arrow icon"></i> Show Older Messages</a>
 		{{#each messages}}
 		{{> messageHolder}}
@@ -95,6 +95,6 @@
 		<div class="ui input" style="display:flex;margin-left:18px;margin-right:10px;">			
 			<textarea id="message-input" autofocus class="input-box_text mousetrap" type="text" placeholder="Add message here"></textarea>
 			<i id="full-screen-message-input" class="maximize icon" style="position:absolute;right:10px;top:10px;color:gray;cursor:pointer"></i>
-		</div>		
+		</div>
 	</div>
 </template>

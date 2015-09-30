@@ -4,7 +4,7 @@
 		<div class="ui icon top left pointing dropdown" style="position: absolute;top: 5px;left: 5px;">
 			<i class="vertical ellipsis icon"></i>
 			<div class="menu">
-				<div id="archive-item-menu-item" class="item"><span class="text">{{archiveMenuItemText}}</span></div>
+				<div id="archive-item-menu-item" class="item "><span class="text">{{archiveMenuItemText}}</span></div>
 				<div id="rename-item-menu-item" class="item"><span class="text">Rename Item</span></div>
 				<div id="change-item-members-menu-item" class="item"><span class="text">Change Members</span></div>
 				<div class="item">
@@ -24,7 +24,7 @@
 		<h1>    
 			<i style="float:left;top:5px;position: relative;" class="big {{itemIcon this}} {{itemIconColor this}} icon"></i>    
 			<div style="padding-left:50px">
-				<div class="item-sid" style="text-transform:uppercase;font-size:12px;color:gray">{{sidLabel this}}</div>
+				<div class="item-sid" style="text-transform:uppercase;font-size:12px;color:gray;position: relative;top: 4px;">{{sidLabel this}}</div>
 				<span id="action-title">{{title}}</span>
 			</div>
 		</h1>
@@ -33,12 +33,12 @@
 		{{/if}}
 	</div>	
 	<div class="ui top attached secondary pointing tabular menu">
-		<a class="active item" data-tab="first">Description</a>
-		<a class="item" data-tab="second">Discussion</a>
-		<a class="item" data-tab="third">Details</a>
+		<a id="description-tab" class="{{activeTab 'description'}} item" data-tab="first">Description</a>
+		<a id="discussion-tab" class="{{activeTab 'discussion'}} item" data-tab="second">Discussion</a>
+		<a id="details-tab" class="{{activeTab 'details'}} item" data-tab="third">Details</a>
 	</div>
 	<div id="tab-wrapper" style="height:calc( 100% - 220px );overflow-y:scroll">
-		<div class="ui active basic tab segment" data-tab="first" style="height:100%">
+		<div class="ui basic tab segment {{activeTab 'description'}}" data-tab="first" style="height:100%">
 			<div style="float:left">
 				<a id="fullscreen-description-link" style="display:none;cursor:pointer"><i class="maximize icon"></i></a>
 			</div>
@@ -53,10 +53,10 @@
 				<textarea id="item-description-editor" style="display:none">{{text}}</textarea>
 			</div>
 		</div>
-		<div class="ui basic tab segment" data-tab="second"  style="margin:10px;position:relative">
-			{{> actionDetailMessages}}
+		<div class="ui basic tab segment {{activeTab 'discussion'}}" data-tab="second"  style="height:100%;margin:10px;position:relative">
+			{{> itemComments}}
 		</div>	
-		<div class="ui basic tab segment" data-tab="third"  style="margin:10px">
+		<div class="ui basic tab segment {{activeTab 'details'}}" data-tab="third"  style="margin:10px">
 
 			<table class="ui celled table" style="margin-left:25px;width:400px;">
 				<tr><td>Type</td><td><strong>{{itemType}}</strong></td></tr>				
@@ -64,22 +64,22 @@
 				<tr><td>Members</td><td><strong>{{itemMembers this}}</strong></td></tr>
 				<tr><td>Created By</td><td><strong>{{usernameFromId userId}}</strong></td></tr>
 				<tr><td>Created Date</td><td><strong>{{formatDate timestamp}}</strong></td></tr>
-				<tr><td>Updated By</td><td><strong>{{updatedBy}}</strong></td></tr>
-				<tr><td>Updated Date</td><td><strong>{{formatDate updatedDate}}</strong></td></tr>
+				<tr><td>Updated By</td><td><strong>{{usernameFromId updatedBy}}</strong></td></tr>
+				<tr><td>Updated Date</td><td><strong>{{formatDate updatedAt}}</strong></td></tr>
 			</table>
 		</div>
-		<div class="ui fluid icon input" style="position:absolute; width:95%; left:12px; bottom:10px">
-			<input id="comment-input" type="text" placeholder="Add your comment here" >
-			<i class="comment icon"></i>
+		<div class="ui input" style="position:absolute; width:95%; left:12px; bottom:10px">
+			<textarea id="comment-input" autofocus class="mousetrap" type="text" placeholder="Add comment here"></textarea>
+			<i id="full-screen-comment-input" class="maximize icon" style="position:absolute;right:10px;top:10px;color:gray;cursor:pointer"></i>
 		</div>
 	</div>
 	{{/with}}
 </template>
 
-<template name="actionDetailMessages">
+<template name="itemComments">
 
-	<div class="ui list message-history" style="padding:5px;">
-		{{#each actionMessages}}
+	<div id="comments-message-list" class="ui list message-history" style="padding:5px;">
+		{{#each itemComments}}
 		{{> messageHolder}}
 		{{/each}}		
 	</div>
