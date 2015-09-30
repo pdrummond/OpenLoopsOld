@@ -1,5 +1,5 @@
 Meteor.startup(function() {
-	reorderAllItems();
+	//reorderAllItems();
 });
 
 function reorderAllItems() {
