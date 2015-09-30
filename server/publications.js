@@ -16,7 +16,11 @@ Meteor.publish('boards', function () {
 });
 
 Meteor.publish('messages', function (opts) {
-    var filter = _.extend(opts.filter, {boardId: opts.boardId});
+    //var filter = _.extend(opts.filter, {boardId: opts.boardId});
+    var filter = {};
+    if(opts.showActivity == false) {
+        filter = {'type': 'chat-message'};
+    }
     return Messages.find(filter, {limit: opts.limit, sort: {timestamp: -1}});
 });
 

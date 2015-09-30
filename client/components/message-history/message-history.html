@@ -36,7 +36,7 @@
 				</div>-->					
 			</span>
 			<span id="board-header">
-			{{#markdown}}{{#emoji}}{{currentBoardDescription}}{{/emoji}}{{/markdown}}
+				{{#markdown}}{{#emoji}}{{currentBoardDescription}}{{/emoji}}{{/markdown}}
 			</span>	
 		</div>		
 		<div id="channel-circle-buttons" style="position:absolute;right:5px;top:10px">	
@@ -86,6 +86,10 @@
 		<div class="ui input" style="display:flex;margin-left:18px;margin-right:10px;positon:relative" title="This is the subject">
 			<!--<i id="new-item-icon" class="{{newItemIcon}} icon"></i>-->
 			<input id="subject-input" class="mousetrap" type="text" value="{{currentSubjectLabel}}" style="margin-left:-12px;height: 10px;border: none;color: green;">
+		</div>
+		<div class="ui toggle checkbox" style="position:absolute;right:12px;top:-5px">
+			<input id="show-activity-checkbox" type="checkbox" checked="{{showActivityCheckBoxClass}}">
+			<label>Show Activity</label>
 		</div>
 		<div class="ui input" style="display:flex;margin-left:18px;margin-right:10px;">			
 			<textarea id="message-input" autofocus class="input-box_text mousetrap" type="text" placeholder="Add message here"></textarea>

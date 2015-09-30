@@ -1,4 +1,5 @@
 Meteor.startup(function() {
+	Session.setDefault('messageHistory.showActivity', true);
 	Session.setDefault('messagesReceivedTimeStamp', new Date().getTime());
 	Session.setDefault('newMessageCount', 0);
 	Session.setDefault('messageHistoryPage.viewTemplate', 'messageHistoryView');

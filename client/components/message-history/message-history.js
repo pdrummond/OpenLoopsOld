@@ -8,6 +8,7 @@ Template.messageHistoryView.onCreated(function() {
 	var self = this;	
 	self.autorun(function() {
 		self.subscribe('messages', {
+			showActivity: Session.get('messageHistory.showActivity'),
 			filter: OpenLoops.getMessageFilter(Session.get('messageFilterString')),
 			boardId: Session.get('currentBoardId'),
 			limit: Session.get('messageLimit'),			
@@ -80,43 +81,37 @@ Template.header.events({
 	'click #create-post-menu-item': function() {
 		Session.set('createItemForm.type', 'post');
 		Session.set('createItemForm.label', 'Post');
-		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
-		Session.set('rightSidebarTemplate', 'createItemForm');
+		OpenLoops.showCreateItemFormInSidebar();
 	},
 
 	'click #create-discussion-menu-item': function() {
 		Session.set('createItemForm.type', 'discussion');
 		Session.set('createItemForm.label', 'Discussion');
-		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
-		Session.set('rightSidebarTemplate', 'createItemForm');
+		OpenLoops.showCreateItemFormInSidebar();
 	},
 
 	'click #create-article-menu-item': function() {
 		Session.set('createItemForm.type', 'article');
 		Session.set('createItemForm.label', 'Article');
-		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
-		Session.set('rightSidebarTemplate', 'createItemForm');
+		OpenLoops.showCreateItemFormInSidebar();
 	},
 
 	'click #create-task-menu-item': function() {
 		Session.set('createItemForm.type', 'task');
 		Session.set('createItemForm.label', 'Task');
-		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
-		Session.set('rightSidebarTemplate', 'createItemForm');
+		OpenLoops.showCreateItemFormInSidebar();
 	},
 
 	'click #create-bug-menu-item': function() {
 		Session.set('createItemForm.type', 'bug');
 		Session.set('createItemForm.label', 'Bug');
-		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
-		Session.set('rightSidebarTemplate', 'createItemForm');
+		OpenLoops.showCreateItemFormInSidebar();
 	},
 
 	'click #create-todo-menu-item': function() {
 		Session.set('createItemForm.type', 'todo');
 		Session.set('createItemForm.label', 'Todo');
-		Session.set('previousRightSidebarTemplate', Session.get('rightSidebarTemplate') || 'actions');
-		Session.set('rightSidebarTemplate', 'createItemForm');
+		OpenLoops.showCreateItemFormInSidebar();
 	}
 });
 
@@ -162,10 +157,18 @@ Template.footer.helpers({
 			subjectLabel = OpenLoops.getSidLabel(subjectItem) + " " + subjectItem.title;
 		}
 		$("#subject-input").val(subjectLabel);
+	},
+
+	showActivityCheckBoxClass: function() {
+		return (Session.get('messageHistory.showActivity') == true ? "checked":"");
 	}
 });
 
 Template.footer.events({
+	'click #show-activity-checkbox': function() {
+		Session.set('messageHistory.showActivity', !Session.get('messageHistory.showActivity'));
+	},
+
 	'click #logout-menu-item': function() {
 		Meteor.logout();
 	},
