@@ -19,7 +19,6 @@ Template.actions.onRendered(function() {
 	});
 });
 
-
 Template.actions.helpers({
 
 	actions: function() {  			
@@ -73,6 +72,11 @@ Template.actions.events({
 	'click #actions-tab': function() {
 		Session.set('activeActionTab', 'actions');
 	},
+
+	'click #labels-tab': function() {
+		Session.set('activeActionTab', 'labels');
+	},
+
 	'click #people-tab': function() {
 		Session.set('activeActionTab', 'people');
 	},
@@ -125,6 +129,16 @@ Template.actions.events({
 
 	'click #all-archived-actions': function() {
 		Session.set('actionFilterString', 'archived:true');
+	},
+
+	'click #new-label-button': function() {
+		var title = prompt("Label Title:");
+		if(title != null && title.length > 0) {
+			var description = prompt("Label Description:")
+			var color = prompt("Label Color:");
+
+			Meteor.call('createLabel', {title: title, description: description, color:color});
+		}
 	}
 
 });

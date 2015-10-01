@@ -9,9 +9,9 @@ Template.actionDetailPage.onCreated(function() {
 });
 
 Template.actionDetailPage.onRendered(function() {
-	this.$('.ui.dropdown').dropdown({
+/*	this.$('.ui.dropdown').dropdown({
 		action: 'hide'
-	});	
+	});	*/
 });
 
 Template.actionDetailPage.helpers({

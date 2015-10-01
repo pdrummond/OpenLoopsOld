@@ -15,6 +15,10 @@ Meteor.publish('boards', function () {
     return Boards.find({'members.userId': this.userId});
 });
 
+Meteor.publish('labels', function () {
+    return Labels.find();
+});
+
 Meteor.publish('messages', function (opts) {
     //var filter = _.extend(opts.filter, {boardId: opts.boardId});
     var filter = {boardId: opts.boardId};

@@ -79,6 +79,10 @@ Template.registerHelper('boards', function (context) {
 	return Boards.find();
 });
 
+Template.registerHelper('labels', function (context) {
+	return Labels.find();
+});
+
 Template.registerHelper('currentBoardDescription', function (context) {
 	return Boards.findOne(Session.get('currentBoardId')).description;
 });

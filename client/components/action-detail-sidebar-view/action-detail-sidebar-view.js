@@ -1,5 +1,11 @@
 Template.actionDetailSidebarView.onRendered( function() {	
-	$('.ui.dropdown').dropdown();	
+	$('#action-detail-menu-dropdown').dropdown();
+	$('#labels-dropdown').dropdown({
+		allowAdditions: true,
+		onChange: function(labels, text, $choice) {
+			Meteor.call('updateItemLabels', Session.get('selectedItemId'), labels.split(","));
+		}
+	});
 });
 
 Template.actionDetailSidebarView.helpers({
@@ -15,6 +21,10 @@ Template.actionDetailSidebarView.helpers({
 		var activeTab = Session.get('actionDetailSidebarView.activeTab') || "description";
 		return activeTab == tabName ? 'active':'';
 	},
+
+	labelsString: function() {
+		return Items.findOne(Session.get('selectedItemId')).labels.join(",");
+	}
 
 });
 
@@ -122,9 +132,9 @@ Template.itemComments.helpers({
 
 Template.actionDetailSidebarView.onRendered(function() {
 	$('.menu .item').tab();
-	this.$('.ui.dropdown').dropdown({
+	/*this.$('.ui.dropdown').dropdown({
 		action: 'hide'
-	});
+	});*/
 });
 
 Template.actionDetailSidebarView.onCreated(function() {

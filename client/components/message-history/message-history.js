@@ -134,12 +134,12 @@ Template.header.helpers({
 });
 
 Template.header.onRendered(function() {	
-	this.$('.ui.dropdown').dropdown({on: 'hover'});	
+	this.$('#create-dropdown').dropdown({on: 'hover'});	
 });
 
 
 Template.footer.onRendered(function() {	
-	this.$('.ui.dropdown').dropdown();
+	//this.$('.ui.dropdown').dropdown();
 	this.$("#show-activity-checkbox").checkbox().first().checkbox({
 		onChecked: function() {
 			Session.set('messageHistory.showActivity', true);

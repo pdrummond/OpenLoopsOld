@@ -8,7 +8,7 @@
 	<div  class="ui top tabular pointing secondary menu" style='margin-bottom:0'>
 		
 		<a id="actions-tab" class="{{activeTab 'actions'}} item"><i class="warning circle icon"></i> Actions</a>
-		<!--<a id="labels-tab" class="{{activeTab 'labels'}} item"><i class="tag icon"></i> Labels</a>-->
+		<a id="labels-tab" class="{{activeTab 'labels'}} item"><i class="tag icon"></i> Labels</a>
 		<a id="people-tab" class="{{activeTab 'people'}} item"><i class="users icon"></i> Team</a>
 	</div>
 	<div class="ui bottom attached {{activeTab 'actions'}} tab" data-tab="first" style="height:100%">			
@@ -46,38 +46,16 @@
 			</div>			
 		</div>			
 	</div>
-	<!--<div class="ui bottom attached tab {{activeTab 'labels'}}" data-tab="third">
-		<div class="ui divided selection list">
-			<a class="item">
-				<div class="right floated content">
-					<strong>6</strong> open <strong>19</strong> Closed
-				</div>
-				<div class="ui red horizontal label">#important</div>
-				<p style="font-size:80%;margin-top:5px">Very important stuff that always takes priority.</p>
-			</a>
-			<a class="item">
-				<div class="right floated content">
-					<strong>6</strong> open <strong>19</strong> Closed
-				</div>
-				<div class="ui purple horizontal label">#now</div>
-				<p style="font-size:80%;margin-top:5px">Tasks that need doing right now</p>
-			</a>
-			<a class="item">
-				<div class="right floated content">
-					<strong>6</strong> open <strong>19</strong> Closed
-				</div>
-				<div class="ui red horizontal label">#next</div>
-				<p style="font-size:80%;margin-top:5px">Tasks that I will be doing next</p>
-			</a>
-			<a class="item">
-				<div class="right floated content">
-					<strong>6</strong> open <strong>19</strong> Closed
-				</div>
-				<div class="ui horizontal label">#soon</div>
-				<p style="font-size:80%;margin-top:5px">Tasks I'll get round to doing soon(ish)</p>
-			</a>
+	<div class="ui bottom attached tab {{activeTab 'labels'}}" data-tab="third">
+		{{#if currentUserIsAdmin}}
+			<button id="new-label-button" class="ui mini button" style="float: right;margin-right:10px">New Label</button>
+		{{/if}}
+		<div class="ui divided selection list" style="padding-top:30px">
+			{{#each labels}}
+			{{> labelItem}}
+			{{/each}}
 		</div>
-	</div>-->
+	</div>
 	<div class="ui bottom attached tab {{activeTab 'people'}}" data-tab="forth">
 		<div class="ui attached message">
 
@@ -105,4 +83,14 @@
 	<div class="filter item {{activeClass}}">
 		{{title}}
 	</div>
+</template>
+
+<template name="labelItem">
+	<a class="item">
+		<div class="right floated content">
+			<strong>6</strong> open <strong>19</strong> Closed
+		</div>
+		<div class="ui {{color}} horizontal label">{{title}}</div>
+		<p style="font-size:80%;margin-top:5px">{{description}}</p>
+	</a>
 </template>

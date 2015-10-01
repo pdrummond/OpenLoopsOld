@@ -1,6 +1,6 @@
 
 Template.boardMenu.onRendered(function() {
-	this.$('.ui.dropdown').dropdown();
+	this.$('#board-menu-dropdown').dropdown();
 });
 
 Template.boardMenu.events({

@@ -1,3 +1,7 @@
+Template.actionStatusDropdown.onRendered(function() {
+	$("#action-status-dropdown").dropdown();
+});
+
 Template.actionStatusDropdown.events({
 	'click .status.item': function(e) {
 		e.preventDefault();		

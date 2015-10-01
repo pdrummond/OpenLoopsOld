@@ -1,7 +1,6 @@
 Template.createItemForm.onRendered(function() {
 	$("#new-item-title-input").focus();
-	$('#member-dropdown').dropdown({allowAdditions: true});
-	
+	$('#member-dropdown').dropdown({allowAdditions: true});	
 	this.$('#description-field').toggle(Session.get('createItemForm.type') != 'article');
 });
 

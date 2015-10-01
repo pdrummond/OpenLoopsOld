@@ -1,9 +1,9 @@
 
 Template.actionItem.onRendered(function() {
 
-	this.$('.ui.dropdown').dropdown({
+	/*this.$('.ui.dropdown').dropdown({
 		action: 'hide'
-	});
+	});*/
 });
 
 Template.actionItem.helpers({

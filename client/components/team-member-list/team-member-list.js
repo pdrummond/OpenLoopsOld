@@ -5,9 +5,9 @@ Template.teamMemberList.helpers({
 })
 
 Template.teamMember.onRendered(function() {
-	this.$('.ui.dropdown').dropdown({
+	this.$('#team-member-dropdown').dropdown({
 		action: 'hide'
-	});	
+	});
 });
 
 Template.teamMember.events({

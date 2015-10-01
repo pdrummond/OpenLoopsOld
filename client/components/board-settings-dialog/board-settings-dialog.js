@@ -1,9 +1,9 @@
 
 Template.boardSettingsDialog.onRendered(function() {
 	this.$('.menu .item').tab();
-	this.$('.ui.dropdown').dropdown({
+	/*this.$('.ui.dropdown').dropdown({
 		action: 'hide'
-	});	
+	});*/	
 });
 
 Template.boardSettingsDialog.helpers({
@@ -14,9 +14,9 @@ Template.boardSettingsDialog.helpers({
 
 
 Template.boardMember.onRendered(function() {
-	this.$('.ui.dropdown').dropdown({
+	/*this.$('.ui.dropdown').dropdown({
 		action: 'hide'
-	});	
+	});*/
 });
 
 Template.boardMember.events({

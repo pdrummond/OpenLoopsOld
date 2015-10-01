@@ -5,7 +5,8 @@ Router.configure({
     return [
     Meteor.subscribe('podSettings'),
     Meteor.subscribe('teamMembers'),
-    Meteor.subscribe('boards'),    
+    Meteor.subscribe('boards'),
+    Meteor.subscribe('labels'),
     Meteor.subscribe('filters'),
     Meteor.subscribe('allUsernames'),
     Meteor.subscribe('notifications'),
