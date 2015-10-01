@@ -23,7 +23,10 @@ Template.actions.onRendered(function() {
 Template.actions.helpers({
 
 	actions: function() {  			
-		return Items.find(_.extend({boardId: Session.get('currentBoardId'), archived:false, itemType: 'action'}, OpenLoops.getActionFilter(Session.get('actionFilterString'))), {sort: {order: 1}});
+		return Items.find(
+			_.extend({boardId: Session.get('currentBoardId'), archived:false, itemType: 'action'}, 
+				OpenLoops.getActionFilter(Session.get('actionFilterString'))), 
+			{sort: {order: 1}});
 	},
 
 	activeTab: function(tabName) {

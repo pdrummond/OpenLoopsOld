@@ -6,6 +6,10 @@ Template.boardList.helpers({
 });
 
 Template.boardList.events({	
+	'click #reorder-all-items-button': function() {
+		Meteor.call('reorderAllItems');
+	},
+
 	"click #save-pod-settings": function(e) {
 		e.preventDefault();
 		var input = $("#pod-prefix-input").val();
