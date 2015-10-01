@@ -112,6 +112,18 @@ Template.header.events({
 		Session.set('createItemForm.type', 'todo');
 		Session.set('createItemForm.label', 'Todo');
 		OpenLoops.showCreateItemFormInSidebar();
+	},
+
+	'click #create-question-menu-item': function() {
+		Session.set('createItemForm.type', 'question');
+		Session.set('createItemForm.label', 'Question');
+		OpenLoops.showCreateItemFormInSidebar();
+	},
+
+	'click #create-todo-menu-item': function() {
+		Session.set('createItemForm.type', 'idea');
+		Session.set('createItemForm.label', 'Idea');
+		OpenLoops.showCreateItemFormInSidebar();
 	}
 });
 

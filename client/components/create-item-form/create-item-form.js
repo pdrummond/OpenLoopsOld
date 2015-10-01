@@ -8,6 +8,10 @@ Template.createItemForm.onRendered(function() {
 Template.createItemForm.helpers({
 	createItemFormLabel: function() {
 		return Session.get('createItemForm.label');
+	},
+
+	itemIcon: function() {
+		return OpenLoops.getItemIcon({type: Session.get('createItemForm.type')})
 	}
 });
 

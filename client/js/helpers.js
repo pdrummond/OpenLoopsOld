@@ -20,6 +20,8 @@ Template.registerHelper('itemIconColor', function (item) {
 		case 'task': return 'green'; 
 		case 'bug': return 'red';
 		case 'todo': return 'orange';
+		case 'idea': return 'brown';
+		case 'question': return 'teal';
 		case 'post': return 'blue';
 		case 'discussion': return 'purple';
 		case 'article': return 'yellow';
