@@ -10,6 +10,10 @@ Template.boardList.events({
 		Meteor.call('reorderAllItems');
 	},
 
+	'click #remove-board-prefix-fields-button': function() {
+		Meteor.call('removeBoardPrefixFields')
+	},
+
 	"click #save-pod-settings": function(e) {
 		e.preventDefault();
 		var input = $("#pod-prefix-input").val();
