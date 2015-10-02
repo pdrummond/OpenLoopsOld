@@ -1,0 +1,37 @@
+<template name="boardList">
+	{{#if currentUserIsAdmin}}
+	<button id="create-board-button" class="ui primary button" style="margin-right:30px;float:right">
+		Create Board
+	</button>
+	{{/if}}
+	<div class="ui cards" style="margin-top:30px;width: 700px;margin-left: 30px;">
+		{{#each boards}}
+		{{> boardListItem}}
+		{{/each}}
+	</div>
+	{{#if noBoards}}
+	{{#if currentUserIsAdmin}}
+	<p>You don't have any boards yet - click on the Create Board button to get started</p>
+	{{else}}
+	<p>You are not a member of any boards - see your admin for access</p>
+	{{/if}}
+	{{/if}}
+</template>
+
+<template name="boardListItem">
+	<div class="teal milestone card" style="cursor:pointer">
+		<div class="content">
+			<div class="header">{{title}}</div>
+			<div class="description">
+				{{description}}
+			</div>
+		</div>
+		<div class="extra">			
+			<strong>6</strong> open  <strong>19</strong> closed
+			<!--<div class="right floated">
+				<strong>6</strong> open  <strong>19</strong> closed
+			</div>-->
+		</div>		
+	</div>
+</template>
+
