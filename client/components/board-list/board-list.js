@@ -6,25 +6,6 @@ Template.boardList.helpers({
 });
 
 Template.boardList.events({	
-	'click #reorder-all-items-button': function() {
-		Meteor.call('reorderAllItems');
-	},
-
-	'click #remove-board-prefix-fields-button': function() {
-		Meteor.call('removeBoardPrefixFields')
-	},
-
-	"click #save-pod-settings": function(e) {
-		e.preventDefault();
-		var input = $("#pod-prefix-input").val();
-		if(input != null && input.length > 0) {
-			Meteor.call('updatePodPrefix', input);
-		}
-	},
-	"click #board-logout": function() {
-		Meteor.logout();
-	},
-
 	"click #create-board-button": function() {
 		$('#createBoardDialog').modal({
 			closable: false,
@@ -50,3 +31,9 @@ Template.boardList.events({
 		
 	},
 });
+
+Template.boardListItem.events({ 
+	'click': function() {
+		Router.go("/board/" + this._id + "/messages");
+	}
+})

@@ -8,7 +8,7 @@ Template.boardMenu.events({
 		Meteor.logout();
 	},
 
-	'click #show-all-boards': function() {
+	'click #mission-control-menu-item': function() {
 		Router.go("/");
 	},
 

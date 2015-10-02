@@ -1,0 +1,24 @@
+<template name="missionControl">
+  <a id="logout-menu-item" style="padding: 5px;display: block;position: absolute;right: 10px;top: 0px;cursor:pointer">Logout</a>
+  <div class="ui text container" style="margin-top:30px">
+    <div class="ui pointing menu">
+      <a id="boards-menu-item" class="item {{activeTab 'boardList'}}">
+        Boards
+      </a>
+      {{#if currentUserIsAdmin}}
+      <a id="team-members-menu-item" class="item {{activeTab 'teamMemberList'}}">
+        Team Members
+      </a>      
+      <a id="pod-settings-menu-item" class="item {{activeTab 'podSettings'}}" >
+        Pod Settings
+      </a>
+      <a id="debug-options-menu-item" class="item {{activeTab 'debugOptions'}}">
+        Debug Options
+      </a>
+      {{/if}}    
+    </div>
+    <div class="ui stacked segment">
+      {{> Template.dynamic template=activeTabTemplate}}
+    </div>
+  </div>
+</template>

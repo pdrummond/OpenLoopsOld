@@ -28,8 +28,8 @@ var requireLogin = function() {
 }
 
 Router.route('/', function () {
-  this.render('boardList');
-}, {name: 'boardList'});
+  this.render('missionControl');
+}, {name: 'missionControl'});
 
 Router.route('/board/:boardId/messages', function () {
   var board = Boards.findOne(this.params.boardId);
@@ -134,6 +134,6 @@ pwd
 ]);
 
 
-Router.onBeforeAction(requireLogin, {only: ['boardList', 'messageHistoryPage', 'actionDetailPage', 'actionDetailCommentPage']});
+Router.onBeforeAction(requireLogin, {only: ['missionControl', 'messageHistoryPage', 'actionDetailPage', 'actionDetailCommentPage']});
 //Router.onBeforeAction('dataNotFound', {only: ['messageHistoryPage', 'actionDetailPage', 'actionDetailCommentPage']});
 

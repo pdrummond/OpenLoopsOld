@@ -1,0 +1,28 @@
+<template name="createBoardDialog">
+	<div id="createBoardDialog" class="ui modal">		
+		<div class="header">
+			Create Board
+		</div>
+		<div class=" content">
+			<form class="ui form">
+				<div class="field">
+					<label>Board Title</label>
+					<input autofocus type="text" name="title" placeholder="Pick a descriptive title for your new board">
+				</div>
+				<div class="field">
+					<label>Board Header</label>
+					<textarea autofocus type="text" name="description" placeholder="Describe the board here or add announcements, links to related sites, etc (Markdown is supported on all edit fields)"></textarea>
+				</div>
+			</form>
+		</div>
+		<div class="actions">
+			<div class="ui black deny button">
+				Cancel
+			</div>
+			<div id="create-board-submit-button" class="ui positive right labeled icon button">
+				Create Board
+				<i class="checkmark icon"></i>
+			</div>
+		</div>
+	</div>
+</template>
