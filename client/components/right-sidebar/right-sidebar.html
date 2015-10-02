@@ -88,14 +88,14 @@
 <template name="labelItem">
 	<a class="item">
 		<div class="right floated content">
-			<span id="label-settings-icon" class="ui icon top left inline pointing dropdown">
-				<i class="tiny settings icon"></i>
-				<div class="menu">					
-					<div id="edit-label-menu-item" class="item">Edit Label</div>
-					<div id="delete-label-menu-item" class="item">Delete Label</div>
-				</div>
-			</span>
-			<strong>6</strong> open <strong>19</strong> Closed			
+			{{#if currentUserIsAdmin}}
+			<div class="ui icon mini buttons">
+				<button id="edit-label-menu-item" class="ui button"><i class="pencil icon"></i></button>
+				<button id="delete-label-menu-item" class="ui button"><i class="remove icon"></i></button>				
+			</div>
+			{{/if}}
+
+			<!--<strong>6</strong> open <strong>19</strong> Closed-->
 		</div>
 		<span id="label" style="cursor:pointer" class="ui {{color}} horizontal label">{{_id}}</span>
 		

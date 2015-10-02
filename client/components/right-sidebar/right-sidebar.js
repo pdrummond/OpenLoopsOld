@@ -132,7 +132,7 @@ Template.actions.events({
 	},
 
 	'click #new-label-button': function() {
-		
+		$("#labelDialog input[name='title']").removeAttr('disabled');
 		$('#labelDialog').modal({
 			closable: true,
 			blurring: true,
@@ -166,17 +166,18 @@ Template.labelItem.events({
 	},
 
 	'click #edit-label-menu-item': function() {
+		var self=this;
 		var label = Labels.findOne(this._id);
+		$("#labelDialog input[name='title']").attr('disabled', 'disabled');
 		$('#labelDialog').modal({
 			closable: true,
 			blurring: true,
 			onApprove : function() {
 				label = {
-					_id: $("#labelDialog input[name='title']").val(),
 					description: $("#labelDialog textarea[name='description']").val(),
 					color: $('#labelDialog #color-dropdown .text .label').attr('data-color')
 				};				
-				Meteor.call("updateLabel", label, function(error, result) {
+				Meteor.call("updateLabel", self._id, label, function(error, result) {
 					if (error) {
 						return alert(error.reason);
 					}
