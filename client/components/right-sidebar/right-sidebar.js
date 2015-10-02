@@ -134,10 +134,10 @@ Template.actions.events({
 	'click #new-label-button': function() {
 		var title = prompt("Label Title:");
 		if(title != null && title.length > 0) {
+			title = slugify(title);
 			var description = prompt("Label Description:")
 			var color = prompt("Label Color:");
-
-			Meteor.call('createLabel', {title: title, description: description, color:color});
+			Meteor.call('createLabel', {_id: title, description: description, color:color});
 		}
 	}
 
@@ -148,3 +148,9 @@ Template.itemArchivedChangeActivity.helpers({
 		return this.item.archived == true ? 'archived':'restored';
 	}
 });
+
+Template.labelItem.events({
+	'click': function() {
+		OpenLoops.showActionListTabInSidebar({filter: "label:" + this._id});
+	}
+})
