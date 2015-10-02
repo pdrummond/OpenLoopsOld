@@ -132,13 +132,24 @@ Template.actions.events({
 	},
 
 	'click #new-label-button': function() {
-		var title = prompt("Label Title:");
-		if(title != null && title.length > 0) {
-			title = slugify(title);
-			var description = prompt("Label Description:")
-			var color = prompt("Label Color:");
-			Meteor.call('createLabel', {_id: title, description: description, color:color});
-		}
+		
+		$('#labelDialog').modal({
+			closable: true,
+			blurring: true,
+			onApprove : function() {
+				label = {
+					_id: $("#labelDialog input[name='title']").val(),
+					description: $("#labelDialog textarea[name='description']").val(),
+					color: $('#labelDialog #color-dropdown .text .label').attr('data-color')
+				};				
+				Meteor.call("createLabel", label, function(error, result) {
+					if (error) {
+						return alert(error.reason);
+					}
+				});
+			}
+		});		
+		$('#labelDialog').modal('show');
 	}
 
 });
@@ -150,7 +161,35 @@ Template.itemArchivedChangeActivity.helpers({
 });
 
 Template.labelItem.events({
-	'click': function() {
+	'click .item .label': function() {
 		OpenLoops.showActionListTabInSidebar({filter: "label:" + this._id});
+	},
+
+	'click #edit-label-menu-item': function() {
+		var label = Labels.findOne(this._id);
+		$('#labelDialog').modal({
+			closable: true,
+			blurring: true,
+			onApprove : function() {
+				label = {
+					_id: $("#labelDialog input[name='title']").val(),
+					description: $("#labelDialog textarea[name='description']").val(),
+					color: $('#labelDialog #color-dropdown .text .label').attr('data-color')
+				};				
+				Meteor.call("updateLabel", label, function(error, result) {
+					if (error) {
+						return alert(error.reason);
+					}
+				});
+			}
+		});		
+		$("#labelDialog input[name='title']").val(label._id);
+		$("#labelDialog textarea[name='description']").val(label.description);		
+		$("#labelDialog #color-dropdown .text").html('<div class="ui ' + label.color + ' empty circular label" data-color="' + label.color + '"></div> ' + label.color);
+		$('#labelDialog').modal('show');
+	},
+
+	'click #delete-label-menu-item': function() {
+		Meteor.call('deleteLabel', this._id);
 	}
 })
