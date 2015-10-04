@@ -23,7 +23,12 @@ Template.actionDetailSidebarView.helpers({
 	},
 
 	labelsString: function() {
-		return Items.findOne(Session.get('selectedItemId')).labels.join(",");
+		var labels = Items.findOne(Session.get('selectedItemId')).labels;
+		if(labels) {
+			return labels.join(",");
+		} else {
+			return "";
+		}
 	}
 
 });
