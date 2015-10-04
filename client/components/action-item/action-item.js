@@ -7,10 +7,11 @@ Template.actionItem.onRendered(function() {
 });
 
 Template.actionItem.helpers({
-	milestoneLabel: function() {
-		var milestone =  Milestones.findOne(this.milestone);
-		return milestone?milestone.title:'No Milestone';
-	},	
+	actionLabels: function() {		
+		return _.map(this.labels, function(label) {
+			return Labels.findOne(label);
+		});
+	}
 });
 
 Template.actionItem.events({

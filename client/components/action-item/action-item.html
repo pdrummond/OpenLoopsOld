@@ -2,17 +2,22 @@
 
 	<div class="action item">		
 		<div class="right floated content">
-			<div class="ui mini button {{itemStatusColor this}}">{{itemStatusLabel this}}</div>
+			<div class="ui basic label {{itemStatusColor this}}">{{itemStatusLabel this}}</div>
 		</div>
 		<!--<i class="action-check big square outline icon"></i>-->
 		<div class="content">
 			<div class="header">
 				{{title}}		
-			</div>
+			</div>			
 			<div class="description" style="margin-top:5px;color: #A3A3A3;font-size: 12px;">
 				<i id="item-icon-handle" class="{{itemIcon this}} {{itemIconColor this}} icon"></i>
 				<span class="item-sid">{{sidLabel this}}</span> opened by {{usernameFromId userId}} {{timeAgo timestamp}}				
 				<span>({{order}})</span>
+			</div>
+			<div class="ui mini labels" style="margin-top:5px">
+				{{#each actionLabels}}
+				{{> actionItemLabelItem}}
+				{{/each}}
 			</div>
 		</div>
 	</div>	
@@ -24,3 +29,8 @@
 	</div>
 </template>
 
+<template name="actionItemLabelItem">
+	<div class="ui label {{color}}">
+		{{_id}}
+	</div>
+</template>
