@@ -140,7 +140,7 @@ Template.actions.events({
 				label = {
 					_id: $("#labelDialog input[name='title']").val(),
 					description: $("#labelDialog textarea[name='description']").val(),
-					color: $('#labelDialog #color-dropdown .text .label').attr('data-color')
+					color: $('#labelDialog .color-dropdown .text .label').attr('data-color')
 				};				
 				Meteor.call("createLabel", label, function(error, result) {
 					if (error) {
@@ -175,7 +175,7 @@ Template.labelItem.events({
 			onApprove : function() {
 				label = {
 					description: $("#labelDialog textarea[name='description']").val(),
-					color: $('#labelDialog #color-dropdown .text .label').attr('data-color')
+					color: $('#labelDialog .color-dropdown .text .label').attr('data-color')
 				};				
 				Meteor.call("updateLabel", self._id, label, function(error, result) {
 					if (error) {
@@ -186,7 +186,7 @@ Template.labelItem.events({
 		});		
 		$("#labelDialog input[name='title']").val(label._id);
 		$("#labelDialog textarea[name='description']").val(label.description);		
-		$("#labelDialog #color-dropdown .text").html('<div class="ui ' + label.color + ' empty circular label" data-color="' + label.color + '"></div> ' + label.color);
+		$("#labelDialog .color-dropdown .text").html('<div class="ui ' + label.color + ' empty circular label" data-color="' + label.color + '"></div> ' + label.color);
 		$('#labelDialog').modal('show');
 	},
 

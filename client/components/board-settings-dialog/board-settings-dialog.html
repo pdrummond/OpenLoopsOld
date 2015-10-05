@@ -4,13 +4,13 @@
 		<div class="header">
 			Board Settings
 		</div>
-		<div class=" content">
+		<div class="content">
 			<div class="ui top secondary pointing menu">
-				<a class="item active" data-tab="first">Board Details</a>
-				<a class="item" data-tab="second">Board Members</a>
-				<a class="item" data-tab="third">Status Slots</a>
+				<a class="item active" data-tab="details">Board Details</a>
+				<a class="item" data-tab="members">Board Members</a>
+				<a class="item" data-tab="status-slots">Board Status Slots</a>
 			</div>
-			<div class="ui top attached tab segment active" data-tab="first">
+			<div class="ui top attached tab segment active" data-tab="details" style="min-height:300px">
 				<form class="ui form">
 					<div class="field">
 						<label>Board Title</label>
@@ -20,42 +20,39 @@
 						<label>Board Header</label>
 						<textarea autofocus type="text" name="description" placeholder="Describe the board here or add announcements, links to related sites, etc (Markdown is supported on all edit fields)"></textarea>
 					</div>
-				</form>
-				<div class="actions" style="height:50px">
-					<div style="padding:10px;float:right;">
-						<div class="ui black deny button">
-							Cancel
-						</div>
-						<div id="create-board-submit-button" class="ui positive right labeled icon button">
-							Update Board
-							<i class="checkmark icon"></i>
-						</div>
-					</div>
-				</div>
+				</form>				
 			</div>
-			<div class="ui top attached tab segment" data-tab="second">
+			<div class="ui top attached tab segment" data-tab="members" style="min-height:300px">
 				<div class="ui aligned list">
 					{{#each boardMembers}}
 					{{ > boardMember}}
 					{{/each}}
 				</div>
 			</div>
-			<div class="ui top attached tab segment" data-tab="third">
-				<div class="ui aligned list">
+			<div class="ui top attached tab segment" data-tab="status-slots" style="min-height:300px">
+				<div id="status-slot-list" class="ui aligned list">
 					{{#each boardStatusSlots}}
 					{{ > statusSlotItem}}
 					{{/each}}
 				</div>
 			</div>
 		</div>
-		
+		<div class="actions">
+			<div class="ui black deny button">
+				Cancel
+			</div>
+			<div id="create-board-submit-button" class="ui positive right labeled icon button">
+				Update Board
+				<i class="checkmark icon"></i>
+			</div>
+		</div>
 	</div>
 </template>
 
 <template name="boardMember">
 	<div class="item">
 		<div class="right floated content">
-			<div class="ui floating dropdown button" style="position: relative;width:160px;top:1.8px;">
+			<div id="board-member-dropdown" class="ui floating dropdown button" style="position: relative;width:160px;top:1.8px;">
 				<div class="text" ><i class="{{roleIcon}} icon"></i> {{roleName}}</div>
 				<i class="dropdown icon"></i>
 				<div class="menu">
@@ -76,18 +73,23 @@
 </template>
 
 <template name="statusSlotItem">
-	<div class="item">
+	<div class="status-slot-item item">
 		<div class="right floated content">			
 			<div class="ui icon buttons">				
-				<button id="new-member-button" class="ui button"><i class="plus green icon"></i></button>
-				<button id="remove-member-button" class="ui button"><i class="remove red icon"></i></button>
+				<button id="new-status-slot-button" class="ui button"><i class="plus green icon"></i></button>
+				<button id="remove-status-slot-button" class="ui button"><i class="remove red icon"></i></button>
 			</div>
-		</div>
-		<img class="ui avatar image" src="{{profileImage userId}}">
+		</div>		
 		<div class="content">
-			<div class="ui input">
-				<input type="text" placeholder="Enter status tag here">
-			</div>			
+			<div class="ui input" style="width:300px">
+				<input type="text" name="label" placeholder="Enter status label, for example: 'In Progress'" value="{{label}}">
+			</div>
+			<div class="ui input" style="width:300px">
+				<input type="text" name="value" placeholder="Enter status value, for example: 'in-progress' " value="{{value}}">
+			</div>
+			<span id="status-slot-color-dropdown" style="margin-left:40px">
+				{{> colorDropdown this}}
+			</span>
 		</div>
 	</div>
 </template>

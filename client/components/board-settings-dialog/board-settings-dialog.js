@@ -1,22 +1,22 @@
-
 Template.boardSettingsDialog.onRendered(function() {
 	this.$('.menu .item').tab();
-	/*this.$('.ui.dropdown').dropdown({
-		action: 'hide'
-	});*/	
 });
 
 Template.boardSettingsDialog.helpers({
 	boardMembers: function() {
 		return Boards.findOne(Session.get('currentBoardId')).members;
+	},
+
+	boardStatusSlots: function() {
+		return Boards.findOne(Session.get('currentBoardId')).statusSlots;
 	}
 });
 
 
 Template.boardMember.onRendered(function() {
-	/*this.$('.ui.dropdown').dropdown({
+	this.$('#board-member-dropdown').dropdown({
 		action: 'hide'
-	});*/
+	});
 });
 
 Template.boardMember.events({
@@ -62,7 +62,7 @@ Template.boardMember.events({
 				alert("Error: " + error);
 			}
 		});
-	}
+	},		
 });
 
 Template.boardMember.helpers({
@@ -72,5 +72,28 @@ Template.boardMember.helpers({
 
 	roleIcon: function() {
 		return this.role === 'ADMIN'?'spy':'user';
-	}	
+	}
 });
+
+Template.statusSlotItem.events({
+	'click #new-status-slot-button': function() {
+		Meteor.call('createStatusSlot', Session.get('currentBoardId'), {
+			label: '',
+			value: '',
+			color: 'gray'
+		}, function(error, result) {
+			if(error) {
+				alert("Error: " + error);
+			}
+		});
+	},
+
+	'click #remove-status-slot-button': function() {		
+		Meteor.call('deleteStatusSlot', Session.get('currentBoardId'), this.value, function(error, result) {
+			if(error) {
+				alert("Error: " + error);
+			}
+		});
+	}
+});
+

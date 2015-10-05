@@ -64,15 +64,19 @@ Template.registerHelper('subjectLabel', function (item) {
 });
 
 Template.registerHelper('itemStatusLabel', function (item) {	
-	return OpenLoops.ActionStatusMeta[item.status].label || 'ERR: No Status';
+	return OpenLoops.getItemStatusLabel(item);
 });
 
 Template.registerHelper('itemStatusColor', function (item) {	
-	return OpenLoops.ActionStatusMeta[item.status].color || 'ERR: No Color';
+	return OpenLoops.getItemStatusColor(item);
 });
 
 Template.registerHelper('boardTitle', function (boardId) {
 	return Boards.findOne(boardId).title;
+});
+
+Template.registerHelper('boardStatusSlots', function (boardId) {
+	return Boards.findOne(boardId || Session.get('currentBoardId')).statusSlots;
 });
 
 Template.registerHelper('boards', function (context) {

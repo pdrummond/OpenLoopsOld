@@ -21,6 +21,7 @@ Template.boardMenu.events({
 				board = _.extend(board, {					
 					title: $("#boardSettingsDialog input[name='title']").val(),
 					description: $("#boardSettingsDialog textarea[name='description']").val(),
+					statusSlots: getStatusSlots()
 				});
 				Meteor.call("updateBoard", board, function(error, result) {
 					if (error) {
@@ -43,3 +44,22 @@ Template.board.events({
 		Router.go("/board/" + Session.get('currentBoardId') + "/messages");
 	}
 });
+
+
+function getStatusSlots() {
+	var slots = [];
+	$("#status-slot-list .status-slot-item").each(function(el) {		
+		var label = $(this).find("input[name='label']").val();
+		var value = $(this).find("input[name='value']").val();
+		var color = $(this).find(".color-dropdown .text .label").attr('data-color');
+
+		if(label != null && label.length > 0 && value != null && value.length > 0) {
+			slots.push({
+				label: label,
+				value: value,
+				color: color
+			});
+		}
+	});
+	return slots;
+}

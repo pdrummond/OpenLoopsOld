@@ -6,5 +6,9 @@ Template.debugOptions.events({
 
 	'click #remove-board-prefix-fields-button': function() {
 		Meteor.call('removeBoardPrefixFields')
+	},
+
+	'click #add-status-slots-button': function() {
+		Meteor.call('addStatusSlotsToAllBoards');
 	}
 });
