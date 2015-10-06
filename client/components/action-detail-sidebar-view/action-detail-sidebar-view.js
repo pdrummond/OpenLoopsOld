@@ -1,3 +1,23 @@
+Template.actionDetailSidebarView.onRendered(function() {
+	$('.menu .item').tab();
+	/*this.$('.ui.dropdown').dropdown({
+		action: 'hide'
+	});*/
+});
+
+Template.actionDetailSidebarView.onCreated(function() {
+	var self = this;
+	self.autorun(function() {
+		self.subscribe('itemMessages', {			
+			boardId: Session.get('currentBoardId'),
+			subjectItemId: this._id,			
+			limit: Session.get('messageLimit'),
+		}, function() {
+			//Do nothing here.
+		});
+	});	
+});
+
 Template.actionDetailSidebarView.onRendered( function() {	
 	$('#action-detail-menu-dropdown').dropdown();
 	$('#labels-dropdown').dropdown({
@@ -135,26 +155,6 @@ Template.itemComments.helpers({
 	itemComments: function() {		
 		return Messages.find({subjectItemId: this._id}, {sort: {timestamp: 1}});
 	}
-});
-
-Template.actionDetailSidebarView.onRendered(function() {
-	$('.menu .item').tab();
-	/*this.$('.ui.dropdown').dropdown({
-		action: 'hide'
-	});*/
-});
-
-Template.actionDetailSidebarView.onCreated(function() {
-	var self = this;
-	self.autorun(function() {
-		self.subscribe('itemMessages', {			
-			boardId: Session.get('currentBoardId'),
-			subjectItemId: this._id,			
-			limit: Session.get('messageLimit'),
-		}, function() {
-			//Do nothing here.
-		});
-	});	
 });
 
 Template.moveToBoardItem.events({
