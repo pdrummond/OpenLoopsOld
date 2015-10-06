@@ -32,82 +32,22 @@ Router.route('/', function () {
 }, {name: 'missionControl'});
 
 Router.route('/board/:boardId/messages', function () {
+  console.log("BOOM: messages routes invoked");
   var board = Boards.findOne(this.params.boardId);
   if(!board) {
     this.render("notFound");
   } else {
-
-    Meteor.subscribe('subjectSuggestions', {boardId: this.params.boardId, subjectText: ''});
+    //Meteor.subscribe('subjectSuggestions', {boardId: this.params.boardId, subjectText: ''});
     Meteor.subscribe('milestones', board._id);
     Meteor.subscribe('actions', {
       filter: OpenLoops.getActionFilter(Session.get('actionFilterString')),
-      board: board,
-      channel: Session.get('channel'),
-      limit: Session.get('actionLimit'),
+      boardId: this.params.boardId,
+      limit: Session.get('actionLimit')
     });
     Session.set('currentBoardId', this.params.boardId);
-
     this.render('messageHistoryPage');
   }
 }, {name: 'messageHistoryPage'});
-
-Router.route('/board/:boardId/action/:_id/:section', {
-  name: 'actionDetailPage',
-  waitOn: function() {
-    return [
-    Meteor.subscribe('milestones', this.params.boardId),
-    Meteor.subscribe('singleAction', this.params._id),    
-    Meteor.subscribe('comments', this.params._id)
-    ];
-  },
-  data: function() {    
-    var board = Boards.findOne(this.params.boardId);
-    if(board) {
-      Session.set('currentBoardId', this.params.boardId);
-      var action = Actions.findOne(this.params._id);    
-      if(action != null) {
-        Session.set('selectedAction', action);
-        Session.set('currentSection', this.params.section);
-        //console.log("selectedAction: " + JSON.stringify(action, null, 4));
-        return action;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
-});
-
-//TODO: Figure out way to merge this with above
-Router.route('/board/:boardId/action/:_id/comments/:commentId', {
-  name: 'actionDetailCommentPage',
-  template: 'actionDetailPage',
-  waitOn: function() {
-    return [
-    Meteor.subscribe('milestones', this.params.boardId),
-    Meteor.subscribe('singleAction', this.params._id),
-    Meteor.subscribe('comments', this.params._id)
-    ];
-  },
-  data: function() {    
-    var board = Boards.findOne(this.params.boardId);
-    if(board) {
-      Session.set('currentBoardId', this.params.boardId);
-      var action = Actions.findOne(this.params._id);    
-      if(action != null) {
-        Session.set('selectedAction', action);
-        Session.set('currentSection', "comments");
-        Session.set('selectedCommentId', this.params.commentId);
-        return action;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
-});
 
 AccountsTemplates.configureRoute('signIn', {name: 'signIn', path:'sign-in'});
 AccountsTemplates.configureRoute('signUp', {name: 'signUp', path:'sign-up'});

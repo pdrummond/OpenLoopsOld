@@ -7,6 +7,7 @@ Template.messageHistoryPage.helpers({
 Template.messageHistoryView.onCreated(function() {
 	var self = this;	
 	self.autorun(function() {
+		console.log("subscribing to 'messages' publication");
 		self.subscribe('messages', {
 			showActivity: Session.get('messageHistory.showActivity'),
 			filter: OpenLoops.getMessageFilter(Session.get('messageFilterString')),
@@ -42,6 +43,7 @@ Template.messageHistoryView.onCreated(function() {
 
 Template.messageHistoryView.helpers({
 	messages: function() { 
+		console.log("find messages ###");
 		return Messages.find({}, {sort: {timestamp: 1}});
 	},
 });

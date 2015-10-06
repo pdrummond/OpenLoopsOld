@@ -1,9 +1,11 @@
 Template.actionDetailSidebarView.onRendered( function() {	
 	$('#action-detail-menu-dropdown').dropdown();
 	$('#labels-dropdown').dropdown({
-		allowAdditions: true,
 		onChange: function(labels, text, $choice) {
-			Meteor.call('updateItemLabels', Session.get('selectedItemId'), labels.split(","));
+			if(labels != null) {
+				var newLabels = labels.split(",");
+				Meteor.call('updateItemLabels', Session.get('selectedItemId'), newLabels);
+			}
 		}
 	});
 });

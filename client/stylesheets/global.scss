@@ -274,13 +274,6 @@ body {
   border-radius: 30px;
 }
 
-.activity.message .message_profile-pic {
-  width: 15px;
-  height: 15px;
-  top: 3px;
-  left: 15px;
-}
-
 /* line 22, ../tests/sass/components/_message.scss */
 .message_username {
   xfont-weight: 900;
@@ -317,10 +310,6 @@ body {
 
 .message_content.archived {
   text-decoration: line-through;
-}
-
-.activity.message .message_content {
-  display: inline;
 }
 
 /* line 4, ../tests/sass/components/_user-menu.scss */
@@ -451,14 +440,8 @@ body {
   color:#0098FF !important;  
 }
 
-
-.activity.message {
-  margin:0;
-  padding:0;
-  padding-left:35px;
-  font-size:12px;
-  min-height:20px;
-  margin-top:10px;
+.activity.message .message_content {
+  font-style:italic;
 }
 
 .activity.message .profile-image {

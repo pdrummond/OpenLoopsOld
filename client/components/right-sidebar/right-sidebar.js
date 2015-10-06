@@ -13,8 +13,8 @@ Template.actionDetailSidebarView.helpers({
 });
 
 Template.actions.onRendered(function() {
-	this.$('.menu .item').tab();
-	this.$('.ui.dropdown').dropdown({
+	this.$('#actions-wrapper .menu .item').tab();
+	this.$('#filter-box .ui.dropdown').dropdown({
 		action:'hide'
 	});
 });
